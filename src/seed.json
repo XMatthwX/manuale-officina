@@ -1,5 +1,5 @@
 {
- "versione": 2,
+ "versione": 3,
  "veicoli": {
   "mazda2-dj-15g": {
    "marca": "Mazda",
@@ -206,6 +206,32 @@
    "note": "Ricontrollare dopo 50 km.",
    "esempio": true,
    "aggiornato": "2026-11-03T16:00:00Z"
+  },
+  "mazda3-bp-20g__ruota__dadi": {
+   "veicoloId": "mazda3-bp-20g",
+   "schema": "ruota",
+   "punto": "dadi",
+   "coppia": "108–147 Nm",
+   "fasi": "Serraggio a croce (a stella).",
+   "procedura": "Allentare i dadi di mezzo giro con la ruota a terra.\nSollevare il veicolo e posizionarlo sui cavalletti.\nSvitare i dadi e togliere la ruota.\nMontare la ruota con i dadi lato smussato verso il cerchio.\nAvvitare a mano, poi stringere a croce senza coppia piena.\nAbbassare il veicolo.\nSerrare a croce alla coppia indicata con chiave dinamometrica.",
+   "fonte": "Manuale d'uso Mazda3 2019 (Mazda USA), sezione Pneumatico sgonfio – Sostituzione ruota",
+   "fonteUrl": "https://www.mazdausa.com/static/manuals/2019/mazda3/contents/10020109.html",
+   "note": "12–14 kgf·m. Valore del manuale d'uso ufficiale Mazda.",
+   "esempio": false,
+   "aggiornato": "2026-11-03T16:48:00Z"
+  },
+  "mx5-nd-15g__ruota__dadi": {
+   "veicoloId": "mx5-nd-15g",
+   "schema": "ruota",
+   "punto": "dadi",
+   "coppia": "108–147 Nm",
+   "fasi": "Serraggio a croce (a stella).",
+   "procedura": "Allentare i dadi di mezzo giro con la ruota a terra.\nSollevare il veicolo e posizionarlo sui cavalletti.\nSvitare i dadi e togliere la ruota.\nMontare la ruota con i dadi lato smussato verso il cerchio.\nAvvitare a mano, poi stringere a croce senza coppia piena.\nAbbassare il veicolo.\nSerrare a croce alla coppia indicata con chiave dinamometrica.",
+   "fonte": "Manuale d'uso MX-5 2018 (Mazda Canada), sezione Pneumatico sgonfio – Sostituzione ruota",
+   "fonteUrl": "https://mazda.ca/en/digital-owners-manual/2018/mx-5/contents/10020109.html",
+   "note": "12–14 kgf·m. Valore del manuale d'uso ufficiale Mazda.",
+   "esempio": false,
+   "aggiornato": "2026-11-03T16:48:00Z"
   }
  }
 }

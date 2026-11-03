@@ -10,8 +10,8 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
-<script>window.APP_VERSION="ab43c4668f";window.APP_BUILD="2026-11-03";</script>
-<script src="seed.js?v=ab43c4668f"></script>
+<script>window.APP_VERSION="cf037649c0";window.APP_BUILD="2026-11-03";</script>
+<script src="seed.js?v=cf037649c0"></script>
 </head><body>
 <title>Manuale Coppie Officina</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -232,6 +232,14 @@ td.v.has{color:var(--ok)}td.v.ex{color:var(--warn)}
 .pre{white-space:pre-wrap;overflow-wrap:anywhere}
 .empty-state{color:var(--muted);display:flex;flex-direction:column;gap:8px}
 .empty-state svg{width:44px;height:44px;stroke:var(--muted);fill:none;stroke-width:1.6}
+.steps{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-direction:column;gap:6px;counter-reset:st}
+.step{width:100%;display:flex;gap:10px;align-items:flex-start;text-align:left;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);cursor:pointer}
+.step .ck{flex:none;width:20px;height:20px;border-radius:5px;border:2px solid var(--line);margin-top:2px;display:grid;place-items:center}
+.step.done{opacity:.6}.step.done .ck{background:var(--ok);border-color:var(--ok)}
+.step.done .ck::after{content:"";width:6px;height:10px;border:solid var(--onsolid);border-width:0 2.5px 2.5px 0;transform:translateY(-1px) rotate(45deg)}
+.step.done span:last-child{text-decoration:line-through}
+.src{display:inline-block;margin-top:4px;color:var(--accent);font-weight:600;text-decoration:none}
+.src:hover{text-decoration:underline}
 .missing{padding:14px;border:1.5px dashed var(--rule);border-radius:8px;color:var(--muted)}
 
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-weight:600;z-index:20;max-width:calc(100% - 32px);box-shadow:0 6px 24px rgba(0,0,0,.25)}
@@ -415,6 +423,7 @@ const CAR_SVG = `<svg viewBox="0 0 200 80" aria-hidden="true"><path class="cb" d
 /* ---------- stato ---------- */
 const S = { view: "marche", marca: null, vid: null, sys: null, part: null, q: "", editing: false, draft: {}, error: "", confirmDel: false, adding: false, vdraft: {}, verror: "", confirmVDel: false, saving: false };
 let veicoli = new Map(), coppie = new Map();
+const DONE = new Set();
 let db = null, dbStatus = "loading", got = { v: false, c: false }, slowTimer = null;
 const key = (vid, sys, part) => `${vid}__${sys}__${part}`;
 const val = (vid, sys, part) => coppie.get(key(vid, sys, part));
@@ -422,6 +431,7 @@ const vLabel = v => `${v.modello}${v.serie ? " (" + v.serie + ")" : ""}`;
 const filledFor = vid => { let n = 0; for (const c of coppie.values()) if (c.veicoloId === vid && c.coppia) n++; return n; };
 const filledSys = (vid, sys) => SYS[sys].parts.filter(p => val(vid, sys, p.id)).length;
 const stateOf = c => !c ? "none" : (c.esempio ? "ex" : "has");
+const chipOf = c => c && c.fonteUrl && !c.esempio ? "off" : stateOf(c);
 
 /* ---------- viste ---------- */
 function crumbs() {
@@ -532,7 +542,7 @@ function viewSchema() {
   const idx = ORDER.indexOf(S.sys) + 1;
   const rows = s.parts.map((p, i) => {
     const c = val(S.vid, S.sys, p.id), st = stateOf(c);
-    return `<tr class="${S.part === p.id ? "sel" : ""}" data-act="part" data-v="${p.id}" tabindex="0"><td class="n">${i + 1}</td><td>${esc(p.nome)}</td><td class="v ${st}">${c ? esc(c.coppia) : "—"}</td><td>${chip(st)}</td></tr>`;
+    return `<tr class="${S.part === p.id ? "sel" : ""}" data-act="part" data-v="${p.id}" tabindex="0"><td class="n">${i + 1}</td><td>${esc(p.nome)}</td><td class="v ${st}">${c ? esc(c.coppia) : "—"}</td><td>${chip(chipOf(c))}</td></tr>`;
   }).join("");
   return `
   <div class="head"><div><div class="eyebrow">Passo 4 di 4 · ${esc(v.marca)} ${esc(vLabel(v))}</div><h1>${esc(s.nome)}</h1>
@@ -550,7 +560,7 @@ function viewSchema() {
 }
 
 function chip(st) {
-  return st === "has" ? `<span class="chip has">Inserito</span>` : st === "ex" ? `<span class="chip ex">Esempio</span>` : `<span class="chip none">Da inserire</span>`;
+  return st === "off" ? `<span class="chip has">Ufficiale</span>` : st === "has" ? `<span class="chip has">Inserito</span>` : st === "ex" ? `<span class="chip ex">Esempio</span>` : `<span class="chip none">Da inserire</span>`;
 }
 
 function sidePanel() {
@@ -569,6 +579,7 @@ function sidePanel() {
       <div class="form">
         <div class="field wide"><label for="f-coppia">Coppia di serraggio</label><input id="f-coppia" data-draft="draft" data-k="coppia" value="${esc(d.coppia)}" placeholder="es. 40 Nm + 90° + 90°"><small>Scrivi come sul manuale: Nm, angoli, più fasi.</small></div>
         <div class="field wide"><label for="f-fasi">Sequenza e fasi</label><textarea id="f-fasi" data-draft="draft" data-k="fasi" placeholder="Ordine di serraggio, passaggi, viti da sostituire, frenafiletti, olio sul filetto…">${esc(d.fasi)}</textarea></div>
+        <div class="field wide"><label for="f-proc">Procedura di smontaggio e montaggio</label><textarea id="f-proc" data-draft="draft" data-k="procedura" style="min-height:120px" placeholder="Un passaggio per riga, come sul manuale">${esc(d.procedura)}</textarea><small>Un passaggio per riga: in officina li spunti uno alla volta.</small></div>
         <div class="field wide"><label for="f-fonte">Fonte</label><input id="f-fonte" data-draft="draft" data-k="fonte" value="${esc(d.fonte)}" placeholder="es. Manuale officina Mazda, sez. 01-10, pag. 12"><small>Obbligatoria: serve a ritrovare il dato.</small></div>
         <div class="field wide"><label for="f-note">Note</label><textarea id="f-note" data-draft="draft" data-k="note" placeholder="Attrezzi, chiave, attenzioni">${esc(d.note)}</textarea></div>
       </div>
@@ -580,12 +591,13 @@ function sidePanel() {
     <div class="missing">Nessun valore inserito per questo pezzo. Prendilo dal manuale ufficiale e inseriscilo con la fonte.</div>
     <div class="row"><button class="btn" data-act="edit" ${store.ok ? "" : "disabled"}>Inserisci valore</button></div></div>`;
   const when = c.aggiornato ? new Date(c.aggiornato).toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" }) : "";
-  return `<div class="panel">${head}${chip(st)}
+  return `<div class="panel">${head}${chip(chipOf(c))}
     <div class="torque ${st === "ex" ? "exv" : ""}">${esc(c.coppia)}</div>
     ${st === "ex" ? `<div class="banner"><b>Valore di esempio.</b> Non usarlo per lavorare.</div>` : ""}
     ${c.fasi ? `<div class="kv"><h3>Sequenza e fasi</h3><p class="pre">${esc(c.fasi)}</p></div>` : ""}
+    ${c.procedura ? `<div class="kv"><h3>Procedura</h3><ol class="steps">${c.procedura.split(/\n+/).filter(x => x.trim()).map((t, i) => { const k = key(S.vid, S.sys, S.part) + "#" + i; return `<li><button class="step ${DONE.has(k) ? "done" : ""}" data-act="step" data-v="${esc(k)}"><span class="ck"></span><span>${esc(t.replace(/^\s*\d+[.)]\s*/, ""))}</span></button></li>`; }).join("")}</ol></div>` : ""}
     ${c.note ? `<div class="kv"><h3>Note</h3><p class="pre">${esc(c.note)}</p></div>` : ""}
-    <div class="kv"><h3>Fonte</h3><p class="pre">${esc(c.fonte || "Non indicata")}</p></div>
+    <div class="kv"><h3>Fonte</h3><p class="pre">${esc(c.fonte || "Non indicata")}</p>${c.fonteUrl && /^https:\/\//.test(c.fonteUrl) ? `<a class="src" href="${esc(c.fonteUrl)}" target="_blank" rel="noopener">Apri la fonte ufficiale ↗</a>` : ""}</div>
     ${when ? `<div class="kv"><h3>Aggiornato</h3><p>${esc(when)}</p></div>` : ""}
     <div class="row">${S.confirmDel
       ? `<span>Eliminare questo valore?</span><button class="btn danger" data-act="del-yes">Elimina</button><button class="btn ghost" data-act="del-no">Annulla</button>`
@@ -717,7 +729,7 @@ async function act(a, d) {
     }
     case "edit": {
       const c = val(S.vid, S.sys, S.part) || {};
-      S.draft = { coppia: c.coppia || "", fasi: c.fasi || "", fonte: c.esempio ? "" : (c.fonte || ""), note: c.note || "" };
+      S.draft = { procedura: c.procedura || "", coppia: c.coppia || "", fasi: c.fasi || "", fonte: c.esempio ? "" : (c.fonte || ""), note: c.note || "" };
       S.editing = true; S.error = ""; render();
       const f = document.getElementById("f-coppia"); if (f) f.focus();
       break;
@@ -730,11 +742,12 @@ async function act(a, d) {
       if (!store.ok) return;
       S.saving = true; S.error = ""; render();
       try {
-        await store.set("coppie", key(S.vid, S.sys, S.part), { veicoloId: S.vid, schema: S.sys, punto: S.part, coppia, fasi: (dd.fasi || "").trim(), fonte, note: (dd.note || "").trim(), esempio: false, aggiornato: new Date().toISOString() });
+        await store.set("coppie", key(S.vid, S.sys, S.part), { veicoloId: S.vid, schema: S.sys, punto: S.part, coppia, fasi: (dd.fasi || "").trim(), procedura: (dd.procedura || "").trim(), fonte, note: (dd.note || "").trim(), esempio: false, aggiornato: new Date().toISOString() });
         S.editing = false; toast("Valore salvato");
       } catch (e) { S.error = "Non salvato. " + errMsg(e); }
       S.saving = false; render(); break;
     }
+    case "step": if (DONE.has(d.v)) DONE.delete(d.v); else DONE.add(d.v); render(); break;
     case "del-ask": S.confirmDel = true; render(); break;
     case "del-no": S.confirmDel = false; render(); break;
     case "del-yes": {
