@@ -1,5 +1,5 @@
 {
- "versione": 3,
+ "versione": 4,
  "veicoli": {
   "mazda2-dj-15g": {
    "marca": "Mazda",
@@ -229,6 +229,32 @@
    "procedura": "Allentare i dadi di mezzo giro con la ruota a terra.\nSollevare il veicolo e posizionarlo sui cavalletti.\nSvitare i dadi e togliere la ruota.\nMontare la ruota con i dadi lato smussato verso il cerchio.\nAvvitare a mano, poi stringere a croce senza coppia piena.\nAbbassare il veicolo.\nSerrare a croce alla coppia indicata con chiave dinamometrica.",
    "fonte": "Manuale d'uso MX-5 2018 (Mazda Canada), sezione Pneumatico sgonfio – Sostituzione ruota",
    "fonteUrl": "https://mazda.ca/en/digital-owners-manual/2018/mx-5/contents/10020109.html",
+   "note": "12–14 kgf·m. Valore del manuale d'uso ufficiale Mazda.",
+   "esempio": false,
+   "aggiornato": "2026-11-03T16:48:00Z"
+  },
+  "cx5-kf-22d__ruota__dadi": {
+   "veicoloId": "cx5-kf-22d",
+   "schema": "ruota",
+   "punto": "dadi",
+   "coppia": "108–147 Nm",
+   "fasi": "Serraggio a croce (a stella).",
+   "procedura": "Allentare i dadi di mezzo giro con la ruota a terra.\nSollevare il veicolo e posizionarlo sui cavalletti.\nSvitare i dadi e togliere la ruota.\nMontare la ruota con i dadi lato smussato verso il cerchio.\nAvvitare a mano, poi stringere a croce senza coppia piena.\nAbbassare il veicolo.\nSerrare a croce alla coppia indicata con chiave dinamometrica.",
+   "fonte": "Manuale d'uso CX-5 2025 (Mazda USA), sezione Dadi antifurto ruota – tabella coppia di serraggio",
+   "fonteUrl": "https://www.mazdausa.com/static/manuals/2025/cx-5/contents/08020302.html",
+   "note": "12–14 kgf·m. Valore del manuale d'uso ufficiale Mazda.",
+   "esempio": false,
+   "aggiornato": "2026-11-03T16:48:00Z"
+  },
+  "cx30-dm-20g__ruota__dadi": {
+   "veicoloId": "cx30-dm-20g",
+   "schema": "ruota",
+   "punto": "dadi",
+   "coppia": "108–147 Nm",
+   "fasi": "Serraggio a croce (a stella).",
+   "procedura": "Allentare i dadi di mezzo giro con la ruota a terra.\nSollevare il veicolo e posizionarlo sui cavalletti.\nSvitare i dadi e togliere la ruota.\nMontare la ruota con i dadi lato smussato verso il cerchio.\nAvvitare a mano, poi stringere a croce senza coppia piena.\nAbbassare il veicolo.\nSerrare a croce alla coppia indicata con chiave dinamometrica.",
+   "fonte": "Manuale d'uso Mazda CX-30, pag. 491 (copia del manuale ufficiale su ManualsLib, anno non indicato)",
+   "fonteUrl": "https://www.manualslib.com/manual/2012333/Mazda-Cx-30.html?page=491",
    "note": "12–14 kgf·m. Valore del manuale d'uso ufficiale Mazda.",
    "esempio": false,
    "aggiornato": "2026-11-03T16:48:00Z"
