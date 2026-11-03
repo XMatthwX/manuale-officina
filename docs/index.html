@@ -10,8 +10,8 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
-<script>window.APP_VERSION="bbb7c22c1b";window.APP_BUILD="2026-11-03";</script>
-<script src="seed.js?v=bbb7c22c1b"></script>
+<script>window.APP_VERSION="6641b73e36";window.APP_BUILD="2026-11-03";</script>
+<script src="seed.js?v=6641b73e36"></script>
 </head><body>
 <title>Manuale Coppie Officina</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -257,18 +257,21 @@ tbody tr.nr{cursor:default}tbody tr.nr:hover{background:transparent}
 .feat p{font-size:15px;color:var(--muted)}
 ol.srcs{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
 a.btn{text-decoration:none}
-.v3d-slot{position:relative;width:100%;aspect-ratio:16/11;min-height:320px;max-height:72vh;border-radius:8px;overflow:hidden;background:radial-gradient(120% 95% at 50% 32%,var(--sheet) 0%,var(--stage) 100%)}
+.v3d-slot{position:relative;width:100%;aspect-ratio:16/11;min-height:320px;max-height:78vh;border-radius:8px;overflow:hidden;background:#fdfdfd;border:1px solid #d9d9d9}
 @media (max-width:600px){.v3d-slot{aspect-ratio:4/5;max-height:78vh}}
 .v3d{position:absolute;inset:0}
 .v3d canvas{width:100%!important;height:100%!important;display:block;touch-action:pan-y;cursor:grab;-webkit-tap-highlight-color:transparent}
 .v3d canvas:active{cursor:grabbing}
 .v3d-marks{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.mk3{position:absolute;left:0;top:0;pointer-events:auto;min-width:30px;height:30px;padding:0 6px;border-radius:15px;border:2px solid var(--ink);background:var(--sheet);color:var(--ink);font:700 13px var(--f-mono);display:grid;place-items:center;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.25)}
-.mk3::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:12px;background:var(--ink);transform:translateX(-50%)}
+.mk3{position:absolute;left:0;top:0;pointer-events:auto;min-width:30px;height:30px;padding:0 9px;border-radius:15px;border:2px solid #141414;background:#fff;color:#141414;font:700 13px var(--f-mono);display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.25);white-space:nowrap}
+.mk3 .nm{display:none;font-family:var(--f-body);font-weight:700;font-size:13px}
+.v3d.wide .mk3 .nm,.mk3.sel .nm{display:inline}
+.mk3:hover{z-index:2;transform-origin:center}
+.v3d-lead{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}.v3d-lead line{stroke:#141414;stroke-width:1.3}.v3d-lead circle{fill:#141414}.v3d-lead .sel{stroke:#e02020;fill:#e02020;stroke-width:2}
 .mk3.has{background:var(--ok);border-color:var(--ok);color:var(--onsolid)}.mk3.has::after{background:var(--ok)}
 .mk3.ex,.mk3.co{background:var(--warn);border-color:var(--warn);color:var(--onsolid)}.mk3.ex::after,.mk3.co::after{background:var(--warn)}
 .mk3.sel{border-color:var(--sel);box-shadow:0 0 0 3px var(--selfill),0 3px 10px rgba(0,0,0,.25)}.mk3.sel::after{background:var(--sel)}
-.v3d-hint{position:absolute;top:10px;left:12px;right:12px;font-size:12px;color:var(--muted);pointer-events:none}
+.v3d-hint{position:absolute;top:10px;left:12px;right:12px;font-size:12px;color:#666;pointer-events:none}
 .v3d-bar{position:absolute;left:10px;right:10px;bottom:10px;display:flex;flex-wrap:wrap;gap:6px;pointer-events:none;align-items:center}
 .v3d-bar .sp{flex:1}
 .v3d-bar button{pointer-events:auto;display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:7px 12px;border-radius:9px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12)}
@@ -513,21 +516,21 @@ const SYS = {
 SYS.panoramica = {
   nome: "Motore in 3D", desc: "Tocca il pezzo sul motore", vb: "0 0 800 500", base: "",
   parts: [
-    ["airbox", "Scatola filtro aria (airbox)", "tagliando", "filtroaria"],
-    ["filtroolio", "Filtro olio", "coppa", "filtro"],
-    ["tappoolio", "Tappo rabbocco olio", "tagliando", "olio"],
-    ["tappocoppa", "Tappo scarico coppa olio", "coppa", "tappo"],
-    ["refrigerante", "Vaschetta liquido refrigerante", "tagliando", "refrigerante"],
-    ["freni", "Serbatoio liquido freni", "tagliando", "freni"],
-    ["gasolio", "Filtro gasolio", "tagliando", "gasolio"],
-    ["iniettori", "Iniettori", "iniezione", "iniettori"],
-    ["candelette", "Candelette", "iniezione", "candelette"],
-    ["cinghia", "Cinghia servizi", "tagliando", "cinghia"],
-    ["puleggia", "Puleggia albero motore", "distribuzione", "albero"],
-    ["ruota", "Bulloni ruota", "ruota", "dadi"],
-    ["pinza", "Pinza freno anteriore", "freni", "staffa"],
-    ["duomo", "Duomo ammortizzatore", "sospensioni", "duomo"]
-  ].map(([id, nome, a, b]) => ({ id, nome, ref: [a, b], shape: "", anchor: [0, 0], label: [0, 0] }))
+    ["airbox", "Scatola filtro aria (airbox)", "tagliando", "filtroaria", "Airbox"],
+    ["filtroolio", "Filtro olio", "coppa", "filtro", "Filtro olio"],
+    ["tappoolio", "Tappo rabbocco e astina olio", "tagliando", "olio", "Tappo olio"],
+    ["tappocoppa", "Tappo scarico coppa olio", "coppa", "tappo", "Tappo coppa"],
+    ["refrigerante", "Vaschetta liquido refrigerante", "tagliando", "refrigerante", "Refrigerante"],
+    ["freni", "Serbatoio liquido freni", "tagliando", "freni", "Liquido freni"],
+    ["gasolio", "Filtro gasolio", "tagliando", "gasolio", "Filtro gasolio"],
+    ["iniettori", "Iniettori", "iniezione", "iniettori", "Iniettori"],
+    ["candelette", "Candelette", "iniezione", "candelette", "Candelette"],
+    ["cinghia", "Cinghia servizi", "tagliando", "cinghia", "Cinghia"],
+    ["puleggia", "Puleggia albero motore", "distribuzione", "albero", "Puleggia"],
+    ["ruota", "Bulloni ruota", "ruota", "dadi", "Bulloni ruota"],
+    ["pinza", "Pinza freno anteriore", "freni", "staffa", "Pinza freno"],
+    ["duomo", "Duomo ammortizzatore", "sospensioni", "duomo", "Duomo"]
+  ].map(([id, nome, a, b, corto]) => ({ id, nome, corto, ref: [a, b], shape: "", anchor: [0, 0], label: [0, 0] }))
 };
 const NARROW = () => window.matchMedia("(max-width:600px)").matches;
 const ORDER = ["tagliando", "distribuzione", "testata", "iniezione", "coppa", "freni", "sospensioni", "ruota"];
@@ -567,7 +570,7 @@ function crumbs() {
 function viewMarche() {
   const counts = {};
   for (const v of veicoli.values()) if (!v.demo) counts[v.marca] = (counts[v.marca] || 0) + 1;
-  const all = [...new Set([...BRANDS, ...Object.keys(counts)])].sort((a, b) => a.localeCompare(b, "it"));
+  const all = Object.keys(counts).sort((a, b) => a.localeCompare(b, "it"));
   const q = S.q.trim().toLowerCase();
   const list = all.filter(b => !q || b.toLowerCase().includes(q));
   const demo = [...veicoli.entries()].find(([, v]) => v.demo);
@@ -828,12 +831,19 @@ const V3D = (() => {
     paint: { color: 0xa9b6c4, metalness: 0.3, roughness: 0.5 },
     ceramic: { color: 0xf1efe8, metalness: 0.0, roughness: 0.32 },
     plastic: { color: 0xe9e5d6, metalness: 0.0, roughness: 0.35, transparent: true, opacity: 0.88 },
-    yellow: { color: 0xf2b705, metalness: 0.1, roughness: 0.45 }
+    yellow: { color: 0xf2b705, metalness: 0.1, roughness: 0.45 },
+    red: { color: 0xc0392b, metalness: 0.35, roughness: 0.42 },
+    blue: { color: 0x1f5fae, metalness: 0.3, roughness: 0.45 },
+    pink: { color: 0xf06595, metalness: 0.0, roughness: 0.3, transparent: true, opacity: 0.85 },
+    glass: { color: 0xf4f1e6, metalness: 0.0, roughness: 0.15, transparent: true, opacity: 0.45 },
+    cover: { color: 0x3b4148, metalness: 0.25, roughness: 0.55 },
+    tire: { color: 0x2a2d31, metalness: 0.0, roughness: 0.95 }
   };
   const shared = {};
-  const SH = n => shared[n] || (shared[n] = new T.MeshStandardMaterial(PRE[n] || PRE.steel));
-  const LINE = new T.LineBasicMaterial({ color: 0x2a3036, transparent: true, opacity: 0.7 });
-  const GREEN = new T.Color(0x37b24d), ORANGE = new T.Color(0xd9480f), UP = new T.Vector3(0, 1, 0);
+  const tech = pr => { const c = new T.Color(pr.color), l = 0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b, g = 0.7 + 0.29 * Math.sqrt(l); return new T.MeshLambertMaterial({ color: new T.Color(g, g, g), transparent: !!pr.transparent, opacity: pr.transparent ? Math.max(0.55, pr.opacity || 1) : 1 }); };
+  const SH = n => shared[n] || (shared[n] = tech(PRE[n] || PRE.steel));
+  const LINE = new T.LineBasicMaterial({ color: 0x141414, transparent: true, opacity: 0.92 });
+  const GREEN = new T.Color(0x3fbf4a), ORANGE = new T.Color(0xd9480f), UP = new T.Vector3(0, 1, 0);
 
   /* --- mattoncini geometrici --- */
   const mesh = (geo, m, x = 0, y = 0, z = 0) => { const me = new T.Mesh(geo, typeof m === "string" ? SH(m) : m); me.position.set(x, y, z); return me; };
@@ -893,9 +903,10 @@ const V3D = (() => {
       part(id, ex) { const g = new T.Group(); g.userData.ex = new T.Vector3(ex[0], ex[1], ex[2]); group.add(g); parts[id] = { g, meshes: [] }; return g; },
       done() {
         const meshes = []; group.traverse(o => { if (o.isMesh && !o.isInstancedMesh) meshes.push(o); });
-        meshes.forEach(o => { const e = new T.LineSegments(new T.EdgesGeometry(o.geometry, 28), LINE); e.raycast = () => {}; o.add(e); });
+        meshes.forEach(o => { const e = new T.LineSegments(new T.EdgesGeometry(o.geometry, 22), LINE); e.raycast = () => {}; o.add(e); });
         for (const [id, p] of Object.entries(parts)) {
-          p.g.traverse(o => { if (o.isMesh) { o.material = o.material.clone(); o.userData.part = id; o.userData.c0 = o.material.color.clone(); p.meshes.push(o); } });
+          p.lineMat = LINE.clone();
+          p.g.traverse(o => { if (o.isMesh) { o.material = o.material.clone(); o.userData.part = id; o.userData.c0 = o.material.color.clone(); p.meshes.push(o); } else if (o.isLineSegments) o.material = p.lineMat; });
           const first = p.g.children[0] || p.g;
           p.anchor = new T.Box3().setFromObject(first).getCenter(new T.Vector3());
           p.base = p.g.position.clone();
@@ -1100,41 +1111,101 @@ const V3D = (() => {
   };
   BUILD.panoramica = () => {
     const m = model();
-    m.base(mesh(box(22, 0.2, 13), "black", 0, -4.2, 0.5));
-    m.base(mesh(box(16, 3.0, 0.5), "dark", 0, -0.5, -5.8));
-    m.base(mesh(box(22, 2.6, 0.3), "dark", 0, -0.8, 6.8));
-    m.base(mesh(rbox(7.2, 4.2, 4.0, 0.4), "alu", 0, -0.6, 0));
-    m.base(mesh(flat(rbox(6.8, 3.4, 1.0, 0.5)), "alu", 0, 1.95, -0.1));
-    m.base(mesh(flat(rbox(6.0, 2.6, 0.45, 0.5)), "black", 0, 2.9, 0.6));
-    m.base(mesh(rbox(6.4, 3.4, 1.0, 0.5), "alu", 0, -3.2, 0));
-    m.base(mesh(rbox(2.4, 1.9, 1.7, 0.2), "black", 5.0, -0.8, 3.6));
-    m.base(mesh(box(0.6, 5.0, 3.6), "alu", -3.9, -0.6, 0));
-    [[-1.2, 2.3, 0.8], [-2.4, -0.6, 0.5]].forEach(([y, z, r]) => m.base(at(orient(mesh(cyl(r, r, 0.4, 32), "steel"), [1, 0, 0]), -4.35, y, z)));
-    m.base(at(orient(mesh(cyl(1.15, 1.15, 0.5, 32), "steel"), [1, 0, 0]), 3.9, -1.6, -1.0));
-    m.base(mesh(rbox(1.2, 7.0, 1.2, 0.3), "dark", 8.0, 0, -1.6));
-    const P = id => m.part(id, [0, 1.6, 0]);
-    let g = P("airbox"); g.add(mesh(rbox(3.2, 1.8, 2.8, 0.35), "black", -6.4, 0.8, -1.4)); g.add(at(orient(mesh(cyl(0.6, 0.6, 2.6, 24), "black"), [0, 0, 1]), -6.4, 0.9, -4.0)); g.add(at(orient(mesh(cyl(0.5, 0.5, 2.0, 24), "rubber"), [1, 0, 0]), -4.6, 1.4, -0.6));
-    g = m.part("filtroolio", [0, 0, 2.2]); g.add(at(orient(mesh(cyl(0.8, 0.8, 1.8, 32), "paint"), [0, 0, 1]), 2.2, -1.6, 2.6)); g.add(at(orient(mesh(cyl(0.6, 0.6, 0.25, 6), "dark"), [0, 0, 1]), 2.2, -1.6, 3.6));
-    g = P("tappoolio"); g.add(mesh(cyl(0.55, 0.55, 0.45, 28), "yellow", -1.8, 3.35, 1.2));
-    g = m.part("tappocoppa", [0, -1.8, 0]); g.add(B("zinc", 0.45, 0.6, [1.8, -4.0, 0.8], [0, -1, 0]));
-    g = P("refrigerante"); g.add(mesh(rbox(1.8, 1.5, 1.8, 0.3), "plastic", 5.4, 0.9, -3.2)); g.add(mesh(cyl(0.42, 0.42, 0.3, 24), "black", 5.4, 1.8, -3.2));
-    g = P("freni"); g.add(mesh(rbox(1.3, 1.0, 1.2, 0.2), "plastic", -6.0, 1.3, 5.2)); g.add(mesh(cyl(0.34, 0.34, 0.26, 24), "black", -6.0, 1.95, 5.2));
-    g = P("gasolio"); g.add(mesh(cyl(0.75, 0.75, 1.9, 32), "steel", 3.8, 0.3, 5.0)); g.add(mesh(cyl(0.8, 0.8, 0.25, 32), "black", 3.8, 1.35, 5.0));
-    g = m.part("iniettori", [0, 2.6, 0]); [-2.1, -0.7, 0.7, 2.1].forEach(x => { g.add(mesh(cyl(0.3, 0.26, 1.4, 20), "steel", x, 3.4, -0.9)); g.add(mesh(rbox(0.5, 0.5, 0.5, 0.1), "black", x, 4.0, -0.5)); });
-    g = m.part("candelette", [0, 2.0, 0]); [-2.1, -0.7, 0.7, 2.1].forEach(x => g.add(mesh(cyl(0.2, 0.2, 0.35, 6), "steel", x, 2.85, -1.75)));
-    g = m.part("cinghia", [-2.0, 0, 0]); g.add(tube([[-4.6, -0.1, 2.3], [-4.6, -1.2, 3.0], [-4.6, -2.4, 2.4], [-4.6, -3.0, 0.5], [-4.6, -2.4, -1.4], [-4.6, -1.3, -1.0], [-4.6, -0.9, 0.2], [-4.6, -0.4, 1.4], [-4.6, 0.9, 2.0]], 0.12, "rubber", true, 140));
-    g = m.part("puleggia", [-2.4, 0, 0]); g.add(at(orient(mesh(cyl(1.0, 1.0, 0.5, 36), "dark"), [1, 0, 0]), -4.4, -2.4, -0.4)); g.add(B("steel", 0.35, 0, [-4.7, -2.4, -0.4], [-1, 0, 0]));
-    m.base(at(orient(mesh(new T.TorusGeometry(2.2, 0.85, 16, 48), "rubber"), [1, 0, 0]), 9.2, -2.0, -1.6));
-    m.base(at(orient(mesh(cyl(1.5, 1.5, 0.5, 40), "steel"), [1, 0, 0]), 9.5, -2.0, -1.6));
-    g = m.part("ruota", [2.4, 0, 0]); for (let i = 0; i < 5; i++) { const a = i * Math.PI * 2 / 5; g.add(B("zinc", 0.22, 0.6, [9.8, -2.0 + Math.cos(a) * 0.85, -1.6 + Math.sin(a) * 0.85], [1, 0, 0])); }
-    g = m.part("pinza", [0, 1.8, 0]); g.add(mesh(rbox(0.9, 1.8, 1.4, 0.3), "paint", 8.6, -0.6, -2.8));
-    g = m.part("duomo", [0, 1.8, 0]); g.add(mesh(cyl(1.0, 1.1, 0.4, 32), "dark", 8.0, 3.7, -1.6)); [0, 2.1, 4.2].forEach(a => g.add(B("zinc", 0.22, 0.5, [8.0 + Math.cos(a) * 0.65, 3.95, -1.6 + Math.sin(a) * 0.65])));
+    /* --- carrozzeria e telaio --- */
+    m.base(mesh(rbox(21, 13.5, 0.3, 1.2).rotateX(-Math.PI / 2), "dark", 0, -5.6, 0.4));
+    m.base(mesh(rbox(16, 4.6, 0.7, 0.3), "dark", 0, -0.8, -6.3));
+    const fins = new T.InstancedMesh(box(0.06, 4.0, 0.5), SH("iron"), 120), mx = new T.Matrix4();
+    for (let i = 0; i < 120; i++) { mx.makeTranslation(-7.4 + i * 0.124, -0.8, -6.62); fins.setMatrixAt(i, mx); }
+    m.base(fins);
+    m.base(mesh(rbox(16.4, 0.6, 1.2, 0.2), "black", 0, 1.65, -6.2));
+    m.base(mesh(rbox(20, 1.4, 1.6, 0.4), "black", 0, 0.9, 6.9));
+    m.base(mesh(rbox(20, 3.2, 0.3, 0.2), "dark", 0, -1.4, 7.4));
+    [-8.4, 8.4].forEach(x => { m.base(mesh(cyl(1.5, 2.0, 3.2, 40), "iron", x, 1.6, -1.4)); m.base(mesh(rbox(1.4, 9, 1.6, 0.3), "dark", x * 1.06, 0.6, 2.8)); });
+    /* --- motore --- */
+    m.base(mesh(rbox(7.6, 4.4, 4.2, 0.35), "iron", 0, -1.3, 0));
+    for (let i = 0; i < 7; i++) m.base(mesh(box(0.22, 3.4, 0.2), "iron", -3.2 + i * 1.07, -1.4, -2.18));
+    m.base(mesh(rbox(7.0, 1.5, 3.9, 0.4), "alu", 0, -4.1, 0.1));
+    for (let i = 0; i < 5; i++) m.base(mesh(box(0.15, 0.25, 3.6), "alu", -2.6 + i * 1.3, -4.95, 0.1));
+    m.base(mesh(rbox(7.4, 1.5, 4.1, 0.3), "alu", 0, 1.6, 0));
+    m.base(mesh(flat(rbox(7.2, 3.8, 0.9, 0.6)), "cover", 0, 2.6, 0));
+    for (let i = 0; i < 4; i++) m.base(mesh(box(6.4, 0.12, 0.12), "cover", 0, 3.08, -1.2 + i * 0.8));
+    m.base(mesh(rbox(0.9, 5.8, 4.2, 0.4), "alu", 4.1, -0.9, 0));
+    m.base(mesh(rbox(3.4, 4.2, 3.8, 0.6), "alu", -5.8, -1.8, 0.5));
+    m.base(at(orient(mesh(cyl(1.7, 1.9, 1.2, 40), "alu"), [1, 0, 0]), -4.4, -1.8, 0.5));
+    /* collettore aspirazione */
+    m.base(at(orient(mesh(cyl(0.55, 0.55, 6.4, 24), "alu"), [1, 0, 0]), 0, 1.3, -2.8));
+    [-2.4, -0.8, 0.8, 2.4].forEach(x => m.base(tube([[x, 1.3, -2.8], [x, 1.6, -2.3], [x, 1.5, -2.0]], 0.28, "alu", false, 16)));
+    /* turbo e DPF (lato paratia) */
+    m.base(at(orient(mesh(new T.TorusGeometry(0.8, 0.45, 16, 32), "steel"), [1, 0, 0]), 1.2, 0.6, 2.9));
+    m.base(at(orient(mesh(cyl(0.6, 0.6, 1.0, 28), "steel"), [1, 0, 0]), 0.4, 0.6, 2.9));
+    m.base(at(orient(mesh(cyl(1.0, 1.0, 4.4, 36), "steel"), [1, 0, 0]), 0.4, -1.5, 3.8));
+    m.base(tube([[-5.8, 1.9, 0.0], [-4.2, 2.4, 1.6], [-1.6, 1.6, 2.6], [0.4, 0.8, 2.9]], 0.45, "rubber", false, 40));
+    /* trazione accessori (lato destro) */
+    m.base(at(orient(mesh(cyl(1.0, 1.0, 2.2, 32), "alu"), [1, 0, 0]), 5.6, 0.5, -1.7));
+    for (let i = 0; i < 8; i++) m.base(at(orient(mesh(cyl(1.05, 1.05, 0.08, 32), "dark"), [1, 0, 0]), 4.7 + i * 0.25, 0.5, -1.7));
+    m.base(at(orient(mesh(cyl(0.45, 0.45, 0.45, 24), "steel"), [1, 0, 0]), 4.75, 0.5, -1.7));
+    m.base(mesh(rbox(1.8, 1.8, 2.2, 0.4), "alu", 5.6, -2.6, -2.0));
+    m.base(at(orient(mesh(cyl(0.65, 0.65, 0.45, 28), "steel"), [1, 0, 0]), 4.75, -2.6, -2.2));
+    m.base(at(orient(mesh(cyl(0.38, 0.38, 0.45, 24), "steel"), [1, 0, 0]), 4.75, -0.9, -0.1));
+    /* batteria */
+    m.base(mesh(rbox(2.8, 2.0, 1.8, 0.15), "black", -6.0, 0.3, -3.6));
+    m.base(mesh(cyl(0.22, 0.22, 0.35, 16), "red", -6.9, 1.45, -3.9)); m.base(mesh(cyl(0.22, 0.22, 0.35, 16), "dark", -5.1, 1.45, -3.9));
+    /* servofreno */
+    m.base(at(orient(mesh(cyl(1.6, 1.6, 1.0, 40), "black"), [0, 0, 1]), -4.0, 0.2, 6.1));
+    /* --- pezzi cliccabili --- */
+    let g = m.part("airbox", [0, 2.0, 0]);
+    g.add(mesh(rbox(3.4, 1.2, 3.0, 0.35), "black", -6.0, 1.9, 0.0)); g.add(mesh(rbox(3.5, 0.6, 3.1, 0.3), "cover", -6.0, 2.75, 0.0));
+    [[-7.7, 0.7], [-7.7, -0.7], [-4.3, 0.7], [-4.3, -0.7]].forEach(([x, z]) => g.add(mesh(box(0.15, 0.6, 0.35), "steel", x, 2.4, z)));
+    g.add(tube([[-6.0, 2.0, -1.5], [-6.0, 2.1, -3.5], [-5.6, 2.2, -5.6]], 0.55, "black", false, 24));
+    g = m.part("filtroolio", [0, 0, -2.6]);
+    g.add(at(orient(mesh(cyl(0.85, 0.85, 1.9, 36), "blue"), [0, 0, -1]), 1.8, -2.4, -3.2));
+    for (let i = 0; i < 6; i++) g.add(at(orient(mesh(cyl(0.88, 0.88, 0.06, 36), "dark"), [0, 0, 1]), 1.8, -2.4, -3.75 - i * 0.12));
+    g.add(at(orient(mesh(cyl(0.9, 0.9, 0.2, 36), "steel"), [0, 0, 1]), 1.8, -2.4, -2.3));
+    g = m.part("tappoolio", [0, 2.2, 0]);
+    g.add(mesh(cyl(0.6, 0.6, 0.45, 32), "yellow", 2.3, 3.3, 0.6)); g.add(mesh(box(0.9, 0.2, 0.2), "yellow", 2.3, 3.6, 0.6));
+    g.add(at(mesh(new T.TorusGeometry(0.32, 0.09, 10, 24), "yellow"), -1.8, 3.4, -2.2)); g.add(mesh(cyl(0.06, 0.06, 1.6, 8), "steel", -1.8, 2.5, -2.2));
+    g = m.part("tappocoppa", [0, -2.0, 0]); g.add(B("zinc", 0.45, 0.6, [1.8, -4.85, 1.0], [0, -1, 0]));
+    g = m.part("refrigerante", [0, 2.2, 0]);
+    g.add(mesh(rbox(2.0, 1.8, 1.8, 0.35), "glass", 6.2, 0.9, -4.4)); g.add(mesh(rbox(1.8, 1.0, 1.6, 0.3), "pink", 6.2, 0.55, -4.4));
+    g.add(mesh(cyl(0.45, 0.45, 0.35, 28), "black", 6.2, 1.95, -4.4)); g.add(tube([[5.4, 0.3, -4.4], [4.6, 0.0, -3.6], [3.8, 0.4, -2.6]], 0.16, "rubber", false, 16));
+    g = m.part("freni", [0, 2.0, 0]);
+    g.add(mesh(rbox(1.4, 1.0, 1.0, 0.2), "glass", -4.0, 2.2, 5.6)); g.add(mesh(rbox(1.3, 0.6, 0.9, 0.2), "yellow", -4.0, 2.0, 5.6)); g.add(mesh(cyl(0.38, 0.38, 0.3, 24), "black", -4.0, 2.85, 5.6));
+    g = m.part("gasolio", [0, 2.2, 0]);
+    g.add(mesh(cyl(0.75, 0.75, 2.0, 32), "steel", 5.2, 0.6, 4.8)); g.add(mesh(cyl(0.82, 0.82, 0.3, 32), "black", 5.2, 1.7, 4.8));
+    g.add(tube([[5.2, 1.85, 4.8], [4.0, 2.4, 4.2], [2.5, 2.4, 1.8]], 0.12, "black", false, 20));
+    g = m.part("iniettori", [0, 2.6, 0]);
+    m.base(at(orient(mesh(cyl(0.38, 0.38, 6.8, 24), "steel"), [1, 0, 0]), 0, 3.2, 1.3));
+    [-2.4, -0.8, 0.8, 2.4].forEach(x => {
+      g.add(mesh(cyl(0.32, 0.26, 1.5, 20), "steel", x, 3.5, -0.2)); g.add(mesh(rbox(0.55, 0.55, 0.55, 0.1), "black", x, 4.2, 0.2));
+      g.add(tube([[x, 3.2, 1.0], [x, 3.9, 0.7], [x, 4.0, 0.2], [x, 3.9, -0.1]], 0.1, "steel", false, 16));
+    });
+    g = m.part("candelette", [0, 0, -2.0]);
+    [-2.4, -0.8, 0.8, 2.4].forEach(x => { g.add(at(orient(mesh(cyl(0.2, 0.2, 0.4, 6), "steel"), [0, 0, -1]), x, 1.9, -2.15)); g.add(at(orient(mesh(cyl(0.06, 0.06, 0.5, 8), "steel"), [0, 0, -1]), x, 1.9, -2.5)); });
+    g = m.part("cinghia", [2.0, 0, 0]);
+    g.add(tube([[4.9, 0.5, -0.6], [4.9, 1.4, -1.2], [4.9, 1.2, -2.6], [4.9, -0.2, -3.0], [4.9, -2.0, -2.9], [4.9, -3.4, -2.2], [4.9, -3.6, -0.6], [4.9, -2.8, 0.6], [4.9, -1.4, 0.5], [4.9, -0.6, 0.1]], 0.12, "rubber", true, 160));
+    g = m.part("puleggia", [2.4, 0, 0]);
+    g.add(at(orient(mesh(cyl(1.15, 1.15, 0.55, 40), "dark"), [1, 0, 0]), 4.85, -2.5, -0.6));
+    g.add(at(orient(mesh(cyl(0.6, 0.6, 0.2, 32), "steel"), [1, 0, 0]), 5.2, -2.5, -0.6)); g.add(B("steel", 0.32, 0, [5.3, -2.5, -0.6], [1, 0, 0]));
+    /* ruota anteriore destra */
+    m.base(at(orient(mesh(new T.TorusGeometry(2.25, 0.95, 20, 56), "tire"), [1, 0, 0]), 10.3, -2.4, -1.4));
+    m.base(at(orient(mesh(cyl(1.55, 1.55, 0.5, 48), "alu"), [1, 0, 0]), 10.6, -2.4, -1.4));
+    for (let i = 0; i < 5; i++) { const a = i * Math.PI * 2 / 5, sp = mesh(box(0.25, 1.4, 0.45), "alu", 10.85, -2.4 + Math.cos(a) * 0.9, -1.4 + Math.sin(a) * 0.9); sp.rotation.x = -a; m.base(sp); }
+    m.base(at(orient(mesh(cyl(1.7, 1.7, 0.25, 48), "iron"), [1, 0, 0]), 9.4, -2.4, -1.4));
+    m.base(tube([[8.4, -1.0, -1.4], [8.4, 2.0, -1.4]], 0.32, "dark", false, 4));
+    class Helix extends T.Curve { getPoint(t, out = new T.Vector3()) { const a = t * Math.PI * 2 * 4.5; return out.set(8.4 + Math.cos(a) * 0.85, -0.6 + t * 2.4, -1.4 + Math.sin(a) * 0.85); } }
+    m.base(new T.Mesh(new T.TubeGeometry(new Helix(), 200, 0.12, 8, false), SH("red")));
+    g = m.part("ruota", [2.6, 0, 0]);
+    for (let i = 0; i < 5; i++) { const a = i * Math.PI * 2 / 5 + 0.6; g.add(B("zinc", 0.2, 0.7, [11.0, -2.4 + Math.cos(a) * 0.55, -1.4 + Math.sin(a) * 0.55], [1, 0, 0])); }
+    g = m.part("pinza", [0, 2.2, 0]); g.add(mesh(rbox(0.9, 1.6, 1.5, 0.35), "red", 9.3, -0.9, -2.4));
+    g = m.part("duomo", [0, 2.0, 0]);
+    g.add(mesh(cyl(1.05, 1.15, 0.3, 32), "dark", 8.4, 3.35, -1.4)); g.add(B("zinc", 0.3, 0, [8.4, 3.5, -1.4]));
+    [0.5, 2.6, 4.7].forEach(a => g.add(B("zinc", 0.22, 0.5, [8.4 + Math.cos(a) * 0.75, 3.5, -1.4 + Math.sin(a) * 0.75])));
     return m.done();
   };
-  const VIEWS = { panoramica: [Math.PI + 0.6, 0.92], ruota: [0.55, 1.25], freni: [0.35, 1.2], sospensioni: [0.7, 1.35], distribuzione: [0.35, 1.3], testata: [0.45, 0.8], iniezione: [0.45, 0.85], coppa: [0.5, 1.2], tagliando: [0.25, 0.72] };
+  const VIEWS = { panoramica: [Math.PI + 0.45, 0.7], ruota: [0.55, 1.25], freni: [0.35, 1.2], sospensioni: [0.7, 1.35], distribuzione: [0.35, 1.3], testata: [0.45, 0.8], iniezione: [0.45, 0.85], coppa: [0.5, 1.2], tagliando: [0.25, 0.72] };
 
   /* --- motore di rendering (uno solo, condiviso) --- */
-  let renderer, envTex, camera, root, marksEl, barEl, current = null, raf = 0, selId = null, selT = 0;
+  let leadEl, renderer, envTex, camera, root, marksEl, barEl, current = null, raf = 0, selId = null, selT = 0;
   const scenes = {}, thumbs = {}, ray = new T.Raycaster();
   const view = { theta: 0.5, phi: 1.1, dist: 20, fit: 20, target: new T.Vector3(), ex: 0, exT: 0, spin: false, intro: 0 };
   const api = { ok: true, onPick: null };
@@ -1153,12 +1224,13 @@ const V3D = (() => {
     if (renderer) return;
     renderer = new T.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-    renderer.outputEncoding = T.sRGBEncoding; renderer.toneMapping = T.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.95;
+    renderer.outputEncoding = T.sRGBEncoding; renderer.toneMapping = T.NoToneMapping;
     renderer.setClearColor(0x000000, 0);
     envTex = makeEnv();
     camera = new T.PerspectiveCamera(32, 1.6, 0.1, 500);
     root = document.createElement("div"); root.className = "v3d";
     root.appendChild(renderer.domElement);
+    leadEl = document.createElementNS("http://www.w3.org/2000/svg", "svg"); leadEl.setAttribute("class", "v3d-lead"); root.appendChild(leadEl);
     marksEl = document.createElement("div"); marksEl.className = "v3d-marks"; root.appendChild(marksEl);
     const hint = document.createElement("div"); hint.className = "v3d-hint"; hint.textContent = "Trascina per ruotare · pizzica per lo zoom · tocca un pezzo"; root.appendChild(hint);
     barEl = document.createElement("div"); barEl.className = "v3d-bar";
@@ -1225,10 +1297,10 @@ const V3D = (() => {
   }
   function getScene(k) {
     if (scenes[k]) return scenes[k];
-    const sc = new T.Scene(); sc.environment = envTex;
-    const dl = new T.DirectionalLight(0xffffff, 1.1); dl.position.set(6, 10, 8); sc.add(dl);
-    const dl2 = new T.DirectionalLight(0xbcd2ff, 0.35); dl2.position.set(-8, 3, -6); sc.add(dl2);
-    sc.add(new T.HemisphereLight(0xffffff, 0x3a4048, 0.35));
+    const sc = new T.Scene();
+    sc.add(new T.HemisphereLight(0xffffff, 0x9a9a9a, 0.85));
+    const dl = new T.DirectionalLight(0xffffff, 0.55); dl.position.set(6, 10, 8); sc.add(dl);
+    const dl2 = new T.DirectionalLight(0xffffff, 0.25); dl2.position.set(-8, 4, -6); sc.add(dl2);
     const md = BUILD[k](); sc.add(md.group);
     const sph = new T.Box3().setFromObject(md.group).getBoundingSphere(new T.Sphere());
     scenes[k] = { k, sc, group: md.group, parts: md.parts, center: sph.center, radius: sph.radius, v: VIEWS[k] || [0.5, 1.1] };
@@ -1251,11 +1323,14 @@ const V3D = (() => {
   }
   function placeCam(cam, th, ph, d, tg) { cam.position.set(tg.x + d * Math.sin(ph) * Math.sin(th), tg.y + d * Math.cos(ph), tg.z + d * Math.sin(ph) * Math.cos(th)); cam.lookAt(tg); }
   function buildMarks(k) {
-    marksEl.innerHTML = "";
+    marksEl.innerHTML = ""; leadEl.innerHTML = "";
     SYS[k].parts.forEach((p, i) => {
       const pp = current.parts[p.id]; if (!pp) return;
       const b = document.createElement("button"); b.type = "button"; b.className = "mk3"; b.dataset.act = "part"; b.dataset.v = p.id;
-      b.textContent = String(i + 1); b.setAttribute("aria-label", `${i + 1}. ${p.nome}`); marksEl.appendChild(b); pp.mk = b;
+      b.innerHTML = `<b>${i + 1}</b>${p.corto ? `<span class="nm">${p.corto}</span>` : ""}`; b.setAttribute("aria-label", `${i + 1}. ${p.nome}`); marksEl.appendChild(b); pp.mk = b;
+      const NS = "http://www.w3.org/2000/svg";
+      pp.ln = document.createElementNS(NS, "line"); pp.dot = document.createElementNS(NS, "circle"); pp.dot.setAttribute("r", "3");
+      leadEl.appendChild(pp.ln); leadEl.appendChild(pp.dot);
     });
   }
   function applyStates(states, sel) {
@@ -1263,11 +1338,14 @@ const V3D = (() => {
       const st = states[id] || "none";
       p.meshes.forEach(me => {
         me.material.color.copy(me.userData.c0); me.material.emissive.setRGB(0, 0, 0);
-        if (st === "has") { me.material.color.copy(GREEN); me.material.emissive.copy(GREEN).multiplyScalar(0.25); }
-        if (st === "ex" || st === "co") { me.material.color.copy(ORANGE); me.material.emissive.copy(ORANGE).multiplyScalar(0.22); }
-        if (id === sel) me.material.emissive.setRGB(0.6, 0.06, 0.04);
+        if (st === "has") { me.material.color.copy(GREEN); me.material.emissive.copy(GREEN).multiplyScalar(0.15); }
+        if (st === "ex" || st === "co") { me.material.color.copy(ORANGE); me.material.emissive.copy(ORANGE).multiplyScalar(0.15); }
+        if (id === sel && st === "none") me.material.color.setRGB(1, 0.82, 0.82);
       });
+      if (p.lineMat) { p.lineMat.color.set(id === sel ? 0xe02020 : 0x141414); p.lineMat.opacity = 1; }
       if (p.mk) p.mk.className = "mk3" + (st !== "none" ? " " + st : "") + (id === sel ? " sel" : "");
+      if (p.ln) { p.ln.setAttribute("class", id === sel ? "sel" : ""); p.dot.setAttribute("class", id === sel ? "sel" : ""); }
+      if (root) root.classList.toggle("wide", root.clientWidth >= 640);
     }
   }
   const ease = t => 1 - Math.pow(1 - t, 3);
@@ -1280,19 +1358,38 @@ const V3D = (() => {
     const ex = Math.max(view.ex, ease(view.intro) * 1.15);
     for (const p of Object.values(current.parts)) p.g.position.copy(p.base).addScaledVector(p.g.userData.ex, ex);
     if (view.spin) { view.theta += 0.006; busy = true; }
+    if (selId && current.parts[selId] && now - selT >= 2600 && now - selT < 2700) current.parts[selId].meshes.forEach(me => me.material.emissive.setRGB(0, 0, 0));
+    if (selId && current.parts[selId] && now - selT < 2700) busy = true;
     if (selId && current.parts[selId] && now - selT < 2600) {
       const k = 0.45 + 0.4 * Math.sin((now - selT) / 160);
-      current.parts[selId].meshes.forEach(me => me.material.emissive.setRGB(0.75 * k, 0.08 * k, 0.05 * k)); busy = true;
+      current.parts[selId].meshes.forEach(me => me.material.emissive.setRGB(0.35 * k, 0.03 * k, 0.03 * k)); busy = true;
     }
     placeCam(camera, view.theta - ease(view.intro) * 0.7, view.phi, view.dist, view.target);
     renderer.render(current.sc, camera);
-    const w = root.clientWidth, h = root.clientHeight, v = new T.Vector3();
+    const w = root.clientWidth, h = root.clientHeight, v = new T.Vector3(), boxes = [], items = [];
     for (const p of Object.values(current.parts)) {
       if (!p.mk) continue;
       v.copy(p.anchor).add(p.g.position).sub(p.base).project(camera);
-      const vis = v.z < 1 && Math.abs(v.x) < 1.05 && Math.abs(v.y) < 1.05;
-      p.mk.style.visibility = vis ? "" : "hidden";
-      p.mk.style.transform = `translate(${((v.x + 1) / 2 * w).toFixed(1)}px,${((1 - v.y) / 2 * h).toFixed(1)}px) translate(-50%,calc(-100% - 12px))`;
+      items.push({ p, ax: (v.x + 1) / 2 * w, ay: (1 - v.y) / 2 * h, vis: v.z < 1 && Math.abs(v.x) < 1.05 && Math.abs(v.y) < 1.05 });
+    }
+    items.sort((a, b) => a.ay - b.ay);
+    for (const it of items) {
+      const el = it.p.mk, ln = it.p.ln, dot = it.p.dot;
+      if (!it.vis) { el.style.visibility = "hidden"; ln.setAttribute("visibility", "hidden"); dot.setAttribute("visibility", "hidden"); continue; }
+      el.style.visibility = ""; ln.setAttribute("visibility", "visible"); dot.setAttribute("visibility", "visible");
+      const bw = el.offsetWidth || 30, bh = el.offsetHeight || 30;
+      let x = Math.min(w - bw / 2 - 4, Math.max(bw / 2 + 4, it.ax)), y = it.ay - 26 - bh / 2;
+      for (let t = 0; t < 14; t++) {
+        const hit = boxes.find(b => Math.abs(b.x - x) < (b.w + bw) / 2 + 4 && Math.abs(b.y - y) < (b.h + bh) / 2 + 3);
+        if (!hit) break;
+        y = hit.y - (hit.h + bh) / 2 - 4;
+        if (y < bh / 2 + 28) { y = it.ay + 26 + bh / 2 + t * 3; x = Math.min(w - bw / 2 - 4, Math.max(bw / 2 + 4, x + (t % 2 ? 1 : -1) * bw * 0.6)); }
+      }
+      boxes.push({ x, y, w: bw, h: bh });
+      el.style.transform = `translate(${(x - bw / 2).toFixed(1)}px,${(y - bh / 2).toFixed(1)}px)`;
+      ln.setAttribute("x1", x.toFixed(1)); ln.setAttribute("y1", (y + (y < it.ay ? bh / 2 : -bh / 2)).toFixed(1));
+      ln.setAttribute("x2", it.ax.toFixed(1)); ln.setAttribute("y2", it.ay.toFixed(1));
+      dot.setAttribute("cx", it.ax.toFixed(1)); dot.setAttribute("cy", it.ay.toFixed(1));
     }
     if (busy) kick();
   }
@@ -1328,7 +1425,14 @@ const V3D = (() => {
 
 /* ---------- render ---------- */
 const app = document.getElementById("app");
+let autoOpened = false;
+function autoOpen() {
+  if (autoOpened || S.view !== "marche") return;
+  const mine = [...veicoli.entries()].find(([, v]) => v.mia);
+  if (mine) { autoOpened = true; S.vid = mine[0]; S.marca = mine[1].marca; S.view = "sistemi"; }
+}
 function render() {
+  if (store.ok && (dbStatus === "local" || dbStatus === "ok")) autoOpen();
   const ae = document.activeElement, fid = ae && ae.id, ss = ae && "selectionStart" in ae ? ae.selectionStart : null;
   let body;
   if (S.view === "modelli") body = viewModelli();
@@ -1577,6 +1681,7 @@ function localInit() {
   if ((seed.versione || 0) > seedVersion) {
     for (const [id, v] of Object.entries(seed.veicoli || {})) if (!veicoli.has(id)) { veicoli.set(id, v); added++; }
     for (const [id, c] of Object.entries(seed.coppie || {})) if (!coppie.has(id)) coppie.set(id, c);
+    for (const id of seed.rimuovi || []) { veicoli.delete(id); for (const k of [...coppie.keys()]) if (coppie.get(k).veicoloId === id) coppie.delete(k); }
     const hadData = seedVersion > 0;
     seedVersion = seed.versione || 0;
     if (hadData && added) setTimeout(() => toast(`Aggiornamento: ${added} nuovi veicoli disponibili`), 600);
