@@ -286,6 +286,44 @@ const radial = (cx, cy, r1, r2, n, off) => { let s = ""; for (let i = 0; i < n; 
 
 /* ---------- disegni tecnici ---------- */
 const SYS = {
+  tagliando: {
+    nome: "Tagliando", desc: "Olio, filtri, liquidi, cinghia servizi: specifiche e intervalli", campo: "Specifica",
+    vb: "0 0 800 540",
+    base:
+      `<path class="b" d="M60 40 L740 40 L760 470 L40 470 Z"/>` +
+      `<rect class="b" x="120" y="56" width="560" height="40" rx="6"/><text class="t" x="352" y="81">RADIATORE</text>` +
+      `<rect class="b" x="250" y="150" width="300" height="200" rx="16"/><text class="t" x="372" y="290">MOTORE</text>` +
+      `<rect class="b" x="600" y="290" width="110" height="80" rx="8"/><text class="t" x="614" y="335">BATTERIA</text>` +
+      `<line class="l" x1="52" y1="440" x2="748" y2="440"/><text class="t" x="560" y="462">PARATIA</text>` +
+      `<text class="t" x="60" y="532">VANO MOTORE · VISTA DALL'ALTO</text>`,
+    parts: [
+      { id: "olio", nome: "Olio motore (tipo, quantità, intervallo)", shape: `<circle cx="400" cy="200" r="20"/><circle class="in" cx="400" cy="200" r="9"/><rect x="326" y="300" width="10" height="44" rx="4"/>`, anchor: [400, 180], label: [400, 124] },
+      { id: "filtroaria", nome: "Filtro aria", shape: `<rect x="80" y="140" width="130" height="110" rx="10"/><rect class="in" x="96" y="156" width="98" height="78" rx="6"/>`, anchor: [145, 250], label: [110, 320] },
+      { id: "refrigerante", nome: "Liquido di raffreddamento", shape: `<rect x="600" y="140" width="80" height="62" rx="10"/><circle cx="640" cy="140" r="11"/>`, anchor: [680, 186], label: [752, 250] },
+      { id: "freni", nome: "Liquido freni", shape: `<rect x="120" y="380" width="70" height="45" rx="8"/><circle cx="155" cy="380" r="9"/>`, anchor: [120, 402], label: [60, 400] },
+      { id: "gasolio", nome: "Filtro gasolio", shape: `<circle cx="470" cy="400" r="26"/><circle class="in" cx="470" cy="400" r="10"/>`, anchor: [470, 426], label: [470, 500] },
+      { id: "cinghia", nome: "Cinghia servizi", shape: `<rect x="212" y="170" width="28" height="160" rx="14"/>`, anchor: [226, 330], label: [300, 404] },
+      { id: "abitacolo", nome: "Filtro abitacolo", shape: `<rect x="330" y="448" width="140" height="22" rx="4"/>`, anchor: [330, 459], label: [250, 500] }
+    ]
+  },
+  iniezione: {
+    nome: "Iniezione diesel", desc: "Iniettori, staffe, candelette, rail e raccordi alta pressione",
+    vb: "0 0 800 500",
+    base:
+      `<rect class="b" x="40" y="146" width="50" height="94" rx="8"/><text class="t" x="65" y="270" text-anchor="middle">POMPA</text>` +
+      `<rect class="b" x="90" y="110" width="620" height="290" rx="18"/>` +
+      `<rect class="d" x="116" y="136" width="568" height="238" rx="12"/>` +
+      `<rect class="b" x="140" y="150" width="520" height="22" rx="11"/><text class="t" x="150" y="196">RAIL</text>` +
+      `<path class="hose" d="M90 160 C 110 160 120 161 140 161"/>` +
+      `<text class="t" x="98" y="470">VISTA DALL'ALTO · MOTORE DIESEL</text>`,
+    parts: [
+      { id: "rail", nome: "Raccordi tubi alta pressione", shape: bolts([[220, 172], [340, 172], [460, 172], [580, 172], [76, 160]], 9), anchor: [340, 163], label: [340, 50] },
+      { id: "staffe", nome: "Bulloni staffe iniettori", shape: bolts([[252, 222], [372, 222], [492, 222], [612, 222]], 9), anchor: [612, 222], label: [560, 60] },
+      { id: "iniettori", nome: "Iniettori", shape: [220, 340, 460, 580].map(x => `<circle cx="${x}" cy="260" r="22"/><circle class="in" cx="${x}" cy="260" r="9"/>`).join(""), anchor: [602, 260], label: [756, 260] },
+      { id: "candelette", nome: "Candelette di preriscaldamento", shape: [220, 340, 460, 580].map(x => `<circle cx="${x}" cy="335" r="12"/><circle class="in" cx="${x}" cy="335" r="5"/>`).join(""), anchor: [212, 345], label: [60, 450] },
+      { id: "sensore", nome: "Sensore pressione rail", shape: `<rect x="660" y="148" width="30" height="26" rx="4"/>`, anchor: [690, 174], label: [740, 440] }
+    ]
+  },
   distribuzione: {
     nome: "Distribuzione", desc: "Catena o cinghia, ruote dentate, tendicatena, pattini",
     vb: "0 0 800 520",
@@ -398,7 +436,7 @@ const SYS = {
   }
 };
 const NARROW = () => window.matchMedia("(max-width:600px)").matches;
-const ORDER = ["distribuzione", "testata", "coppa", "freni", "sospensioni", "ruota"];
+const ORDER = ["tagliando", "distribuzione", "testata", "iniezione", "coppa", "freni", "sospensioni", "ruota"];
 const TOTAL_PARTS = ORDER.reduce((n, k) => n + SYS[k].parts.length, 0);
 
 const BRANDS = ["Alfa Romeo","Audi","BMW","Citroën","Dacia","Fiat","Ford","Honda","Hyundai","Jeep","Kia","Lancia","Mazda","Mercedes-Benz","Mini","Mitsubishi","Nissan","Opel","Peugeot","Renault","Seat","Škoda","Suzuki","Toyota","Volkswagen","Volvo"];
@@ -538,7 +576,7 @@ function viewSchema() {
       <div class="legend"><span><i class="has"></i>Valore inserito</span>${v.demo ? `<span><i class="ex"></i>Valore di esempio</span>` : ""}<span><i></i>Da inserire</span><span><i class="sel"></i>Selezionato</span></div>
       <div class="sheet-draw"><div class="zoomwrap" id="zoomwrap">${drawSvg(S.sys, false)}<div class="zctl"><button data-act="zoom-in" aria-label="Ingrandisci">+</button><button data-act="zoom-out" aria-label="Riduci">−</button><button data-act="zoom-reset" aria-label="Vista intera"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div></div><p class="zhint">Doppio tocco o pizzica per ingrandire · trascina per spostarti</p></div>
       <div class="cart"><div><span>Veicolo</span><b>${esc(v.marca)} ${esc(vLabel(v))}</b></div><div><span>Motore</span><b>${esc(v.motore || "—")}</b></div><div><span>Foglio</span><b>${idx}/${ORDER.length}</b></div></div>
-      <div class="tablebox" style="border-top:1px solid var(--rule)"><table><thead><tr><th>N°</th><th>Componente</th><th>Coppia</th><th>Stato</th></tr></thead><tbody>${rows}</tbody></table></div>
+      <div class="tablebox" style="border-top:1px solid var(--rule)"><table><thead><tr><th>N°</th><th>Componente</th><th>${esc(s.campo || "Coppia")}</th><th>Stato</th></tr></thead><tbody>${rows}</tbody></table></div>
     </div>
     <aside class="side" id="side">${sidePanel()}</aside>
   </div>`;
@@ -562,7 +600,7 @@ function sidePanel() {
     const d = S.draft;
     return `<div class="panel">${head}
       <div class="form">
-        <div class="field wide"><label for="f-coppia">Coppia di serraggio</label><input id="f-coppia" data-draft="draft" data-k="coppia" value="${esc(d.coppia)}" placeholder="es. 40 Nm + 90° + 90°"><small>Scrivi come sul manuale: Nm, angoli, più fasi.</small></div>
+        <div class="field wide"><label for="f-coppia">${esc(s.campo || "Coppia di serraggio")}</label><input id="f-coppia" data-draft="draft" data-k="coppia" value="${esc(d.coppia)}" placeholder="${s.campo ? "es. tipo, quantità, intervallo in km o mesi" : "es. 40 Nm + 90° + 90°"}"><small>${s.campo ? "Scrivi come sul manuale: specifica, quantità, ogni quanti km o mesi." : "Scrivi come sul manuale: Nm, angoli, più fasi."}</small></div>
         <div class="field wide"><label for="f-fasi">Sequenza e fasi</label><textarea id="f-fasi" data-draft="draft" data-k="fasi" placeholder="Ordine di serraggio, passaggi, viti da sostituire, frenafiletti, olio sul filetto…">${esc(d.fasi)}</textarea></div>
         <div class="field wide"><label for="f-proc">Procedura di smontaggio e montaggio</label><textarea id="f-proc" data-draft="draft" data-k="procedura" style="min-height:120px" placeholder="Un passaggio per riga, come sul manuale">${esc(d.procedura)}</textarea><small>Un passaggio per riga: in officina li spunti uno alla volta.</small></div>
         <div class="field wide"><label for="f-fonte">Fonte</label><input id="f-fonte" data-draft="draft" data-k="fonte" value="${esc(d.fonte)}" placeholder="es. Manuale officina Mazda, sez. 01-10, pag. 12"><small>Obbligatoria: serve a ritrovare il dato.</small></div>
@@ -722,7 +760,7 @@ async function act(a, d) {
     case "cancel": S.editing = false; S.error = ""; render(); break;
     case "save": {
       const dd = S.draft, coppia = (dd.coppia || "").trim(), fonte = (dd.fonte || "").trim();
-      if (!coppia) { S.error = "Scrivi la coppia di serraggio."; render(); return; }
+      if (!coppia) { S.error = SYS[S.sys].campo ? "Scrivi la specifica." : "Scrivi la coppia di serraggio."; render(); return; }
       if (!fonte) { S.error = "Indica la fonte del valore."; render(); return; }
       if (!store.ok) return;
       S.saving = true; S.error = ""; render();
