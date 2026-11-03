@@ -7,6 +7,8 @@ App web installabile (PWA) per un manuale d'officina interattivo: marca → mode
 - `src/seed.json` — veicoli e valori distribuiti a tutti. **Aumentare `versione` di 1** a ogni modifica, altrimenti i dispositivi già installati non ricevono i nuovi veicoli. Il merge aggiunge solo id nuovi, non sovrascrive i dati dell'utente.
 - `tools/build.py` — genera `docs/` (index.html, seed.js, sw.js con versione hash, manifest, icone). Mai modificare `docs/` a mano.
 - `docs/` — versione pubblicata (Netlify o GitHub Pages servono questa cartella).
+- 3D: modelli procedurali three.js r128 nel blocco `V3D` di `src/app.html` (`BUILD.<sistema>`, id dei pezzi uguali a `SYS`). three.js sta in `tools/static/vendor/` per l'uso offline; build.py sostituisce l'URL CDN.
+- Veicolo dell'utente: `cx5-kf-22d150-signature-2019` (`mia: true`) con `dati`, `fontiDati`, `funzioni`, `manuale`. Dati solo da fonti ufficiali Mazda (owners-manual.mazda.com, edizione EC).
 
 ## Flusso di aggiornamento
 1. Modifica `src/app.html` e/o `src/seed.json`.

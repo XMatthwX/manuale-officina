@@ -1,8 +1,8 @@
 /* Service worker: l'app funziona anche senza internet e si aggiorna da sola quando c'è rete. */
-const VERSION = "8e0aadc37b";
+const VERSION = "81a27fda62";
 const SHELL_CACHE = "coppie-shell-" + VERSION;
 const FONT_CACHE = "coppie-fonts";
-const SHELL = ["./", "index.html", "seed.js", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];
+const SHELL = ["./", "index.html", "seed.js", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png", "vendor/three.min.js"];
 
 self.addEventListener("install", e => {
   e.waitUntil(caches.open(SHELL_CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));

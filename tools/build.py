@@ -31,7 +31,11 @@ if ("serviceWorker" in navigator) addEventListener("load", () => navigator.servi
 </body></html>
 """
 OUT.mkdir(exist_ok=True)
+app = app.replace("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js", "vendor/three.min.js")
 (OUT / "index.html").write_text(head + app + tail, encoding="utf-8")
+(OUT / "vendor").mkdir(exist_ok=True)
+for f in ["three.min.js", "three-LICENSE.txt"]:
+    shutil.copy(ROOT / "tools" / "static" / "vendor" / f, OUT / "vendor" / f)
 (OUT / "seed.js").write_text("window.SEED_DATA = " + json.dumps(seed, ensure_ascii=False) + ";\n", encoding="utf-8")
 (OUT / "sw.js").write_text((ROOT / "tools" / "sw.template.js").read_text().replace("__VERSION__", version), encoding="utf-8")
 for f in ["manifest.webmanifest", "icon-192.png", "icon-512.png", "icon-maskable-512.png", "apple-touch-icon.png"]:
