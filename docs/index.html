@@ -1,6 +1,6 @@
 <!doctype html><html lang="it"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#1a2127">
+<meta name="theme-color" content="#0e3a63">
 <meta name="description" content="Manuale d'officina interattivo con coppie di serraggio">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -10,8 +10,8 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
-<script>window.APP_VERSION="f86a164587";window.APP_BUILD="2026-11-03";</script>
-<script src="seed.js?v=f86a164587"></script>
+<script>window.APP_VERSION="8e0aadc37b";window.APP_BUILD="2026-11-03";</script>
+<script src="seed.js?v=8e0aadc37b"></script>
 </head><body>
 <title>Manuale Coppie Officina</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -27,7 +27,7 @@
   --sel:#d9302c; --selfill:rgba(217,48,44,.14);
   --warn:#c2410c; --warnfill:rgba(234,120,40,.30); --warnbg:#fff0e4;
   --accent:#1d5a85; --accentbg:#e2edf5;
-  --btn:#1a2127; --btnfg:#fbfcfd; --onsolid:#ffffff; --bar:#1a2127; --barfg:#eef2f4;
+  --btn:#1a2127; --btnfg:#fbfcfd; --onsolid:#ffffff; --bar:#0e3a63; --barfg:#eef4fa;
   --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
   --f-body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
@@ -40,7 +40,7 @@
     --sel:#ff6b6b; --selfill:rgba(255,107,107,.16);
     --warn:#ff9a4d; --warnfill:rgba(255,154,77,.28); --warnbg:#2c1f15;
     --accent:#74b4e3; --accentbg:#16293a;
-    --btn:#e4e9ed; --btnfg:#11161a; --onsolid:#0d1114; --bar:#080b0e; --barfg:#e4e9ed;
+    --btn:#e4e9ed; --btnfg:#11161a; --onsolid:#0d1114; --bar:#0b2742; --barfg:#e4edf5;
     color-scheme:dark;
   }
 }
@@ -51,7 +51,7 @@
   --sel:#ff6b6b; --selfill:rgba(255,107,107,.16);
   --warn:#ff9a4d; --warnfill:rgba(255,154,77,.28); --warnbg:#2c1f15;
   --accent:#74b4e3; --accentbg:#16293a;
-  --btn:#e4e9ed; --btnfg:#11161a; --onsolid:#0d1114; --bar:#080b0e; --barfg:#e4e9ed;
+  --btn:#e4e9ed; --btnfg:#11161a; --onsolid:#0d1114; --bar:#0b2742; --barfg:#e4edf5;
   color-scheme:dark;
 }
 *{box-sizing:border-box}
@@ -245,6 +245,30 @@ td.v.has{color:var(--ok)}td.v.ex{color:var(--warn)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-weight:600;z-index:20;max-width:calc(100% - 32px);box-shadow:0 6px 24px rgba(0,0,0,.25)}
 .foot{color:var(--muted);font-size:13px;border-top:1px solid var(--rule);padding-top:14px}
 .status.local i{background:#51cf66}
+.vstrip{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:18px;align-items:center;padding:14px 18px;border-radius:12px;background:var(--bar);color:var(--barfg)}
+.vs-car{width:104px}.vs-car svg{width:100%;height:auto;display:block}
+.vstrip svg .cb{fill:rgba(255,255,255,.14);stroke:var(--barfg)}.vstrip svg .cw{fill:var(--bar);stroke:var(--barfg)}.vstrip svg .cl{stroke:var(--barfg)}
+.vs-main{display:flex;flex-direction:column;min-width:0}
+.vs-mk{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.vs-main b{font-family:var(--f-display);font-size:28px;line-height:1.05;text-transform:uppercase;overflow-wrap:anywhere}
+.vs-sp{font-size:14px;opacity:.85}
+.vs-kpi{font-family:var(--f-mono);text-align:right;white-space:nowrap}.vs-kpi b{font-size:28px}.vs-kpi span{font-size:12px;opacity:.8}
+.vstrip .btn.ghost{color:var(--barfg);border-color:rgba(255,255,255,.35)}
+.vstrip .btn.ghost:hover{border-color:var(--barfg)}
+@media (max-width:640px){.vstrip{grid-template-columns:minmax(0,1fr) auto;gap:10px 14px}.vs-car{display:none}.vs-btn{grid-column:1/-1;justify-content:center}}
+.modules{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px}
+.mod{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:16px;row-gap:3px;align-items:center;text-align:left;padding:18px;background:var(--sheet);border:1px solid var(--rule);border-radius:12px;cursor:pointer}
+.mod:hover{border-color:var(--accent)}
+.mod .mi{grid-row:1/4;width:60px;height:60px;border-radius:14px;background:var(--accentbg);color:var(--accent);display:grid;place-items:center}
+.mod .mi svg{width:32px;height:32px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mod .mt{font-family:var(--f-display);font-size:24px;font-weight:700;text-transform:uppercase;line-height:1}
+.mod .md{font-size:14px;color:var(--muted)}
+.mod .mc{font-family:var(--f-mono);font-size:11px;color:var(--ok);letter-spacing:.04em}
+.h2{font-size:28px;text-transform:uppercase}
+table.dt tr.grp th{background:var(--accentbg);color:var(--accent);font-family:var(--f-display);font-size:16px;font-weight:700;letter-spacing:.05em;padding:9px 12px;text-transform:uppercase;cursor:default}
+table.dt td.fx{color:var(--muted);font-size:14px}
+.tog{display:inline-flex;gap:8px;align-items:center;font-weight:600;cursor:pointer}
+.tog input{width:18px;height:18px;accent-color:var(--accent)}
 .zoomwrap{position:relative;overflow:hidden;border-radius:6px;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .zoomwrap.zoomed{touch-action:none;cursor:grab}
 .zoomwrap svg.draw{transform-origin:0 0}
@@ -476,7 +500,8 @@ function crumbs() {
   const items = [`<button data-act="go" data-to="marche">Marche</button>`];
   const v = veicoli.get(S.vid);
   if (S.view !== "marche" && S.marca) items.push(S.view === "modelli" ? `<span class="cur">${esc(S.marca)}</span>` : `<button data-act="go" data-to="modelli">${esc(S.marca)}</button>`);
-  if ((S.view === "sistemi" || S.view === "schema") && v) items.push(S.view === "sistemi" ? `<span class="cur">${esc(vLabel(v))}</span>` : `<button data-act="go" data-to="sistemi">${esc(vLabel(v))}</button>`);
+  if ((S.view === "sistemi" || S.view === "schema" || S.view === "dati") && v) items.push(S.view === "sistemi" ? `<span class="cur">${esc(vLabel(v))}</span>` : `<button data-act="go" data-to="sistemi">${esc(vLabel(v))}</button>`);
+  if (S.view === "dati") items.push(`<span class="cur">Coppie di serraggio</span>`);
   if (S.view === "schema" && S.sys) items.push(`<span class="cur">${esc(SYS[S.sys].nome)}</span>`);
   return `<nav class="crumbs" aria-label="Percorso">${items.join('<span class="sep">›</span>')}</nav>`;
 }
@@ -490,7 +515,7 @@ function viewMarche() {
   const demo = [...veicoli.entries()].find(([, v]) => v.demo);
   return `
   <div class="head">
-    <div><div class="eyebrow">Passo 1 di 4</div><h1>Scegli la marca</h1>
+    <div><div class="eyebrow">Selezione veicolo</div><h1>Scegli la marca</h1>
     <p>Marca, modello, sistema: poi tocca il pezzo sul disegno e leggi coppia di serraggio, sequenza e fonte.</p></div>
     <div class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
     <input id="q-marca" type="search" placeholder="Cerca marca" aria-label="Cerca marca" value="${esc(S.q)}" autocomplete="off"></div>
@@ -532,29 +557,69 @@ function viewModelli() {
       <div class="row"><button class="btn" data-act="add-save" ${S.saving ? "disabled" : ""}>Salva modello</button><button class="btn ghost" data-act="add-cancel">Annulla</button></div>
     </div>` : "";
   return `
-  <div class="head"><div><div class="eyebrow">Passo 2 di 4</div><h1>${esc(S.marca)}</h1>
+  <div class="head"><div><div class="eyebrow">Selezione veicolo · modello e motore</div><h1>${esc(S.marca)}</h1>
   <p>${list.length ? "Scegli modello e motore. La barra indica quanti valori sono già stati inseriti." : "Ancora nessun modello per questa marca. Aggiungi il primo: bastano modello e motore."}</p></div></div>
   <div class="cars">${cards}${S.adding ? "" : `<button class="car add" data-act="add-open" ${store.ok ? "" : "disabled"}><span class="plus">+</span>Aggiungi modello</button>`}</div>
   ${form}`;
 }
 
+const ICON = {
+  cal: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M8.5 15.5l2.5 2.5 4.5-5"/></svg>`,
+  gauge: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 18a9 9 0 1 1 15 0"/><path d="M12 14l4.5-4.5"/><circle cx="12" cy="14" r="1.6"/><path d="M6.5 13H5M19 13h-1.5M12 7.5V6"/></svg>`,
+  book: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h6a3 3 0 0 1 3 3v12a2.5 2.5 0 0 0-2.5-2.5H3z"/><path d="M21 5h-6a3 3 0 0 0-3 3v12a2.5 2.5 0 0 1 2.5-2.5H21z"/></svg>`
+};
+function vehStrip(v) {
+  return `<div class="vstrip"><div class="vs-car">${CAR_SVG}</div>
+    <div class="vs-main"><span class="vs-mk">${esc(v.marca)}${v.demo ? " · esempio" : ""}</span><b>${esc(vLabel(v))}</b><span class="vs-sp">${esc(v.motore || "Motore non indicato")}${v.anni ? " · " + esc(v.anni) : ""}</span></div>
+    <div class="vs-kpi"><b>${filledFor(S.vid)}</b><span>/${TOTAL_PARTS} valori</span></div>
+    <button class="btn ghost vs-btn" data-act="go" data-to="modelli">Cambia veicolo</button></div>`;
+}
+
 function viewSistemi() {
   const v = veicoli.get(S.vid);
   if (!v) return `<p class="spec">Veicolo non trovato.</p>`;
-  const tiles = ORDER.map(k => {
+  const rep = ORDER.filter(k => k !== "tagliando");
+  const nT = filledSys(S.vid, "tagliando"), tT = SYS.tagliando.parts.length;
+  const tiles = rep.map(k => {
     const s = SYS[k], n = filledSys(S.vid, k);
     return `<button class="sys" data-act="sistema" data-v="${k}"><span class="thumbbox">${drawSvg(k, true)}</span>
       <span class="tn">${esc(s.nome)}</span><span class="td">${esc(s.desc)}</span>
       <span class="meter"><span class="bar"><i style="width:${Math.round(n / s.parts.length * 100)}%"></i></span>${n}/${s.parts.length}</span></button>`;
   }).join("");
-  return `
-  <div class="head"><div><div class="eyebrow">Passo 3 di 4 · ${esc(v.marca)}</div><h1>${esc(vLabel(v))}</h1>
-  <div class="vehicle"><span class="spec">${esc(v.motore || "Motore non indicato")}</span>${v.anni ? `<span class="spec">${esc(v.anni)}</span>` : ""}<span class="spec">${filledFor(S.vid)}/${TOTAL_PARTS} valori inseriti</span></div></div></div>
+  return `${vehStrip(v)}
   ${v.demo ? `<div class="banner"><b>Veicolo di esempio.</b> I valori sono inventati per mostrare come funziona l'app. Non usarli su un'auto vera.</div>` : ""}
+  <div class="modules">
+    <button class="mod" data-act="modulo" data-v="manutenzione"><span class="mi">${ICON.cal}</span><span class="mt">Manutenzione</span><span class="md">Tagliando: olio, filtri, liquidi, cinghia servizi</span><span class="mc">${nT}/${tT} specifiche</span></button>
+    <button class="mod" data-act="modulo" data-v="dati"><span class="mi">${ICON.gauge}</span><span class="mt">Coppie di serraggio</span><span class="md">Tutti i valori del veicolo in una tabella</span><span class="mc">${filledFor(S.vid)}/${TOTAL_PARTS} valori</span></button>
+    <button class="mod" data-act="modulo" data-v="manuali"><span class="mi">${ICON.book}</span><span class="mt">Manuali di riparazione</span><span class="md">Disegni esplosi con coppie e procedure</span><span class="mc">${rep.length} sistemi</span></button>
+  </div>
+  <div class="head" id="manuali"><div><div class="eyebrow">Manuali di riparazione</div><h2 class="h2">Scegli il sistema</h2></div></div>
   <div class="systems">${tiles}</div>
   <div class="row">${S.confirmVDel
     ? `<span>Eliminare ${esc(vLabel(v))} e tutti i suoi valori?</span><button class="btn danger" data-act="vdel-yes">Sì, elimina</button><button class="btn ghost" data-act="vdel-no">Annulla</button>`
     : `<button class="btn link" data-act="vdel-ask" ${store.ok ? "" : "disabled"}>Elimina questo veicolo</button>`}</div>`;
+}
+
+function viewDati() {
+  const v = veicoli.get(S.vid);
+  if (!v) return `<p class="spec">Veicolo non trovato.</p>`;
+  const q = (S.dq || "").trim().toLowerCase();
+  let total = 0, filled = 0;
+  const groups = ORDER.map(k => {
+    const s = SYS[k];
+    const rows = s.parts.map((p, i) => {
+      const c = val(S.vid, k, p.id); total++; if (c) filled++;
+      if (S.onlyFilled && !c) return "";
+      if (q && !(p.nome + " " + s.nome + " " + (c ? c.coppia : "")).toLowerCase().includes(q)) return "";
+      return `<tr data-act="dato" data-s="${k}" data-v="${p.id}" tabindex="0"><td class="n">${i + 1}</td><td>${esc(p.nome)}</td><td class="v ${stateOf(c)}">${c ? esc(c.coppia) : "—"}</td><td class="fx">${c && c.fasi ? esc(c.fasi.split("\n")[0]) : ""}</td><td>${chip(chipOf(c))}</td></tr>`;
+    }).join("");
+    return rows ? `<tbody><tr class="grp"><th colspan="5">${esc(s.nome)}</th></tr>${rows}</tbody>` : "";
+  }).join("");
+  return `${vehStrip(v)}
+  <div class="head"><div><div class="eyebrow">Dati tecnici</div><h1>Coppie di serraggio</h1><p>Tutti i valori del veicolo, raggruppati per sistema. Tocca una riga per aprire il disegno.</p></div>
+    <div class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q-dati" type="search" placeholder="Cerca componente" aria-label="Cerca componente" value="${esc(S.dq || "")}" autocomplete="off"></div></div>
+  <div class="row"><label class="tog"><input type="checkbox" id="only-filled" ${S.onlyFilled ? "checked" : ""}> Solo valori inseriti</label><span class="spec">${filled}/${total} valori inseriti</span></div>
+  <div class="sheet"><div class="tablebox"><table class="dt"><thead><tr><th>N°</th><th>Componente</th><th>Valore</th><th>Fasi</th><th>Stato</th></tr></thead>${groups || `<tbody><tr><td colspan="5" class="spec">Nessun risultato.</td></tr></tbody>`}</table></div></div>`;
 }
 
 function drawSvg(k, thumb) {
@@ -583,7 +648,8 @@ function viewSchema() {
     return `<tr class="${S.part === p.id ? "sel" : ""}" data-act="part" data-v="${p.id}" tabindex="0"><td class="n">${i + 1}</td><td>${esc(p.nome)}</td><td class="v ${st}">${c ? esc(c.coppia) : "—"}</td><td>${chip(chipOf(c))}</td></tr>`;
   }).join("");
   return `
-  <div class="head"><div><div class="eyebrow">Passo 4 di 4 · ${esc(v.marca)} ${esc(vLabel(v))}</div><h1>${esc(s.nome)}</h1>
+  ${vehStrip(v)}
+  <div class="head"><div><div class="eyebrow">${s.campo ? "Manutenzione" : "Manuale di riparazione"} · foglio ${idx}/${ORDER.length}</div><h1>${esc(s.nome)}</h1>
   <p>Tocca un pezzo sul disegno o una riga della tabella.</p></div></div>
   ${v.demo ? `<div class="banner"><b>Veicolo di esempio.</b> Valori inventati, solo per prova.</div>` : ""}
   <div class="work">
@@ -651,6 +717,7 @@ function render() {
   if (S.view === "modelli") body = viewModelli();
   else if (S.view === "sistemi") body = viewSistemi();
   else if (S.view === "schema") body = viewSchema();
+  else if (S.view === "dati") body = viewDati();
   else body = viewMarche();
   let banner = "";
   if (dbStatus === "off") banner = `<div class="banner"><b>Archivio non disponibile.</b> Apri la pagina dal tuo account Claude per vedere e salvare i valori.</div>`;
@@ -755,6 +822,12 @@ async function act(a, d) {
     case "marca": S.marca = d.v; S.q = ""; go("modelli"); break;
     case "veicolo": S.vid = d.v; if (d.m) S.marca = d.m; go("sistemi"); break;
     case "sistema": S.sys = d.v; S.part = null; Z.k = 1; Z.x = 0; Z.y = 0; S.animate = true; go("schema"); break;
+    case "modulo":
+      if (d.v === "manutenzione") { S.sys = "tagliando"; S.part = null; Z.k = 1; Z.x = 0; Z.y = 0; S.animate = true; go("schema"); }
+      else if (d.v === "dati") go("dati");
+      else { const el = document.getElementById("manuali"); if (el) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth", block: "start" }); }
+      break;
+    case "dato": S.sys = d.s; S.part = d.v; Z.k = 1; Z.x = 0; Z.y = 0; S.animate = true; go("schema"); break;
     case "zoom-in": zoomMid(1.5); break;
     case "zoom-out": zoomMid(1 / 1.5); break;
     case "zoom-reset": Z.k = 1; Z.x = 0; Z.y = 0; applyZoom(); break;
@@ -837,6 +910,8 @@ document.addEventListener("keydown", e => {
 document.addEventListener("input", e => {
   const t = e.target;
   if (t.id === "q-marca") { S.q = t.value; render(); return; }
+  if (t.id === "q-dati") { S.dq = t.value; render(); return; }
+  if (t.id === "only-filled") { S.onlyFilled = t.checked; render(); return; }
   if (t.dataset && t.dataset.draft) S[t.dataset.draft][t.dataset.k] = t.value;
 });
 

@@ -1,5 +1,5 @@
 /* Service worker: l'app funziona anche senza internet e si aggiorna da sola quando c'è rete. */
-const VERSION = "f86a164587";
+const VERSION = "8e0aadc37b";
 const SHELL_CACHE = "coppie-shell-" + VERSION;
 const FONT_CACHE = "coppie-fonts";
 const SHELL = ["./", "index.html", "seed.js", "manifest.webmanifest", "icon-192.png", "icon-512.png", "apple-touch-icon.png"];

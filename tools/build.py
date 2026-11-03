@@ -10,7 +10,7 @@ version = hashlib.sha1((app + json.dumps(seed, sort_keys=True)).encode()).hexdig
 stamp = datetime.date.today().isoformat()
 head = f"""<!doctype html><html lang="it"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#1a2127">
+<meta name="theme-color" content="#0e3a63">
 <meta name="description" content="Manuale d'officina interattivo con coppie di serraggio">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
