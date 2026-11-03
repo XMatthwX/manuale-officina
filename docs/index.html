@@ -10,8 +10,8 @@
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
-<script>window.APP_VERSION="81a27fda62";window.APP_BUILD="2026-11-03";</script>
-<script src="seed.js?v=81a27fda62"></script>
+<script>window.APP_VERSION="1d23ed14f8";window.APP_BUILD="2026-11-03";</script>
+<script src="seed.js?v=1d23ed14f8"></script>
 </head><body>
 <title>Manuale Coppie Officina</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -175,8 +175,8 @@ svg .solid{fill:var(--partfill);stroke:var(--line);stroke-width:2}
 .pt > *{fill:var(--partfill);stroke:var(--line);stroke-width:1.8;transition:fill .15s,stroke .15s}
 .pt > .in{fill:none}
 .pt.has > *{fill:var(--okfill);stroke:var(--ok)}
-.pt.ex > *{fill:var(--warnfill);stroke:var(--warn)}
-.pt.has > .in,.pt.ex > .in{fill:none}
+.pt.ex > *,.pt.co > *{fill:var(--warnfill);stroke:var(--warn)}
+.pt.has > .in,.pt.ex > .in,.pt.co > .in{fill:none}
 .pt.sel > *{stroke:var(--sel);stroke-width:3.2}
 .pt.sel:not(.has):not(.ex) > *{fill:var(--selfill)}
 .draw .pt,.draw .mk{cursor:pointer}
@@ -187,8 +187,8 @@ svg .solid{fill:var(--partfill);stroke:var(--line);stroke-width:2}
 .mk circle{fill:var(--sheet);stroke:var(--ink);stroke-width:1.8}
 .mk text{font-family:var(--f-mono);font-size:var(--mkfs,14px);font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
 .mk.has circle{fill:var(--ok);stroke:var(--ok)}
-.mk.has text,.mk.ex text{fill:var(--onsolid)}
-.mk.ex circle{fill:var(--warn);stroke:var(--warn)}
+.mk.has text,.mk.ex text,.mk.co text{fill:var(--onsolid)}
+.mk.ex circle,.mk.co circle{fill:var(--warn);stroke:var(--warn)}
 .mk.sel circle{stroke:var(--sel);stroke-width:3.5}
 .mk.sel line{stroke:var(--sel);stroke-width:1.8}
 
@@ -210,14 +210,14 @@ tbody tr.sel{background:var(--selfill)}
 td.n{font-family:var(--f-mono);font-weight:700;width:44px}
 td.v{font-family:var(--f-mono);font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
 td.v.none{color:var(--muted);font-weight:500}
-td.v.has{color:var(--ok)}td.v.ex{color:var(--warn)}
+td.v.has{color:var(--ok)}td.v.ex,td.v.co{color:var(--warn)}
 @media (max-width:520px){th:nth-child(4),td:nth-child(4){display:none}td.v{white-space:normal}}
 @media (max-width:600px){svg.draw{--mkfs:26px}}
 
 .panel > .chip{align-self:flex-start}
 .chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;white-space:nowrap}
 .chip.has{background:var(--okfill);color:var(--ink)}
-.chip.ex{background:var(--warnfill);color:var(--ink)}
+.chip.ex,.chip.co{background:var(--warnfill);color:var(--ink)}
 .chip.none{background:var(--partfill);color:var(--muted)}
 
 .side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px)}
@@ -266,7 +266,7 @@ a.btn{text-decoration:none}
 .mk3{position:absolute;left:0;top:0;pointer-events:auto;min-width:30px;height:30px;padding:0 6px;border-radius:15px;border:2px solid var(--ink);background:var(--sheet);color:var(--ink);font:700 13px var(--f-mono);display:grid;place-items:center;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.25)}
 .mk3::after{content:"";position:absolute;left:50%;top:100%;width:2px;height:12px;background:var(--ink);transform:translateX(-50%)}
 .mk3.has{background:var(--ok);border-color:var(--ok);color:var(--onsolid)}.mk3.has::after{background:var(--ok)}
-.mk3.ex{background:var(--warn);border-color:var(--warn);color:var(--onsolid)}.mk3.ex::after{background:var(--warn)}
+.mk3.ex,.mk3.co{background:var(--warn);border-color:var(--warn);color:var(--onsolid)}.mk3.ex::after,.mk3.co::after{background:var(--warn)}
 .mk3.sel{border-color:var(--sel);box-shadow:0 0 0 3px var(--selfill),0 3px 10px rgba(0,0,0,.25)}.mk3.sel::after{background:var(--sel)}
 .v3d-hint{position:absolute;top:10px;left:12px;right:12px;font-size:12px;color:var(--muted);pointer-events:none}
 .v3d-bar{position:absolute;left:10px;right:10px;bottom:10px;display:flex;flex-wrap:wrap;gap:6px;pointer-events:none;align-items:center}
@@ -524,8 +524,8 @@ const val = (vid, sys, part) => coppie.get(key(vid, sys, part));
 const vLabel = v => `${v.modello}${v.serie ? " (" + v.serie + ")" : ""}`;
 const filledFor = vid => { let n = 0; for (const c of coppie.values()) if (c.veicoloId === vid && c.coppia) n++; return n; };
 const filledSys = (vid, sys) => SYS[sys].parts.filter(p => val(vid, sys, p.id)).length;
-const stateOf = c => !c ? "none" : (c.esempio ? "ex" : "has");
-const chipOf = c => c && c.fonteUrl && !c.esempio ? "off" : stateOf(c);
+const stateOf = c => !c ? "none" : (c.esempio ? "ex" : c.community ? "co" : "has");
+const chipOf = c => c && c.fonteUrl && !c.esempio && !c.community ? "off" : stateOf(c);
 
 /* ---------- viste ---------- */
 function crumbs() {
@@ -724,7 +724,7 @@ function viewSchema() {
   ${v.demo ? `<div class="banner"><b>Veicolo di esempio.</b> Valori inventati, solo per prova.</div>` : ""}
   <div class="work">
     <div class="sheet">
-      <div class="legend"><span><i class="has"></i>Valore inserito</span>${v.demo ? `<span><i class="ex"></i>Valore di esempio</span>` : ""}<span><i></i>Da inserire</span><span><i class="sel"></i>Selezionato</span></div>
+      <div class="legend"><span><i class="has"></i>Valore inserito</span>${v.demo ? `<span><i class="ex"></i>Valore di esempio</span>` : ""}${s.parts.some(p => (val(S.vid, S.sys, p.id) || {}).community) ? `<span><i class="ex"></i>Non ufficiale</span>` : ""}<span><i></i>Da inserire</span><span><i class="sel"></i>Selezionato</span></div>
       ${V3D.ok ? `<div class="sheet-draw"><div class="v3d-slot" id="v3dslot"></div></div>` : `<div class="sheet-draw"><div class="zoomwrap" id="zoomwrap">${drawSvg(S.sys, false)}<div class="zctl"><button data-act="zoom-in" aria-label="Ingrandisci">+</button><button data-act="zoom-out" aria-label="Riduci">−</button><button data-act="zoom-reset" aria-label="Vista intera"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div></div><p class="zhint">Doppio tocco o pizzica per ingrandire · trascina per spostarti</p></div>`}
       <div class="cart"><div><span>Veicolo</span><b>${esc(v.marca)} ${esc(vLabel(v))}</b></div><div><span>Motore</span><b>${esc(v.motore || "—")}</b></div><div><span>Foglio</span><b>${idx}/${ORDER.length}</b></div></div>
       <div class="tablebox" style="border-top:1px solid var(--rule)"><table><thead><tr><th>N°</th><th>Componente</th><th>${esc(s.campo || "Coppia")}</th><th>Stato</th></tr></thead><tbody>${rows}</tbody></table></div>
@@ -738,7 +738,7 @@ function srcList(c) {
   return list.map(f => `<p class="pre">${esc(f.t)}</p>${f.u && /^https:\/\//.test(f.u) ? `<a class="src" href="${esc(f.u)}" target="_blank" rel="noopener">Apri la fonte ↗</a>` : ""}`).join("");
 }
 function chip(st) {
-  return st === "off" ? `<span class="chip has">Ufficiale</span>` : st === "has" ? `<span class="chip has">Inserito</span>` : st === "ex" ? `<span class="chip ex">Esempio</span>` : `<span class="chip none">Da inserire</span>`;
+  return st === "co" ? `<span class="chip co">Non ufficiale</span>` : st === "off" ? `<span class="chip has">Ufficiale</span>` : st === "has" ? `<span class="chip has">Inserito</span>` : st === "ex" ? `<span class="chip ex">Esempio</span>` : `<span class="chip none">Da inserire</span>`;
 }
 
 function sidePanel() {
@@ -770,8 +770,9 @@ function sidePanel() {
     <div class="row"><button class="btn" data-act="edit" ${store.ok ? "" : "disabled"}>Inserisci valore</button></div></div>`;
   const when = c.aggiornato ? new Date(c.aggiornato).toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" }) : "";
   return `<div class="panel">${head}${chip(chipOf(c))}
-    <div class="torque ${st === "ex" ? "exv" : ""}${(c.coppia || "").length > 18 ? " long" : ""}">${esc(c.coppia)}</div>
+    <div class="torque ${st === "ex" || st === "co" ? "exv" : ""}${(c.coppia || "").length > 18 ? " long" : ""}">${esc(c.coppia)}</div>
     ${st === "ex" ? `<div class="banner"><b>Valore di esempio.</b> Non usarlo per lavorare.</div>` : ""}
+    ${st === "co" ? `<div class="banner"><b>Valore della community, non ufficiale.</b> Riportato uguale da più fonti, ma va verificato sul manuale d'officina prima di serrare.</div>` : ""}
     ${c.fasi ? `<div class="kv"><h3>Sequenza e fasi</h3><p class="pre">${esc(c.fasi)}</p></div>` : ""}
     ${c.procedura ? `<div class="kv"><h3>Procedura</h3><ol class="steps">${c.procedura.split(/\n+/).filter(x => x.trim()).map((t, i) => { const k = key(S.vid, S.sys, S.part) + "#" + i; return `<li><button class="step ${DONE.has(k) ? "done" : ""}" data-act="step" data-v="${esc(k)}"><span class="ck"></span><span>${esc(t.replace(/^\s*\d+[.)]\s*/, ""))}</span></button></li>`; }).join("")}</ol></div>` : ""}
     ${c.note ? `<div class="kv"><h3>Note</h3><p class="pre">${esc(c.note)}</p></div>` : ""}
@@ -807,7 +808,7 @@ const V3D = (() => {
   const shared = {};
   const SH = n => shared[n] || (shared[n] = new T.MeshStandardMaterial(PRE[n] || PRE.steel));
   const LINE = new T.LineBasicMaterial({ color: 0x2a3036, transparent: true, opacity: 0.7 });
-  const GREEN = new T.Color(0x37b24d), ORANGE = new T.Color(0xf08c00), UP = new T.Vector3(0, 1, 0);
+  const GREEN = new T.Color(0x37b24d), ORANGE = new T.Color(0xd9480f), UP = new T.Vector3(0, 1, 0);
 
   /* --- mattoncini geometrici --- */
   const mesh = (geo, m, x = 0, y = 0, z = 0) => { const me = new T.Mesh(geo, typeof m === "string" ? SH(m) : m); me.position.set(x, y, z); return me; };
@@ -1204,8 +1205,8 @@ const V3D = (() => {
       const st = states[id] || "none";
       p.meshes.forEach(me => {
         me.material.color.copy(me.userData.c0); me.material.emissive.setRGB(0, 0, 0);
-        if (st === "has") { me.material.color.lerp(GREEN, 0.8); me.material.emissive.copy(GREEN).multiplyScalar(0.22); }
-        if (st === "ex") { me.material.color.lerp(ORANGE, 0.8); me.material.emissive.copy(ORANGE).multiplyScalar(0.2); }
+        if (st === "has") { me.material.color.copy(GREEN); me.material.emissive.copy(GREEN).multiplyScalar(0.25); }
+        if (st === "ex" || st === "co") { me.material.color.copy(ORANGE); me.material.emissive.copy(ORANGE).multiplyScalar(0.22); }
         if (id === sel) me.material.emissive.setRGB(0.6, 0.06, 0.04);
       });
       if (p.mk) p.mk.className = "mk3" + (st !== "none" ? " " + st : "") + (id === sel ? " sel" : "");

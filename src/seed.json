@@ -1,5 +1,5 @@
 {
- "versione": 7,
+ "versione": 8,
  "veicoli": {
   "mazda2-dj-15g": {
    "marca": "Mazda",
@@ -654,6 +654,66 @@
    "note": "12–14 kgf·m.",
    "esempio": false,
    "aggiornato": "2026-11-03T17:20:00Z"
+  },
+  "cx5-kf-22d150-signature-2019__freni__staffa": {
+   "veicoloId": "cx5-kf-22d150-signature-2019",
+   "schema": "freni",
+   "punto": "staffa",
+   "coppia": "92–110 Nm",
+   "fasi": "Anteriore: 68–81 ft-lb.\nPosteriore (riportato): 85–102 Nm (63–75 ft-lb).",
+   "procedura": "",
+   "fonte": "Forum mazdas247 – «2017~2025 CX-5 Brake job torque setting?»: valori postati da due utenti (geo55, yrwei52), riferiti a CX-5 2018 USA",
+   "fonteUrl": "https://mazdas247.com/forum/goto/post?id=6647015",
+   "fonti": [
+    {
+     "t": "Forum mazdas247 – «2017~2025 CX-5 Brake job torque setting?»: valori postati da due utenti (geo55, yrwei52), riferiti a CX-5 2018 USA",
+     "u": "https://mazdas247.com/forum/goto/post?id=6647015"
+    }
+   ],
+   "note": "Non ufficiale. Riferito alla CX-5 2017–2025 (serie KF) del mercato USA: verificare che la pinza della tua versione europea diesel sia la stessa.",
+   "esempio": false,
+   "community": true,
+   "aggiornato": "2026-11-03T17:40:00Z"
+  },
+  "cx5-kf-22d150-signature-2019__freni__guida": {
+   "veicoloId": "cx5-kf-22d150-signature-2019",
+   "schema": "freni",
+   "punto": "guida",
+   "coppia": "31–38 Nm",
+   "fasi": "Anteriore: 23–28 ft-lb.\nPosteriore (riportato): 23–30 Nm (17–22 ft-lb).",
+   "procedura": "",
+   "fonte": "Forum mazdas247 – «2017~2025 CX-5 Brake job torque setting?»: valori postati da due utenti (geo55, yrwei52), riferiti a CX-5 2018 USA",
+   "fonteUrl": "https://mazdas247.com/forum/goto/post?id=6647015",
+   "fonti": [
+    {
+     "t": "Forum mazdas247 – «2017~2025 CX-5 Brake job torque setting?»: valori postati da due utenti (geo55, yrwei52), riferiti a CX-5 2018 USA",
+     "u": "https://mazdas247.com/forum/goto/post?id=6647015"
+    }
+   ],
+   "note": "Non ufficiale. Riferito alla CX-5 2017–2025 (serie KF) del mercato USA.",
+   "esempio": false,
+   "community": true,
+   "aggiornato": "2026-11-03T17:40:00Z"
+  },
+  "cx5-kf-22d150-signature-2019__coppa__tappo": {
+   "veicoloId": "cx5-kf-22d150-signature-2019",
+   "schema": "coppa",
+   "punto": "tappo",
+   "coppia": "30–41 Nm",
+   "fasi": "23–30 ft-lbf (3,1–4,1 kgf·m).\nRondella in alluminio nuova a ogni cambio olio.",
+   "procedura": "",
+   "fonte": "Forum mazdas247 – «CX-5 Oil Change with Filter»: 30–41 Nm (da mcx5.org) e 23–30 ft-lb («secondo il manuale CX-5») da due utenti diversi",
+   "fonteUrl": "https://mazdas247.com/forum/goto/post?id=6569073",
+   "fonti": [
+    {
+     "t": "Forum mazdas247 – «CX-5 Oil Change with Filter»: 30–41 Nm (da mcx5.org) e 23–30 ft-lb («secondo il manuale CX-5») da due utenti diversi",
+     "u": "https://mazdas247.com/forum/goto/post?id=6569073"
+    }
+   ],
+   "note": "Non ufficiale. Il forum non specifica il motore: verificare che valga per lo Skyactiv-D 2.2.",
+   "esempio": false,
+   "community": true,
+   "aggiornato": "2026-11-03T17:40:00Z"
   }
  }
 }
