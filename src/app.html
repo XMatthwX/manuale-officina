@@ -1,0 +1,821 @@
+<title>Manuale Coppie Officina</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: banco di lavoro. Barra in alto, foglio tecnico a sinistra, scheda valori a destra (impilati su telefono). */
+:root{
+  --bg:#e8ecef; --sheet:#fbfcfd; --ink:#1a2127; --muted:#5d6973; --rule:#d0d7dc;
+  --line:#4b5761; --partfill:#dfe5e9;
+  --ok:#2b8a3e; --okfill:rgba(55,178,77,.34);
+  --sel:#d9302c; --selfill:rgba(217,48,44,.14);
+  --warn:#c2410c; --warnfill:rgba(234,120,40,.30); --warnbg:#fff0e4;
+  --accent:#1d5a85; --accentbg:#e2edf5;
+  --btn:#1a2127; --btnfg:#fbfcfd; --onsolid:#ffffff; --bar:#1a2127; --barfg:#eef2f4;
+  --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#11161a; --sheet:#192026; --ink:#e4e9ed; --muted:#97a3ad; --rule:#2c363e;
+    --line:#a3afb9; --partfill:#27313a;
+    --ok:#51cf66; --okfill:rgba(81,207,102,.30);
+    --sel:#ff6b6b; --selfill:rgba(255,107,107,.16);
+    --warn:#ff9a4d; --warnfill:rgba(255,154,77,.28); --warnbg:#2c1f15;
+    --accent:#74b4e3; --accentbg:#16293a;
+    --btn:#e4e9ed; --btnfg:#11161a; --onsolid:#0d1114; --bar:#080b0e; --barfg:#e4e9ed;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11161a; --sheet:#192026; --ink:#e4e9ed; --muted:#97a3ad; --rule:#2c363e;
+  --line:#a3afb9; --partfill:#27313a;
+  --ok:#51cf66; --okfill:rgba(81,207,102,.30);
+  --sel:#ff6b6b; --selfill:rgba(255,107,107,.16);
+  --warn:#ff9a4d; --warnfill:rgba(255,154,77,.28); --warnbg:#2c1f15;
+  --accent:#74b4e3; --accentbg:#16293a;
+  --btn:#e4e9ed; --btnfg:#11161a; --onsolid:#0d1114; --bar:#080b0e; --barfg:#e4e9ed;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bar)}
+button,input,textarea{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;line-height:1.1;margin:0;text-wrap:balance}
+p{margin:0}
+
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bar);color:var(--barfg)}
+@media (max-width:480px){.logo span{display:none}.logo b{font-size:20px}}
+.top-in{max-width:1240px;margin:0 auto;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;cursor:pointer;color:inherit}
+.logo svg{width:30px;height:30px}
+.logo b{font-family:var(--f-display);font-size:22px;letter-spacing:.02em;text-transform:uppercase}
+.logo span{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;opacity:.7;text-transform:uppercase}
+.status{margin-left:auto;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:7px;opacity:.9}
+.status i{width:8px;height:8px;border-radius:50%;background:#8a96a0;display:inline-block}
+.status.ok i{background:#51cf66}.status.slow i,.status.loading i{background:#fcc419}.status.off i,.status.error i{background:#ff6b6b}
+
+.wrap{max-width:1240px;margin:0 auto;padding-block:18px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px}
+.crumbs{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.crumbs button{background:none;border:0;padding:4px 2px;cursor:pointer;color:var(--accent);text-transform:uppercase;letter-spacing:.05em;font-family:var(--f-mono);font-size:12px}
+.crumbs button:hover{text-decoration:underline}
+.crumbs .sep{opacity:.5}
+.crumbs .cur{color:var(--ink)}
+
+.head{display:flex;flex-wrap:wrap;align-items:flex-end;gap:12px 24px;justify-content:space-between}
+.head h1{font-size:clamp(30px,5vw,44px);text-transform:uppercase;letter-spacing:.01em}
+.head p{color:var(--muted);max-width:62ch}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+
+.search{position:relative;width:min(100%,320px)}
+.search input{width:100%;padding:10px 12px 10px 36px;border:1px solid var(--rule);border-radius:8px;background:var(--sheet)}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--muted);fill:none;stroke-width:2}
+
+.brands{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.brand{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:14px;min-height:96px;padding:14px;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;cursor:pointer;text-align:left;transition:border-color .15s,transform .15s}
+.brand:hover{border-color:var(--accent);transform:translateY(-1px)}
+.brand .bn{overflow-wrap:anywhere;font-family:var(--f-display);font-size:22px;font-weight:700;text-transform:uppercase;letter-spacing:.02em;line-height:1}
+.brand .bc{font-family:var(--f-mono);font-size:11px;color:var(--muted);letter-spacing:.04em}
+.brand.empty .bn{color:var(--muted)}
+.brand.has{border-color:var(--ink)}
+.brand.has .bc{color:var(--ok)}
+
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.note{padding:16px;border-radius:10px;background:var(--accentbg);display:flex;flex-direction:column;gap:6px}
+.note h3{font-size:19px;text-transform:uppercase}
+.note p{font-size:15px}
+.note.demo{background:var(--warnbg)}
+.note button{align-self:flex-start;margin-top:6px}
+
+.cars{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.car{display:flex;flex-direction:column;gap:8px;padding:14px;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;cursor:pointer;text-align:left;transition:border-color .15s,transform .15s}
+.car:hover{border-color:var(--accent);transform:translateY(-1px)}
+.car svg{width:100%;height:auto;max-width:100%;aspect-ratio:200/80}
+.car svg .cb{fill:var(--partfill);stroke:var(--line);stroke-width:1.6}
+.car svg .cw{fill:var(--sheet);stroke:var(--line);stroke-width:1.6}
+.car svg .cl{fill:none;stroke:var(--line);stroke-width:1.2}
+.car .cn{font-family:var(--f-display);font-size:24px;font-weight:700;line-height:1;text-transform:uppercase}
+.car .cs{font-size:14px;color:var(--muted)}
+.meter{display:flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.meter .bar{flex:1;height:5px;border-radius:3px;background:var(--partfill);overflow:hidden}
+.meter .bar i{display:block;height:100%;background:var(--ok)}
+.car.add{align-items:center;justify-content:center;border-style:dashed;color:var(--accent);font-weight:600;min-height:150px}
+.car.add .plus{font-family:var(--f-display);font-size:40px;line-height:1}
+
+.panel{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:14px}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field.wide{grid-column:1/-1}
+.field label{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.field input,.field textarea{width:100%;padding:10px 11px;border:1px solid var(--rule);border-radius:7px;background:var(--bg)}
+.field textarea{min-height:84px;resize:vertical}
+.field small{font-size:13px;color:var(--muted)}
+.field input:focus,.field textarea:focus,.search input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.err{color:var(--sel);font-size:14px;font-weight:600}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:7px;border:1px solid var(--btn);background:var(--btn);color:var(--btnfg);font-weight:600;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:var(--rule)}
+.btn.danger{background:var(--sel);border-color:var(--sel);color:var(--onsolid)}
+.btn.link{background:none;border:0;padding:6px 0;color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+button:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.vehicle{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline}
+.spec{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.banner{padding:12px 14px;border-radius:8px;background:var(--warnbg);color:var(--ink);border-left:4px solid var(--warn);font-size:15px}
+.banner b{color:var(--warn)}
+
+.systems{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.sys{display:flex;flex-direction:column;gap:8px;padding:12px;background:var(--sheet);border:1px solid var(--rule);border-radius:10px;cursor:pointer;text-align:left;transition:border-color .15s,transform .15s}
+.sys:hover{border-color:var(--accent);transform:translateY(-1px)}
+.sys .tn{font-family:var(--f-display);font-size:22px;font-weight:700;text-transform:uppercase;line-height:1}
+.sys .td{font-size:14px;color:var(--muted)}
+.sys .thumbbox{background:var(--bg);border-radius:6px;padding:6px}
+
+.work{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:880px){.work{grid-template-columns:minmax(0,1fr)}}
+.sheet{background:var(--sheet);border:1px solid var(--rule);border-radius:10px;overflow:hidden;min-width:0}
+.sheet-draw{padding:10px;border-bottom:1px solid var(--rule)}
+.cart{display:grid;grid-template-columns:2fr 2fr 1fr;font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.cart div{padding:8px 10px;border-right:1px solid var(--rule);min-width:0;overflow-wrap:anywhere}
+.cart div:last-child{border-right:0}
+.cart span{display:block;color:var(--muted);font-size:10px}
+.cart b{font-weight:700;color:var(--ink)}
+@media (max-width:520px){.cart{grid-template-columns:1fr 1fr}.cart div:last-child{display:none}.cart div:nth-child(2){border-right:0}}
+
+svg.draw{width:100%;height:auto;display:block}
+svg.thumb{width:100%;height:auto;display:block;pointer-events:none}
+svg .b{fill:var(--sheet);stroke:var(--line);stroke-width:2.2}
+svg .l{fill:none;stroke:var(--line);stroke-width:1.5}
+svg .d{fill:none;stroke:var(--line);stroke-width:1.3;stroke-dasharray:6 5}
+svg .t{font-family:var(--f-mono);font-size:12px;font-weight:500;fill:var(--muted);letter-spacing:.1em}
+svg .chain{fill:none;stroke:var(--line);stroke-width:9;stroke-dasharray:7 4}
+svg .rail-o{fill:none;stroke:var(--line);stroke-width:18;stroke-linecap:round}
+svg .rail{fill:none;stroke:var(--partfill);stroke-width:14;stroke-linecap:round}
+svg .hose{fill:none;stroke:var(--line);stroke-width:7;stroke-linecap:round}
+svg .solid{fill:var(--partfill);stroke:var(--line);stroke-width:2}
+.pt > *{fill:var(--partfill);stroke:var(--line);stroke-width:1.8;transition:fill .15s,stroke .15s}
+.pt > .in{fill:none}
+.pt.has > *{fill:var(--okfill);stroke:var(--ok)}
+.pt.ex > *{fill:var(--warnfill);stroke:var(--warn)}
+.pt.has > .in,.pt.ex > .in{fill:none}
+.pt.sel > *{stroke:var(--sel);stroke-width:3.2}
+.pt.sel:not(.has):not(.ex) > *{fill:var(--selfill)}
+.draw .pt,.draw .mk{cursor:pointer}
+.draw .pt:hover > *{stroke-width:3}
+.pt:focus,.mk:focus{outline:none}
+.pt:focus-visible > *{stroke:var(--accent);stroke-width:3.5}
+.mk line{stroke:var(--muted);stroke-width:1.2}
+.mk circle{fill:var(--sheet);stroke:var(--ink);stroke-width:1.8}
+.mk text{font-family:var(--f-mono);font-size:var(--mkfs,14px);font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central}
+.mk.has circle{fill:var(--ok);stroke:var(--ok)}
+.mk.has text,.mk.ex text{fill:var(--onsolid)}
+.mk.ex circle{fill:var(--warn);stroke:var(--warn)}
+.mk.sel circle{stroke:var(--sel);stroke-width:3.5}
+.mk.sel line{stroke:var(--sel);stroke-width:1.8}
+
+.legend{display:flex;flex-wrap:wrap;gap:14px;padding:10px 12px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--rule)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:14px;border-radius:3px;border:1.5px solid var(--line);background:var(--partfill);display:inline-block}
+.legend i.has{background:var(--okfill);border-color:var(--ok)}
+.legend i.ex{background:var(--warnfill);border-color:var(--warn)}
+.legend i.sel{background:transparent;border-color:var(--sel);border-width:2.5px}
+
+.tablebox{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px}
+th{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 12px;border-bottom:1px solid var(--rule);font-weight:500}
+td{padding:10px 12px;border-bottom:1px solid var(--rule);vertical-align:top}
+tr:last-child td{border-bottom:0}
+tbody tr{cursor:pointer}
+tbody tr:hover{background:var(--bg)}
+tbody tr.sel{background:var(--selfill)}
+td.n{font-family:var(--f-mono);font-weight:700;width:44px}
+td.v{font-family:var(--f-mono);font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+td.v.none{color:var(--muted);font-weight:500}
+td.v.has{color:var(--ok)}td.v.ex{color:var(--warn)}
+@media (max-width:520px){th:nth-child(4),td:nth-child(4){display:none}td.v{white-space:normal}}
+@media (max-width:600px){svg.draw{--mkfs:26px}}
+
+.panel > .chip{align-self:flex-start}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:999px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;white-space:nowrap}
+.chip.has{background:var(--okfill);color:var(--ink)}
+.chip.ex{background:var(--warnfill);color:var(--ink)}
+.chip.none{background:var(--partfill);color:var(--muted)}
+
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 70px)}
+@media (max-width:880px){.side{position:static}}
+.ph{display:flex;align-items:center;gap:12px}
+.ph .num{flex:none;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;border:2px solid var(--sel);color:var(--ink)}
+.ph h2{font-size:26px;text-transform:uppercase}
+.torque{font-family:var(--f-mono);font-weight:700;font-size:clamp(30px,4.4vw,42px);line-height:1.05;letter-spacing:-.01em;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.torque.exv{color:var(--warn)}
+.kv{display:flex;flex-direction:column;gap:3px}
+.kv h3{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.empty-state{color:var(--muted);display:flex;flex-direction:column;gap:8px}
+.empty-state svg{width:44px;height:44px;stroke:var(--muted);fill:none;stroke-width:1.6}
+.missing{padding:14px;border:1.5px dashed var(--rule);border-radius:8px;color:var(--muted)}
+
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:8px;font-weight:600;z-index:20;max-width:calc(100% - 32px);box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.foot{color:var(--muted);font-size:13px;border-top:1px solid var(--rule);padding-top:14px}
+.status.local i{background:#51cf66}
+.zoomwrap{position:relative;overflow:hidden;border-radius:6px;touch-action:pan-y;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.zoomwrap.zoomed{touch-action:none;cursor:grab}
+.zoomwrap svg.draw{transform-origin:0 0}
+.zctl{position:absolute;right:max(8px,env(safe-area-inset-right,0px));top:8px;display:flex;flex-direction:column;gap:6px}
+.zctl button{width:40px;height:40px;border-radius:8px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);font-size:22px;font-weight:600;line-height:1;cursor:pointer;display:grid;place-items:center;box-shadow:0 2px 10px rgba(0,0,0,.10)}
+.zctl button:hover{border-color:var(--accent)}
+.zhint{font-size:12.5px;color:var(--muted);padding:6px 4px 0;text-align:center}
+@media (prefers-reduced-motion:no-preference){
+  @keyframes draw{to{stroke-dashoffset:0}}
+  @keyframes fillin{from{fill-opacity:0}to{fill-opacity:1}}
+  @keyframes pop{0%{opacity:0;transform:scale(.4)}70%{opacity:1;transform:scale(1.12)}100%{opacity:1;transform:scale(1)}}
+  @keyframes glow{0%,100%{filter:drop-shadow(0 0 0 transparent)}50%{filter:drop-shadow(0 0 7px var(--sel))}}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  svg.anim .b,svg.anim .l{stroke-dasharray:3000;stroke-dashoffset:3000;animation:draw 1.2s cubic-bezier(.4,0,.2,1) forwards,fillin .7s .35s both}
+  svg.anim .pt,svg.anim .mk{opacity:0;transform-box:fill-box;transform-origin:center;animation:pop .5s cubic-bezier(.2,.8,.3,1) forwards}
+  .pt.sel{animation:glow 1.8s ease-in-out infinite}
+  .wrap.enter{animation:rise .32s cubic-bezier(.2,.8,.3,1)}
+  .brand,.car,.sys{transition:border-color .15s,transform .15s,box-shadow .15s}
+  .brand:hover,.car:hover,.sys:hover{box-shadow:0 6px 18px rgba(20,30,40,.10)}
+  .zoomwrap svg.draw{transition:transform .18s ease-out}
+  .zoomwrap.dragging svg.draw{transition:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="top">
+  <div class="top-in">
+    <button class="logo" data-act="home" aria-label="Torna alle marche">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="none" stroke="currentColor" stroke-width="2.2"/><polygon points="16,8.5 22.5,12.25 22.5,19.75 16,23.5 9.5,19.75 9.5,12.25" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="16" cy="16" r="3" fill="currentColor"/></svg>
+      <b>Manuale Coppie</b><span>Officina</span>
+    </button>
+    <div id="status" class="status loading"><i></i><span>Collegamento…</span></div>
+  </div>
+</header>
+<main class="wrap" id="app"></main>
+<div class="toast" id="toast" hidden></div>
+<input type="file" id="imp" accept="application/json,.json" hidden>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- utilità ---------- */
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const hexPts = (cx, cy, r) => { const p = []; for (let i = 0; i < 6; i++) { const a = Math.PI / 3 * i; p.push((cx + r * Math.cos(a)).toFixed(1) + "," + (cy + r * Math.sin(a)).toFixed(1)); } return p.join(" "); };
+const bolt = (cx, cy, r) => `<polygon points="${hexPts(cx, cy, r)}"/><circle class="in" cx="${cx}" cy="${cy}" r="${(r * .42).toFixed(1)}"/>`;
+const bolts = (list, r) => list.map(([x, y]) => bolt(x, y, r)).join("");
+const arc = (cx, cy, r1, r2, a1, a2) => {
+  const P = (r, a) => [(cx + r * Math.cos(a * Math.PI / 180)).toFixed(1), (cy + r * Math.sin(a * Math.PI / 180)).toFixed(1)];
+  const [x1, y1] = P(r2, a1), [x2, y2] = P(r2, a2), [x3, y3] = P(r1, a2), [x4, y4] = P(r1, a1);
+  return `M${x1} ${y1} A${r2} ${r2} 0 0 1 ${x2} ${y2} L${x3} ${y3} A${r1} ${r1} 0 0 0 ${x4} ${y4} Z`;
+};
+const radial = (cx, cy, r1, r2, n, off) => { let s = ""; for (let i = 0; i < n; i++) { const a = (off + 360 / n * i) * Math.PI / 180; s += `<line class="l" x1="${(cx + r1 * Math.cos(a)).toFixed(1)}" y1="${(cy + r1 * Math.sin(a)).toFixed(1)}" x2="${(cx + r2 * Math.cos(a)).toFixed(1)}" y2="${(cy + r2 * Math.sin(a)).toFixed(1)}"/>`; } return s; };
+
+/* ---------- disegni tecnici ---------- */
+const SYS = {
+  distribuzione: {
+    nome: "Distribuzione", desc: "Catena o cinghia, ruote dentate, tendicatena, pattini",
+    vb: "0 0 800 520",
+    base:
+      `<path class="b" d="M120 30 L680 30 L705 472 L95 472 Z"/>` +
+      `<text class="t" x="128" y="462">VISTA FRONTALE</text>` +
+      `<path class="chain" d="M260 60 L540 60 A70 70 0 0 1 610 130 L450 400 A50 50 0 0 1 350 400 L190 130 A70 70 0 0 1 260 60 Z"/>` +
+      `<circle class="b" cx="260" cy="130" r="66"/><circle class="d" cx="260" cy="130" r="56"/><circle class="l" cx="260" cy="130" r="26"/>` +
+      `<circle class="b" cx="540" cy="130" r="66"/><circle class="d" cx="540" cy="130" r="56"/><circle class="l" cx="540" cy="130" r="26"/>` +
+      `<circle class="b" cx="400" cy="400" r="46"/><circle class="d" cx="400" cy="400" r="38"/>` +
+      `<path class="rail-o" d="M184 168 L318 396"/><path class="rail" d="M184 168 L318 396"/>` +
+      `<path class="rail-o" d="M620 170 L476 412"/><path class="rail" d="M620 170 L476 412"/>` +
+      `<text class="t" x="216" y="20">ASPIRAZIONE</text><text class="t" x="510" y="20">SCARICO</text>`,
+    parts: [
+      { id: "albero", nome: "Bullone puleggia albero motore", shape: `<polygon points="${hexPts(400, 400, 20)}"/><circle class="in" cx="400" cy="400" r="8"/>`, anchor: [400, 420], label: [400, 490] },
+      { id: "camme", nome: "Bulloni ruote dentate alberi a camme", shape: bolts([[260, 130], [540, 130]], 17), anchor: [252, 116], label: [70, 52] },
+      { id: "tendicatena", nome: "Tendicatena", shape: `<rect x="628" y="250" width="58" height="90" rx="10"/><rect x="540" y="286" width="88" height="18" rx="4"/>` + bolts([[657, 266], [657, 324]], 8), anchor: [686, 295], label: [756, 295] },
+      { id: "pattini", nome: "Viti pattini guida catena", shape: bolts([[190, 180], [312, 386], [478, 408]], 9), anchor: [190, 180], label: [56, 300] }
+    ]
+  },
+  testata: {
+    nome: "Testata", desc: "Bulloni testata, coperchio punterie, candele",
+    vb: "0 0 800 500",
+    base:
+      `<rect class="b" x="46" y="160" width="44" height="190" rx="8"/>` +
+      `<text class="t" x="72" y="255" text-anchor="middle" transform="rotate(-90 72 255)">DISTRIB.</text>` +
+      `<rect class="b" x="90" y="110" width="620" height="290" rx="18"/>` +
+      `<rect class="d" x="116" y="136" width="568" height="238" rx="12"/>` +
+      `<line class="l" x1="130" y1="212" x2="670" y2="212"/><line class="l" x1="130" y1="298" x2="670" y2="298"/>` +
+      `<circle class="l" cx="230" cy="180" r="5"/><circle class="l" cx="350" cy="330" r="5"/><circle class="l" cx="470" cy="180" r="5"/><circle class="l" cx="590" cy="330" r="5"/>` +
+      `<text class="t" x="560" y="98">ASPIRAZIONE</text><text class="t" x="560" y="426">SCARICO</text>` +
+      `<text class="t" x="98" y="470">VISTA DALL'ALTO · CIL. 1 LATO DISTRIBUZIONE</text>`,
+    parts: [
+      { id: "bulloni", nome: "Bulloni testata", shape: bolts([170, 290, 410, 530, 650].flatMap(x => [[x, 175], [x, 335]]), 15), anchor: [410, 160], label: [410, 52] },
+      { id: "candele", nome: "Candele", shape: [230, 350, 470, 590].map(x => `<circle cx="${x}" cy="255" r="20"/><circle class="in" cx="${x}" cy="255" r="9"/>`).join(""), anchor: [610, 255], label: [756, 255] },
+      { id: "coperchio", nome: "Viti coperchio punterie", shape: bolts([[140, 123], [400, 123], [660, 123], [140, 387], [400, 387], [660, 387], [104, 200], [104, 310], [696, 200], [696, 310]], 7), anchor: [140, 387], label: [56, 452] }
+    ]
+  },
+  coppa: {
+    nome: "Coppa olio", desc: "Tappo di scarico, bulloni coppa, filtro olio",
+    vb: "0 0 800 500",
+    base:
+      `<rect class="b" x="80" y="70" width="640" height="360" rx="30"/>` +
+      `<rect class="b" x="320" y="125" width="360" height="270" rx="22"/>` +
+      `<line class="d" x1="410" y1="145" x2="410" y2="375"/><line class="d" x1="500" y1="145" x2="500" y2="375"/><line class="d" x1="590" y1="145" x2="590" y2="375"/>` +
+      `<text class="t" x="336" y="148">POZZETTO</text>` +
+      `<text class="t" x="96" y="466">VISTA DAL BASSO · ANTERIORE A SINISTRA</text>`,
+    parts: [
+      { id: "tappo", nome: "Tappo scarico olio", shape: `<polygon points="${hexPts(560, 320, 20)}"/><circle class="in" cx="560" cy="320" r="9"/>`, anchor: [576, 334], label: [756, 466] },
+      { id: "bulloni", nome: "Bulloni coppa olio", shape: bolts([130, 250, 370, 490, 610, 690].flatMap(x => [[x, 88], [x, 412]]).concat([[98, 180], [98, 320], [702, 180], [702, 320]]), 8), anchor: [130, 88], label: [44, 36] },
+      { id: "filtro", nome: "Filtro olio", shape: `<circle cx="200" cy="250" r="54"/><circle class="in" cx="200" cy="250" r="44" stroke-dasharray="5 4"/><circle cx="200" cy="250" r="14"/>`, anchor: [168, 292], label: [56, 400] }
+    ]
+  },
+  freni: {
+    nome: "Pinza freno", desc: "Viti guida, viti staffa, raccordo tubo, spurgo",
+    vb: "0 0 800 500",
+    base:
+      `<path class="d" d="M118 30 Q 54 250 118 470"/><text class="t" x="40" y="250" transform="rotate(-90 40 250)" text-anchor="middle">DISCO</text>` +
+      `<path class="b" d="M170 360 L250 360 L262 300 L538 300 L550 360 L630 360 L630 440 L550 440 L538 404 L262 404 L250 440 L170 440 Z"/>` +
+      `<rect class="b" x="186" y="96" width="70" height="56" rx="14"/><rect class="b" x="544" y="96" width="70" height="56" rx="14"/>` +
+      `<rect class="b" x="220" y="110" width="360" height="210" rx="44"/>` +
+      `<circle class="d" cx="330" cy="215" r="58"/><circle class="d" cx="470" cy="215" r="58"/>` +
+      `<path class="hose" d="M618 215 C 680 215 700 270 770 270"/>` +
+      `<text class="t" x="276" y="300">PINZA</text><text class="t" x="420" y="392">STAFFA</text>`,
+    parts: [
+      { id: "guida", nome: "Viti guida pinza", shape: bolts([[221, 124], [579, 124]], 16), anchor: [214, 110], label: [150, 40] },
+      { id: "staffa", nome: "Viti staffa pinza", shape: bolts([[210, 400], [590, 400]], 17), anchor: [604, 412], label: [730, 470] },
+      { id: "tubo", nome: "Raccordo tubo freno", shape: `<circle cx="598" cy="215" r="21"/><polygon points="${hexPts(598, 215, 11)}"/>`, anchor: [612, 200], label: [712, 140] },
+      { id: "spurgo", nome: "Vite spurgo", shape: `<rect x="514" y="112" width="12" height="18" rx="3"/><circle cx="520" cy="134" r="11"/><circle class="in" cx="520" cy="134" r="4"/>`, anchor: [520, 112], label: [520, 40] }
+    ]
+  },
+  ruota: {
+    nome: "Ruota e mozzo", desc: "Bulloni o dadi ruota, dado mozzo",
+    vb: "0 0 800 500",
+    base:
+      `<circle class="b" cx="400" cy="255" r="200"/>` +
+      `<circle class="d" cx="400" cy="255" r="152"/>` + radial(400, 255, 160, 192, 24, 7) +
+      `<path class="solid" d="${arc(400, 255, 168, 218, -34, 34)}"/>` +
+      `<circle class="b" cx="400" cy="255" r="108"/><circle class="l" cx="400" cy="255" r="40"/>` +
+      `<text class="t" x="604" y="124">PINZA</text><text class="t" x="168" y="80">DISCO</text>`,
+    parts: [
+      { id: "dadi", nome: "Bulloni / dadi ruota", shape: [0, 1, 2, 3, 4].map(k => { const a = (-90 + 72 * k) * Math.PI / 180; return bolt(+(400 + 72 * Math.cos(a)).toFixed(1), +(255 + 72 * Math.sin(a)).toFixed(1), 16); }).join(""), anchor: [400, 167], label: [400, 30] },
+      { id: "mozzo", nome: "Dado mozzo / semiasse", shape: `<polygon points="${hexPts(400, 255, 26)}"/><circle class="in" cx="400" cy="255" r="12"/>`, anchor: [382, 274], label: [92, 452] }
+    ]
+  }
+};
+const NARROW = () => window.matchMedia("(max-width:600px)").matches;
+const ORDER = ["distribuzione", "testata", "coppa", "freni", "ruota"];
+const TOTAL_PARTS = ORDER.reduce((n, k) => n + SYS[k].parts.length, 0);
+
+const BRANDS = ["Alfa Romeo","Audi","BMW","Citroën","Dacia","Fiat","Ford","Honda","Hyundai","Jeep","Kia","Lancia","Mazda","Mercedes-Benz","Mini","Mitsubishi","Nissan","Opel","Peugeot","Renault","Seat","Škoda","Suzuki","Toyota","Volkswagen","Volvo"];
+
+const CAR_SVG = `<svg viewBox="0 0 200 80" aria-hidden="true"><path class="cb" d="M12 60 C12 51 17 47 30 45 L58 41 C71 28 87 20 110 20 C134 20 151 27 165 41 L179 45 C187 47 189 52 189 60 Z"/><path class="cl" d="M66 41 C78 31 92 26 108 26 L108 41 Z M114 26 C130 26 143 31 154 41 L114 41 Z"/><circle class="cw" cx="50" cy="61" r="13"/><circle class="cl" cx="50" cy="61" r="5"/><circle class="cw" cx="152" cy="61" r="13"/><circle class="cl" cx="152" cy="61" r="5"/></svg>`;
+
+/* ---------- stato ---------- */
+const S = { view: "marche", marca: null, vid: null, sys: null, part: null, q: "", editing: false, draft: {}, error: "", confirmDel: false, adding: false, vdraft: {}, verror: "", confirmVDel: false, saving: false };
+let veicoli = new Map(), coppie = new Map();
+let db = null, dbStatus = "loading", got = { v: false, c: false }, slowTimer = null;
+const key = (vid, sys, part) => `${vid}__${sys}__${part}`;
+const val = (vid, sys, part) => coppie.get(key(vid, sys, part));
+const vLabel = v => `${v.modello}${v.serie ? " (" + v.serie + ")" : ""}`;
+const filledFor = vid => { let n = 0; for (const c of coppie.values()) if (c.veicoloId === vid && c.coppia) n++; return n; };
+const filledSys = (vid, sys) => SYS[sys].parts.filter(p => val(vid, sys, p.id)).length;
+const stateOf = c => !c ? "none" : (c.esempio ? "ex" : "has");
+
+/* ---------- viste ---------- */
+function crumbs() {
+  const items = [`<button data-act="go" data-to="marche">Marche</button>`];
+  const v = veicoli.get(S.vid);
+  if (S.view !== "marche" && S.marca) items.push(S.view === "modelli" ? `<span class="cur">${esc(S.marca)}</span>` : `<button data-act="go" data-to="modelli">${esc(S.marca)}</button>`);
+  if ((S.view === "sistemi" || S.view === "schema") && v) items.push(S.view === "sistemi" ? `<span class="cur">${esc(vLabel(v))}</span>` : `<button data-act="go" data-to="sistemi">${esc(vLabel(v))}</button>`);
+  if (S.view === "schema" && S.sys) items.push(`<span class="cur">${esc(SYS[S.sys].nome)}</span>`);
+  return `<nav class="crumbs" aria-label="Percorso">${items.join('<span class="sep">›</span>')}</nav>`;
+}
+
+function viewMarche() {
+  const counts = {};
+  for (const v of veicoli.values()) if (!v.demo) counts[v.marca] = (counts[v.marca] || 0) + 1;
+  const all = [...new Set([...BRANDS, ...Object.keys(counts)])].sort((a, b) => a.localeCompare(b, "it"));
+  const q = S.q.trim().toLowerCase();
+  const list = all.filter(b => !q || b.toLowerCase().includes(q));
+  const demo = [...veicoli.entries()].find(([, v]) => v.demo);
+  return `
+  <div class="head">
+    <div><div class="eyebrow">Passo 1 di 4</div><h1>Scegli la marca</h1>
+    <p>Marca, modello, sistema: poi tocca il pezzo sul disegno e leggi coppia di serraggio, sequenza e fonte.</p></div>
+    <div class="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+    <input id="q-marca" type="search" placeholder="Cerca marca" aria-label="Cerca marca" value="${esc(S.q)}" autocomplete="off"></div>
+  </div>
+  <div class="brands">${list.map(b => {
+    const n = counts[b] || 0;
+    return `<button class="brand ${n ? "has" : "empty"}" data-act="marca" data-v="${esc(b)}"><span class="bn">${esc(b)}</span><span class="bc">${n ? n + (n === 1 ? " modello" : " modelli") : "nessun modello"}</span></button>`;
+  }).join("") || `<p class="spec">Nessuna marca trovata per “${esc(S.q)}”.</p>`}
+  ${q && !all.some(b => b.toLowerCase() === q) ? `<button class="brand empty" data-act="marca" data-v="${esc(S.q.trim())}"><span class="bn">+ ${esc(S.q.trim())}</span><span class="bc">aggiungi marca</span></button>` : ""}</div>
+  <div class="info">
+    ${demo ? `<div class="note demo"><h3>Guarda un esempio compilato</h3><p>Un veicolo di prova con i valori già inseriti, per vedere come funziona. I numeri sono inventati: non usarli su un'auto vera.</p><button class="btn" data-act="veicolo" data-v="${esc(demo[0])}" data-m="${esc(demo[1].marca)}">Apri l'esempio</button></div>` : ""}
+    <div class="note"><h3>Da dove arrivano i valori</h3><p>Li inserisci tu, copiandoli dal manuale ufficiale della casa (portale riparazioni del costruttore), da un manuale Haynes o dalla documentazione dell'officina. Ogni valore porta con sé la fonte, così sai sempre da dove viene.</p></div>
+    ${store.mode === "local"
+      ? `<div class="note"><h3>Backup dei tuoi dati</h3><p>I valori restano salvati su questo dispositivo. Esporta un backup per non perderli o per passarli su un altro telefono, tablet o PC.</p><div class="row"><button class="btn" data-act="export">Esporta backup</button><button class="btn ghost" data-act="import">Importa backup</button></div></div>`
+      : `<div class="note"><h3>Archivio condiviso</h3><p>Quello che salvi resta nell'archivio di questa pagina. Se la condividi con un collega, vede e può aggiungere gli stessi valori.</p></div>`}
+  </div>`;
+}
+
+function viewModelli() {
+  const list = [...veicoli.entries()].filter(([, v]) => v.marca === S.marca).sort((a, b) => (a[1].modello + a[1].serie).localeCompare(b[1].modello + b[1].serie, "it"));
+  const cards = list.map(([id, v]) => {
+    const n = filledFor(id), pct = Math.round(n / TOTAL_PARTS * 100);
+    return `<button class="car" data-act="veicolo" data-v="${esc(id)}">${CAR_SVG}
+      <span class="cn">${esc(vLabel(v))}</span>
+      <span class="cs">${esc(v.motore || "Motore non indicato")}${v.anni ? " · " + esc(v.anni) : ""}</span>
+      <span class="meter"><span class="bar"><i style="width:${pct}%"></i></span>${n}/${TOTAL_PARTS} valori</span></button>`;
+  }).join("");
+  const d = S.vdraft;
+  const form = S.adding ? `
+    <div class="panel" id="add-form">
+      <h2 style="font-size:24px;text-transform:uppercase">Nuovo modello ${esc(S.marca)}</h2>
+      <div class="form">
+        <div class="field"><label for="v-modello">Modello</label><input id="v-modello" data-draft="vdraft" data-k="modello" value="${esc(d.modello)}" placeholder="es. CX-30"></div>
+        <div class="field"><label for="v-serie">Serie / codice telaio</label><input id="v-serie" data-draft="vdraft" data-k="serie" value="${esc(d.serie)}" placeholder="es. DM"></div>
+        <div class="field"><label for="v-motore">Motore</label><input id="v-motore" data-draft="vdraft" data-k="motore" value="${esc(d.motore)}" placeholder="es. 2.0 e-Skyactiv G benzina"></div>
+        <div class="field"><label for="v-anni">Anni</label><input id="v-anni" data-draft="vdraft" data-k="anni" value="${esc(d.anni)}" placeholder="es. dal 2019"></div>
+      </div>
+      ${S.verror ? `<p class="err">${esc(S.verror)}</p>` : ""}
+      <div class="row"><button class="btn" data-act="add-save" ${S.saving ? "disabled" : ""}>Salva modello</button><button class="btn ghost" data-act="add-cancel">Annulla</button></div>
+    </div>` : "";
+  return `
+  <div class="head"><div><div class="eyebrow">Passo 2 di 4</div><h1>${esc(S.marca)}</h1>
+  <p>${list.length ? "Scegli modello e motore. La barra indica quanti valori sono già stati inseriti." : "Ancora nessun modello per questa marca. Aggiungi il primo: bastano modello e motore."}</p></div></div>
+  <div class="cars">${cards}${S.adding ? "" : `<button class="car add" data-act="add-open" ${store.ok ? "" : "disabled"}><span class="plus">+</span>Aggiungi modello</button>`}</div>
+  ${form}`;
+}
+
+function viewSistemi() {
+  const v = veicoli.get(S.vid);
+  if (!v) return `<p class="spec">Veicolo non trovato.</p>`;
+  const tiles = ORDER.map(k => {
+    const s = SYS[k], n = filledSys(S.vid, k);
+    return `<button class="sys" data-act="sistema" data-v="${k}"><span class="thumbbox">${drawSvg(k, true)}</span>
+      <span class="tn">${esc(s.nome)}</span><span class="td">${esc(s.desc)}</span>
+      <span class="meter"><span class="bar"><i style="width:${Math.round(n / s.parts.length * 100)}%"></i></span>${n}/${s.parts.length}</span></button>`;
+  }).join("");
+  return `
+  <div class="head"><div><div class="eyebrow">Passo 3 di 4 · ${esc(v.marca)}</div><h1>${esc(vLabel(v))}</h1>
+  <div class="vehicle"><span class="spec">${esc(v.motore || "Motore non indicato")}</span>${v.anni ? `<span class="spec">${esc(v.anni)}</span>` : ""}<span class="spec">${filledFor(S.vid)}/${TOTAL_PARTS} valori inseriti</span></div></div></div>
+  ${v.demo ? `<div class="banner"><b>Veicolo di esempio.</b> I valori sono inventati per mostrare come funziona l'app. Non usarli su un'auto vera.</div>` : ""}
+  <div class="systems">${tiles}</div>
+  <div class="row">${S.confirmVDel
+    ? `<span>Eliminare ${esc(vLabel(v))} e tutti i suoi valori?</span><button class="btn danger" data-act="vdel-yes">Sì, elimina</button><button class="btn ghost" data-act="vdel-no">Annulla</button>`
+    : `<button class="btn link" data-act="vdel-ask" ${store.ok ? "" : "disabled"}>Elimina questo veicolo</button>`}</div>`;
+}
+
+function drawSvg(k, thumb) {
+  const s = SYS[k];
+  let parts = "", marks = "";
+  const R = NARROW() ? 30 : 16;
+  s.parts.forEach((p, i) => {
+    const c = val(S.vid, k, p.id), st = stateOf(c);
+    const sel = !thumb && S.part === p.id ? " sel" : "";
+    const cls = (st === "none" ? "" : " " + st) + sel;
+    if (thumb) { parts += `<g class="pt${cls}">${p.shape}</g>`; return; }
+    const lbl = `${i + 1}. ${p.nome}${c ? ": " + c.coppia : ", valore mancante"}`;
+    const dl = S.animate ? ` style="animation-delay:${(0.55 + i * 0.14).toFixed(2)}s"` : "";
+    parts += `<g class="pt${cls}"${dl} data-act="part" data-v="${p.id}" tabindex="0" role="button" aria-label="${esc(lbl)}">${p.shape}</g>`;
+    marks += `<g class="mk${cls}"${dl} data-act="part" data-v="${p.id}" aria-hidden="true"><line x1="${p.label[0]}" y1="${p.label[1]}" x2="${p.anchor[0]}" y2="${p.anchor[1]}"/><circle cx="${p.label[0]}" cy="${p.label[1]}" r="${R}"/><text x="${p.label[0]}" y="${p.label[1]}">${i + 1}</text></g>`;
+  });
+  return `<svg class="${thumb ? "thumb" : "draw" + (S.animate ? " anim" : "")}" viewBox="${s.vb}" role="img" aria-label="Schema ${esc(s.nome)}">${s.base}${parts}${marks}</svg>`;
+}
+
+function viewSchema() {
+  const v = veicoli.get(S.vid), s = SYS[S.sys];
+  if (!v || !s) return `<p class="spec">Schema non trovato.</p>`;
+  const idx = ORDER.indexOf(S.sys) + 1;
+  const rows = s.parts.map((p, i) => {
+    const c = val(S.vid, S.sys, p.id), st = stateOf(c);
+    return `<tr class="${S.part === p.id ? "sel" : ""}" data-act="part" data-v="${p.id}" tabindex="0"><td class="n">${i + 1}</td><td>${esc(p.nome)}</td><td class="v ${st}">${c ? esc(c.coppia) : "—"}</td><td>${chip(st)}</td></tr>`;
+  }).join("");
+  return `
+  <div class="head"><div><div class="eyebrow">Passo 4 di 4 · ${esc(v.marca)} ${esc(vLabel(v))}</div><h1>${esc(s.nome)}</h1>
+  <p>Tocca un pezzo sul disegno o una riga della tabella.</p></div></div>
+  ${v.demo ? `<div class="banner"><b>Veicolo di esempio.</b> Valori inventati, solo per prova.</div>` : ""}
+  <div class="work">
+    <div class="sheet">
+      <div class="legend"><span><i class="has"></i>Valore inserito</span>${v.demo ? `<span><i class="ex"></i>Valore di esempio</span>` : ""}<span><i></i>Da inserire</span><span><i class="sel"></i>Selezionato</span></div>
+      <div class="sheet-draw"><div class="zoomwrap" id="zoomwrap">${drawSvg(S.sys, false)}<div class="zctl"><button data-act="zoom-in" aria-label="Ingrandisci">+</button><button data-act="zoom-out" aria-label="Riduci">−</button><button data-act="zoom-reset" aria-label="Vista intera"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div></div><p class="zhint">Doppio tocco o pizzica per ingrandire · trascina per spostarti</p></div>
+      <div class="cart"><div><span>Veicolo</span><b>${esc(v.marca)} ${esc(vLabel(v))}</b></div><div><span>Motore</span><b>${esc(v.motore || "—")}</b></div><div><span>Foglio</span><b>${idx}/${ORDER.length}</b></div></div>
+      <div class="tablebox" style="border-top:1px solid var(--rule)"><table><thead><tr><th>N°</th><th>Componente</th><th>Coppia</th><th>Stato</th></tr></thead><tbody>${rows}</tbody></table></div>
+    </div>
+    <aside class="side" id="side">${sidePanel()}</aside>
+  </div>`;
+}
+
+function chip(st) {
+  return st === "has" ? `<span class="chip has">Inserito</span>` : st === "ex" ? `<span class="chip ex">Esempio</span>` : `<span class="chip none">Da inserire</span>`;
+}
+
+function sidePanel() {
+  const s = SYS[S.sys];
+  const p = s.parts.find(x => x.id === S.part);
+  if (!p) return `<div class="panel"><div class="empty-state">
+    <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M14 6l20 20-6 1 5 11-4 2-5-11-5 5z"/></svg>
+    <h2 style="font-size:24px;text-transform:uppercase;color:var(--ink)">Scegli un pezzo</h2>
+    <p>Tocca un componente sul disegno: qui compaiono coppia di serraggio, sequenza, note e fonte.</p></div></div>`;
+  const n = s.parts.indexOf(p) + 1;
+  const c = val(S.vid, S.sys, p.id), st = stateOf(c);
+  const head = `<div class="ph"><span class="num">${n}</span><h2>${esc(p.nome)}</h2></div>`;
+  if (S.editing) {
+    const d = S.draft;
+    return `<div class="panel">${head}
+      <div class="form">
+        <div class="field wide"><label for="f-coppia">Coppia di serraggio</label><input id="f-coppia" data-draft="draft" data-k="coppia" value="${esc(d.coppia)}" placeholder="es. 40 Nm + 90° + 90°"><small>Scrivi come sul manuale: Nm, angoli, più fasi.</small></div>
+        <div class="field wide"><label for="f-fasi">Sequenza e fasi</label><textarea id="f-fasi" data-draft="draft" data-k="fasi" placeholder="Ordine di serraggio, passaggi, viti da sostituire, frenafiletti, olio sul filetto…">${esc(d.fasi)}</textarea></div>
+        <div class="field wide"><label for="f-fonte">Fonte</label><input id="f-fonte" data-draft="draft" data-k="fonte" value="${esc(d.fonte)}" placeholder="es. Manuale officina Mazda, sez. 01-10, pag. 12"><small>Obbligatoria: serve a ritrovare il dato.</small></div>
+        <div class="field wide"><label for="f-note">Note</label><textarea id="f-note" data-draft="draft" data-k="note" placeholder="Attrezzi, chiave, attenzioni">${esc(d.note)}</textarea></div>
+      </div>
+      ${S.error ? `<p class="err">${esc(S.error)}</p>` : ""}
+      <div class="row"><button class="btn" data-act="save" ${S.saving ? "disabled" : ""}>${S.saving ? "Salvo…" : "Salva valore"}</button><button class="btn ghost" data-act="cancel">Annulla</button></div>
+    </div>`;
+  }
+  if (!c) return `<div class="panel">${head}${chip("none")}
+    <div class="missing">Nessun valore inserito per questo pezzo. Prendilo dal manuale ufficiale e inseriscilo con la fonte.</div>
+    <div class="row"><button class="btn" data-act="edit" ${store.ok ? "" : "disabled"}>Inserisci valore</button></div></div>`;
+  const when = c.aggiornato ? new Date(c.aggiornato).toLocaleDateString("it-IT", { day: "numeric", month: "short", year: "numeric" }) : "";
+  return `<div class="panel">${head}${chip(st)}
+    <div class="torque ${st === "ex" ? "exv" : ""}">${esc(c.coppia)}</div>
+    ${st === "ex" ? `<div class="banner"><b>Valore di esempio.</b> Non usarlo per lavorare.</div>` : ""}
+    ${c.fasi ? `<div class="kv"><h3>Sequenza e fasi</h3><p class="pre">${esc(c.fasi)}</p></div>` : ""}
+    ${c.note ? `<div class="kv"><h3>Note</h3><p class="pre">${esc(c.note)}</p></div>` : ""}
+    <div class="kv"><h3>Fonte</h3><p class="pre">${esc(c.fonte || "Non indicata")}</p></div>
+    ${when ? `<div class="kv"><h3>Aggiornato</h3><p>${esc(when)}</p></div>` : ""}
+    <div class="row">${S.confirmDel
+      ? `<span>Eliminare questo valore?</span><button class="btn danger" data-act="del-yes">Elimina</button><button class="btn ghost" data-act="del-no">Annulla</button>`
+      : `<button class="btn" data-act="edit" ${store.ok ? "" : "disabled"}>Modifica</button><button class="btn ghost" data-act="del-ask" ${store.ok ? "" : "disabled"}>Elimina</button>`}</div>
+  </div>`;
+}
+
+/* ---------- render ---------- */
+const app = document.getElementById("app");
+function render() {
+  const ae = document.activeElement, fid = ae && ae.id, ss = ae && "selectionStart" in ae ? ae.selectionStart : null;
+  let body;
+  if (S.view === "modelli") body = viewModelli();
+  else if (S.view === "sistemi") body = viewSistemi();
+  else if (S.view === "schema") body = viewSchema();
+  else body = viewMarche();
+  let banner = "";
+  if (dbStatus === "off") banner = `<div class="banner"><b>Archivio non disponibile.</b> Apri la pagina dal tuo account Claude per vedere e salvare i valori.</div>`;
+  else if (dbStatus === "slow") banner = `<div class="banner"><b>L'archivio non risponde ancora.</b> I dati potrebbero comparire tra poco; controlla la connessione.</div>`;
+  else if (dbStatus === "error") banner = `<div class="banner"><b>Collegamento all'archivio interrotto.</b> Ricarica la pagina per riprovare.</div>`;
+  app.innerHTML = crumbs() + banner + body + `<p class="foot">I valori di coppia sono inseriti a mano e vanno sempre verificati sulla documentazione ufficiale del costruttore prima di lavorare.${window.APP_BUILD ? " · Versione del " + esc(window.APP_BUILD) : ""}</p>`;
+  S.animate = false; applyZoom();
+  if (S.enter) { S.enter = false; app.classList.remove("enter"); void app.offsetWidth; app.classList.add("enter"); }
+  if (fid) { const el = document.getElementById(fid); if (el) { el.focus(); if (ss != null && el.setSelectionRange) try { el.setSelectionRange(ss, ss); } catch (e) {} } }
+  const st = document.getElementById("status");
+  const lab = { local: "Salvato sul dispositivo", loading: "Collegamento…", ok: "Archivio collegato", slow: "Archivio lento", off: "Archivio non disponibile", error: "Archivio scollegato" }[dbStatus];
+  st.className = "status " + dbStatus; st.querySelector("span").textContent = lab;
+}
+
+let toastT;
+function toast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 2600); }
+/* ---------- zoom e spostamento ---------- */
+const Z = { k: 1, x: 0, y: 0 };
+let suppressClick = false;
+function clampZ(w) { Z.k = Math.min(4, Math.max(1, Z.k)); const W = w.clientWidth, H = w.clientHeight; Z.x = Math.min(0, Math.max(W - W * Z.k, Z.x)); Z.y = Math.min(0, Math.max(H - H * Z.k, Z.y)); }
+function applyZoom() { const w = document.getElementById("zoomwrap"); if (!w) return; const svg = w.querySelector("svg.draw"); if (!svg) return; clampZ(w); svg.style.transform = Z.k > 1.001 ? `translate(${Z.x}px,${Z.y}px) scale(${Z.k})` : ""; w.classList.toggle("zoomed", Z.k > 1.01); }
+function zoomAt(f, cx, cy) { const k2 = Math.min(4, Math.max(1, Z.k * f)), r = k2 / Z.k; Z.x = cx - (cx - Z.x) * r; Z.y = cy - (cy - Z.y) * r; Z.k = k2; applyZoom(); }
+function zoomMid(f) { const w = document.getElementById("zoomwrap"); if (w) zoomAt(f, w.clientWidth / 2, w.clientHeight / 2); }
+const ptrs = new Map(); let moved = 0, pinch = null;
+document.addEventListener("pointerdown", e => {
+  const w = e.target.closest && e.target.closest("#zoomwrap");
+  if (!w || e.target.closest(".zctl")) return;
+  ptrs.set(e.pointerId, { x: e.clientX, y: e.clientY }); moved = 0;
+  if (ptrs.size === 2) { const [a, b] = [...ptrs.values()]; pinch = { d: Math.hypot(a.x - b.x, a.y - b.y) || 1 }; }
+});
+window.addEventListener("pointermove", e => {
+  if (!ptrs.has(e.pointerId)) return;
+  const w = document.getElementById("zoomwrap"); if (!w) { ptrs.clear(); return; }
+  const prev = ptrs.get(e.pointerId), cur = { x: e.clientX, y: e.clientY }; ptrs.set(e.pointerId, cur);
+  if (ptrs.size === 2 && pinch) {
+    const [a, b] = [...ptrs.values()], d = Math.hypot(a.x - b.x, a.y - b.y) || 1, r = w.getBoundingClientRect();
+    w.classList.add("dragging"); zoomAt(d / pinch.d, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top); pinch.d = d; moved += 10; return;
+  }
+  if (Z.k > 1.01) { w.classList.add("dragging"); Z.x += cur.x - prev.x; Z.y += cur.y - prev.y; moved += Math.abs(cur.x - prev.x) + Math.abs(cur.y - prev.y); applyZoom(); }
+});
+const endPtr = e => {
+  if (!ptrs.has(e.pointerId)) return;
+  ptrs.delete(e.pointerId); if (ptrs.size < 2) pinch = null;
+  if (!ptrs.size) { const w = document.getElementById("zoomwrap"); if (w) w.classList.remove("dragging"); }
+  if (moved > 6) { suppressClick = true; setTimeout(() => { suppressClick = false; }, 60); }
+};
+window.addEventListener("pointerup", endPtr); window.addEventListener("pointercancel", endPtr);
+document.addEventListener("dblclick", e => {
+  const w = e.target.closest && e.target.closest("#zoomwrap");
+  if (!w || e.target.closest(".zctl")) return;
+  const r = w.getBoundingClientRect();
+  if (Z.k > 1.5) { Z.k = 1; Z.x = 0; Z.y = 0; applyZoom(); } else zoomAt(2.2, e.clientX - r.left, e.clientY - r.top);
+});
+document.addEventListener("wheel", e => {
+  const w = e.target.closest && e.target.closest("#zoomwrap");
+  if (!w || !(e.ctrlKey || Z.k > 1.01)) return;
+  e.preventDefault(); const r = w.getBoundingClientRect();
+  zoomAt(Math.exp(-e.deltaY * 0.0025), e.clientX - r.left, e.clientY - r.top);
+}, { passive: false });
+window.addEventListener("resize", () => applyZoom());
+
+/* ---------- backup ---------- */
+function exportBackup() {
+  const data = JSON.stringify({ app: "manuale-coppie", versione: 1, esportato: new Date().toISOString(), veicoli: Object.fromEntries(veicoli), coppie: Object.fromEntries(coppie) }, null, 1);
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([data], { type: "application/json" }));
+  a.download = "manuale-coppie-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+  document.body.appendChild(a); a.click();
+  setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500);
+  toast("Backup esportato");
+}
+document.getElementById("imp").addEventListener("change", async e => {
+  const f = e.target.files && e.target.files[0]; e.target.value = "";
+  if (!f) return;
+  try {
+    const d = JSON.parse(await f.text());
+    if (!d || typeof d !== "object" || typeof d.veicoli !== "object" || typeof d.coppie !== "object") throw new Error("formato");
+    veicoli = new Map([...veicoli, ...Object.entries(d.veicoli)]);
+    coppie = new Map([...coppie, ...Object.entries(d.coppie)]);
+    localSave(); render();
+    toast(`Backup importato: ${Object.keys(d.veicoli).length} veicoli, ${Object.keys(d.coppie).length} valori`);
+  } catch (err) { toast("File non valido: scegli un backup esportato da questa app."); }
+});
+
+function errMsg(e) {
+  const code = e && e.code;
+  if (code === "permission_denied" || code === "not_granted" || code === "forbidden") return "Non hai i permessi per modificare questo archivio.";
+  return (e && e.message) ? e.message : "Errore sconosciuto.";
+}
+
+/* ---------- azioni ---------- */
+function go(view) { S.view = view; S.enter = true; S.editing = false; S.confirmDel = false; S.confirmVDel = false; S.error = ""; S.adding = false; S.verror = ""; window.scrollTo(0, 0); render(); }
+
+async function act(a, d) {
+  switch (a) {
+    case "home": S.marca = null; S.vid = null; S.sys = null; S.part = null; go("marche"); break;
+    case "go":
+      if (d.to === "marche") { S.marca = null; S.vid = null; S.sys = null; S.part = null; }
+      if (d.to === "modelli") { S.vid = null; S.sys = null; S.part = null; }
+      if (d.to === "sistemi") { S.sys = null; S.part = null; }
+      go(d.to); break;
+    case "marca": S.marca = d.v; S.q = ""; go("modelli"); break;
+    case "veicolo": S.vid = d.v; if (d.m) S.marca = d.m; go("sistemi"); break;
+    case "sistema": S.sys = d.v; S.part = null; Z.k = 1; Z.x = 0; Z.y = 0; S.animate = true; go("schema"); break;
+    case "zoom-in": zoomMid(1.5); break;
+    case "zoom-out": zoomMid(1 / 1.5); break;
+    case "zoom-reset": Z.k = 1; Z.x = 0; Z.y = 0; applyZoom(); break;
+    case "export": exportBackup(); break;
+    case "import": document.getElementById("imp").click(); break;
+    case "part": {
+      S.part = d.v; S.editing = false; S.confirmDel = false; S.error = ""; render();
+      if (window.matchMedia("(max-width:880px)").matches) { const sd = document.getElementById("side"); if (sd) sd.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth", block: "start" }); }
+      break;
+    }
+    case "edit": {
+      const c = val(S.vid, S.sys, S.part) || {};
+      S.draft = { coppia: c.coppia || "", fasi: c.fasi || "", fonte: c.esempio ? "" : (c.fonte || ""), note: c.note || "" };
+      S.editing = true; S.error = ""; render();
+      const f = document.getElementById("f-coppia"); if (f) f.focus();
+      break;
+    }
+    case "cancel": S.editing = false; S.error = ""; render(); break;
+    case "save": {
+      const dd = S.draft, coppia = (dd.coppia || "").trim(), fonte = (dd.fonte || "").trim();
+      if (!coppia) { S.error = "Scrivi la coppia di serraggio."; render(); return; }
+      if (!fonte) { S.error = "Indica la fonte del valore."; render(); return; }
+      if (!store.ok) return;
+      S.saving = true; S.error = ""; render();
+      try {
+        await store.set("coppie", key(S.vid, S.sys, S.part), { veicoloId: S.vid, schema: S.sys, punto: S.part, coppia, fasi: (dd.fasi || "").trim(), fonte, note: (dd.note || "").trim(), esempio: false, aggiornato: new Date().toISOString() });
+        S.editing = false; toast("Valore salvato");
+      } catch (e) { S.error = "Non salvato. " + errMsg(e); }
+      S.saving = false; render(); break;
+    }
+    case "del-ask": S.confirmDel = true; render(); break;
+    case "del-no": S.confirmDel = false; render(); break;
+    case "del-yes": {
+      if (!store.ok) return;
+      try { await store.del("coppie", key(S.vid, S.sys, S.part)); toast("Valore eliminato"); }
+      catch (e) { toast("Non eliminato. " + errMsg(e)); }
+      S.confirmDel = false; render(); break;
+    }
+    case "add-open": S.adding = true; S.vdraft = {}; S.verror = ""; render(); { const f = document.getElementById("v-modello"); if (f) { f.focus(); f.scrollIntoView({ block: "center" }); } } break;
+    case "add-cancel": S.adding = false; S.verror = ""; render(); break;
+    case "add-save": {
+      const v = S.vdraft, modello = (v.modello || "").trim();
+      if (!modello) { S.verror = "Scrivi il nome del modello."; render(); return; }
+      if (!store.ok) return;
+      S.saving = true; render();
+      try {
+        const ref = { id: await store.add("veicoli", { marca: S.marca, modello, serie: (v.serie || "").trim(), motore: (v.motore || "").trim(), anni: (v.anni || "").trim(), demo: false, creato: new Date().toISOString() }) };
+        S.adding = false; S.saving = false; S.vid = ref.id; toast("Modello aggiunto"); go("sistemi");
+      } catch (e) { S.saving = false; S.verror = "Non salvato. " + errMsg(e); render(); }
+      break;
+    }
+    case "vdel-ask": S.confirmVDel = true; render(); break;
+    case "vdel-no": S.confirmVDel = false; render(); break;
+    case "vdel-yes": {
+      if (!store.ok) return;
+      const vid = S.vid;
+      try {
+        for (const [id, c] of [...coppie.entries()]) if (c.veicoloId === vid) await store.del("coppie", id);
+        await store.del("veicoli", vid);
+        toast("Veicolo eliminato"); S.vid = null; go("modelli");
+      } catch (e) { toast("Non eliminato. " + errMsg(e)); S.confirmVDel = false; render(); }
+      break;
+    }
+  }
+}
+
+document.addEventListener("click", e => {
+  if (suppressClick) { suppressClick = false; return; }
+  const el = e.target.closest("[data-act]");
+  if (!el || el.disabled) return;
+  act(el.dataset.act, el.dataset);
+});
+document.addEventListener("keydown", e => {
+  if (e.key !== "Enter" && e.key !== " ") return;
+  const el = e.target.closest && e.target.closest("[data-act][tabindex]");
+  if (!el || el.tagName === "BUTTON") return;
+  e.preventDefault(); act(el.dataset.act, el.dataset);
+});
+document.addEventListener("input", e => {
+  const t = e.target;
+  if (t.id === "q-marca") { S.q = t.value; render(); return; }
+  if (t.dataset && t.dataset.draft) S[t.dataset.draft][t.dataset.k] = t.value;
+});
+
+/* ---------- archivio ---------- */
+const LS_KEY = "manuale-coppie-v1";
+const store = {
+  ok: false, mode: null,
+  async set(col, id, data) { if (this.mode === "db") return db.collection(col).doc(id).set(data); localPut(col, id, data); },
+  async del(col, id) { if (this.mode === "db") return db.collection(col).doc(id).delete(); localPut(col, id, null); },
+  async add(col, data) {
+    if (this.mode === "db") return (await db.collection(col).add(data)).id;
+    const id = "v" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+    localPut(col, id, data); return id;
+  }
+};
+let seedVersion = 0;
+function localSave() {
+  try { localStorage.setItem(LS_KEY, JSON.stringify({ seedVersion, veicoli: Object.fromEntries(veicoli), coppie: Object.fromEntries(coppie) })); return true; }
+  catch (e) { return false; }
+}
+function localPut(col, id, data) {
+  const m = new Map(col === "veicoli" ? veicoli : coppie);
+  if (data) m.set(id, data); else m.delete(id);
+  if (col === "veicoli") veicoli = m; else coppie = m;
+  if (!localSave()) toast("Memoria del dispositivo non disponibile: esporta un backup per non perdere i dati.");
+  render();
+}
+function localInit() {
+  let data = null;
+  try { data = JSON.parse(localStorage.getItem(LS_KEY) || "null"); } catch (e) { data = null; }
+  const seed = window.SEED_DATA || { versione: 0, veicoli: {}, coppie: {} };
+  if (!data) data = { seedVersion: 0, veicoli: {}, coppie: {} };
+  veicoli = new Map(Object.entries(data.veicoli || {}));
+  coppie = new Map(Object.entries(data.coppie || {}));
+  seedVersion = data.seedVersion || 0;
+  /* nuove macchine e valori arrivati con un aggiornamento: si aggiungono, senza toccare quello che hai inserito tu */
+  let added = 0;
+  if ((seed.versione || 0) > seedVersion) {
+    for (const [id, v] of Object.entries(seed.veicoli || {})) if (!veicoli.has(id)) { veicoli.set(id, v); added++; }
+    for (const [id, c] of Object.entries(seed.coppie || {})) if (!coppie.has(id)) coppie.set(id, c);
+    const hadData = seedVersion > 0;
+    seedVersion = seed.versione || 0;
+    if (hadData && added) setTimeout(() => toast(`Aggiornamento: ${added} nuovi veicoli disponibili`), 600);
+  }
+  localSave();
+  store.ok = true; store.mode = "local"; dbStatus = "local"; render();
+}
+function ready() {
+  if (got.v && got.c && dbStatus !== "ok") { dbStatus = "ok"; clearTimeout(slowTimer); }
+}
+async function connect() {
+  if (!(window.claude && typeof window.claude.use === "function")) { localInit(); return; }
+  try { db = await window.claude.use("db"); } catch (e) { db = null; }
+  if (!db) { dbStatus = "off"; render(); return; }
+  store.ok = true; store.mode = "db";
+  slowTimer = setTimeout(() => { if (dbStatus === "loading") { dbStatus = "slow"; render(); } }, 10000);
+  const fail = () => { dbStatus = "error"; clearTimeout(slowTimer); render(); };
+  db.collection("veicoli").onSnapshot(s => {
+    const m = new Map(); s.docs.forEach(d => m.set(d.id, d.data())); veicoli = m;
+    if (!s.metadata.fromCache) got.v = true; ready(); render();
+  }, fail);
+  db.collection("coppie").onSnapshot(s => {
+    const m = new Map(); s.docs.forEach(d => m.set(d.id, d.data())); coppie = m;
+    if (!s.metadata.fromCache) got.c = true; ready(); render();
+  }, fail);
+}
+
+render();
+connect();
+let lastNarrow = NARROW();
+window.addEventListener("resize", () => { const n = NARROW(); if (n !== lastNarrow) { lastNarrow = n; render(); } });
+})();
+</script>
