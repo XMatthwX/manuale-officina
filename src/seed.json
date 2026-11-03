@@ -1,5 +1,5 @@
 {
- "versione": 1,
+ "versione": 2,
  "veicoli": {
   "mazda2-dj-15g": {
    "marca": "Mazda",
@@ -40,6 +40,38 @@
    "motore": "1.6 benzina",
    "anni": "",
    "demo": true
+  },
+  "cx30-dm-20g": {
+   "marca": "Mazda",
+   "modello": "CX-30",
+   "serie": "DM",
+   "motore": "2.0 e-Skyactiv G benzina",
+   "anni": "dal 2019",
+   "demo": false
+  },
+  "cx3-dk-20g": {
+   "marca": "Mazda",
+   "modello": "CX-3",
+   "serie": "DK",
+   "motore": "2.0 Skyactiv-G benzina",
+   "anni": "2015–2022",
+   "demo": false
+  },
+  "mazda6-gj-22d": {
+   "marca": "Mazda",
+   "modello": "Mazda6",
+   "serie": "GJ/GL",
+   "motore": "2.2 Skyactiv-D diesel",
+   "anni": "2012–2024",
+   "demo": false
+  },
+  "cx60-kh-33d": {
+   "marca": "Mazda",
+   "modello": "CX-60",
+   "serie": "KH",
+   "motore": "3.3 e-Skyactiv D diesel",
+   "anni": "dal 2022",
+   "demo": false
   }
  },
  "coppie": {

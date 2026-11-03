@@ -349,6 +349,31 @@ const SYS = {
       { id: "spurgo", nome: "Vite spurgo", shape: `<rect x="514" y="112" width="12" height="18" rx="3"/><circle cx="520" cy="134" r="11"/><circle class="in" cx="520" cy="134" r="4"/>`, anchor: [520, 112], label: [520, 40] }
     ]
   },
+  sospensioni: {
+    nome: "Sospensioni anteriori", desc: "Duomo, ammortizzatore, braccio, snodo, biellette",
+    vb: "0 0 800 540",
+    base:
+      `<rect class="b" x="392" y="58" width="16" height="160" rx="4"/>` +
+      `<polyline class="l" style="stroke-width:7;stroke-linejoin:round" points="${Array.from({ length: 11 }, (_, i) => (i % 2 ? 470 : 330) + "," + (74 + i * 15)).join(" ")}"/>` +
+      `<rect class="b" x="300" y="30" width="200" height="26" rx="6"/>` +
+      `<rect class="b" x="310" y="224" width="180" height="12" rx="4"/>` +
+      `<rect class="b" x="372" y="236" width="56" height="130" rx="8"/>` +
+      `<rect class="b" x="428" y="304" width="34" height="66" rx="6"/>` +
+      `<path class="b" d="M366 366 L462 366 L474 420 L470 466 L430 492 L372 486 L356 430 Z"/>` +
+      `<circle class="b" cx="540" cy="440" r="48"/><circle class="l" cx="540" cy="440" r="20"/>` +
+      `<path class="b" d="M106 456 L384 474 L384 498 L106 490 Z"/>` +
+      `<circle class="b" cx="130" cy="473" r="20"/><circle class="b" cx="200" cy="477" r="16"/>` +
+      `<path class="rail-o" d="M60 380 L244 380"/><path class="rail" d="M60 380 L244 380"/>` +
+      `<path class="rail-o" d="M250 380 L362 290"/><path class="rail" d="M250 380 L362 290"/>` +
+      `<text class="t" x="500" y="528">MACPHERSON · VISTA LATERALE</text><text class="t" x="60" y="356">BARRA STABILIZZATRICE</text><text class="t" x="604" y="444">MOZZO</text>`,
+    parts: [
+      { id: "duomo", nome: "Dadi supporto duomo", shape: bolts([[325, 43], [475, 43]], 10) + `<polygon points="${hexPts(400, 43, 12)}"/>`, anchor: [318, 34], label: [200, 40] },
+      { id: "fusello", nome: "Bulloni ammortizzatore–fusello", shape: bolts([[445, 322], [445, 352]], 12), anchor: [457, 322], label: [640, 290] },
+      { id: "braccio", nome: "Bulloni braccio oscillante", shape: bolts([[130, 473], [200, 477]], 12), anchor: [124, 462], label: [56, 440] },
+      { id: "snodo", nome: "Dado snodo sferico", shape: `<polygon points="${hexPts(372, 488, 12)}"/><circle class="in" cx="372" cy="488" r="5"/>`, anchor: [366, 498], label: [292, 512] },
+      { id: "biellette", nome: "Dadi bielletta barra stabilizzatrice", shape: bolts([[250, 380], [362, 290]], 10), anchor: [250, 380], label: [150, 290] }
+    ]
+  },
   ruota: {
     nome: "Ruota e mozzo", desc: "Bulloni o dadi ruota, dado mozzo",
     vb: "0 0 800 500",
@@ -365,7 +390,7 @@ const SYS = {
   }
 };
 const NARROW = () => window.matchMedia("(max-width:600px)").matches;
-const ORDER = ["distribuzione", "testata", "coppa", "freni", "ruota"];
+const ORDER = ["distribuzione", "testata", "coppa", "freni", "sospensioni", "ruota"];
 const TOTAL_PARTS = ORDER.reduce((n, k) => n + SYS[k].parts.length, 0);
 
 const BRANDS = ["Alfa Romeo","Audi","BMW","Citroën","Dacia","Fiat","Ford","Honda","Hyundai","Jeep","Kia","Lancia","Mazda","Mercedes-Benz","Mini","Mitsubishi","Nissan","Opel","Peugeot","Renault","Seat","Škoda","Suzuki","Toyota","Volkswagen","Volvo"];
