@@ -259,6 +259,7 @@ a.btn{text-decoration:none}
 .v3d-hint{position:absolute;top:10px;left:12px;right:12px;font-size:12px;color:#666;pointer-events:none}
 .v3d-bar{position:absolute;left:10px;right:10px;bottom:10px;display:flex;flex-wrap:wrap;gap:6px;pointer-events:none;align-items:center}
 .v3d-bar .sp{flex:1}
+.v3d.nolabels .mk3:not(.sel),.v3d.nolabels .v3d-lead :not(.sel){display:none}
 .v3d-bar button{pointer-events:auto;display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:7px 12px;border-radius:9px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);font-weight:600;font-size:14px;cursor:pointer;box-shadow:0 2px 10px rgba(0,0,0,.12)}
 .v3d-bar button[aria-label]{width:40px;justify-content:center;font-size:20px;padding:0}
 .v3d-bar button svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -1457,13 +1458,15 @@ const V3D = (() => {
     marksEl = document.createElement("div"); marksEl.className = "v3d-marks"; root.appendChild(marksEl);
     const hint = document.createElement("div"); hint.className = "v3d-hint"; hint.textContent = "Trascina per ruotare · pizzica per lo zoom · tocca un pezzo"; root.appendChild(hint);
     barEl = document.createElement("div"); barEl.className = "v3d-bar";
-    barEl.innerHTML = `<button type="button" data-v3="explode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M7 7l2 2M17 17l-2-2M17 7l-2 2M7 17l2-2"/></svg>Esploso</button><button type="button" data-v3="spin" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg>Ruota</button><button type="button" data-v3="reset"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Centra</button><span class="sp"></span><button type="button" data-v3="in" aria-label="Avvicina">+</button><button type="button" data-v3="out" aria-label="Allontana">−</button>`;
+    barEl.innerHTML = `<button type="button" data-v3="explode" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M7 7l2 2M17 17l-2-2M17 7l-2 2M7 17l2-2"/></svg>Esploso</button><button type="button" data-v3="spin" aria-pressed="false"><svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></svg>Ruota</button><button type="button" data-v3="labels" aria-pressed="true"><svg viewBox="0 0 24 24"><circle cx="7" cy="8" r="3"/><path d="M7 11v6M14 7h6M14 12h6M14 17h4"/></svg><span class="lbl">Numeri</span></button><button type="button" data-v3="reset"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Centra</button><span class="sp"></span><button type="button" data-v3="in" aria-label="Avvicina">+</button><button type="button" data-v3="out" aria-label="Allontana">−</button>`;
     root.appendChild(barEl);
+    try { if (localStorage.getItem("mc-nolabels") === "1") root.classList.add("nolabels"); } catch (e) {}
     barEl.addEventListener("click", e => {
       const b = e.target.closest("[data-v3]"); if (!b) return;
       const k = b.dataset.v3;
       if (k === "explode") view.exT = view.exT > 0.5 ? 0 : 1;
       if (k === "spin") view.spin = !view.spin;
+      if (k === "labels") { const off = !root.classList.contains("nolabels"); root.classList.toggle("nolabels", off); try { localStorage.setItem("mc-nolabels", off ? "1" : "0"); } catch (e) {} }
       if (k === "reset") { resetView(); view.exT = 0; view.spin = false; }
       if (k === "in") zoomBy(0.8);
       if (k === "out") zoomBy(1.25);
@@ -1474,6 +1477,8 @@ const V3D = (() => {
     else window.addEventListener("resize", () => { resize(); kick(); });
   }
   function syncBar() {
+    const lb = barEl.querySelector('[data-v3="labels"]'), off = root.classList.contains("nolabels");
+    lb.classList.toggle("on", !off); lb.setAttribute("aria-pressed", !off); lb.querySelector(".lbl").textContent = off ? "Numeri spenti" : "Numeri";
     barEl.querySelector('[data-v3="explode"]').classList.toggle("on", view.exT > 0.5);
     barEl.querySelector('[data-v3="explode"]').setAttribute("aria-pressed", view.exT > 0.5);
     barEl.querySelector('[data-v3="spin"]').classList.toggle("on", view.spin);
