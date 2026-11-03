@@ -319,6 +319,46 @@ table.dt td.fx{color:var(--muted);font-size:14px}
   .zoomwrap.dragging svg.draw{transition:none}
 }
 body.shell-mode .top,body.shell-mode::before{display:none}
+.home{min-height:100vh;background:var(--bg)}
+.hm-top{display:flex;align-items:center;gap:12px;padding-block:calc(14px + env(safe-area-inset-top,0px)) 22px;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));background:var(--bar);color:var(--barfg)}
+.hm-top small{font-size:12px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}.hm-top h1{font-size:34px;text-transform:uppercase;line-height:1}.hm-top span{font-size:14px;opacity:.85}
+.hm-body{max-width:860px;margin:-12px auto 0;padding-inline:max(14px,env(safe-area-inset-left,0px));padding-bottom:calc(32px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
+.hm-card{background:var(--sheet);border-radius:18px;padding:18px;box-shadow:0 6px 24px rgba(15,30,50,.10);display:flex;flex-direction:column;gap:12px}
+.hm-card h2{font-size:28px;text-transform:uppercase;line-height:1.05}
+.hm-sub{color:var(--muted);font-size:15px}
+.hm-nhead{display:flex;gap:14px;align-items:center}.hm-nhead small{color:var(--muted);font-size:13px;font-weight:600}
+.hm-badge{flex:none;width:58px;height:58px;border-radius:16px;background:var(--accent);color:var(--onsolid);display:grid;place-items:center;font:700 22px var(--f-mono)}
+.hm-next.late .hm-badge{background:var(--sel)}.hm-next.late h2{color:var(--sel)}
+.hm-bar{height:8px;border-radius:4px;background:var(--partfill);overflow:hidden}.hm-bar i{display:block;height:100%;background:var(--ok);border-radius:4px}
+.hm-next.late .hm-bar i{background:var(--sel)}
+.hm-meta{display:flex;justify-content:space-between;align-items:center;font-size:15px;color:var(--muted)}.hm-meta b{color:var(--ink);font-family:var(--f-mono)}
+.hm-todo small{display:block;font-weight:700;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.hm-chips{display:flex;flex-direction:column;gap:6px}
+.hm-chip{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--rule);background:var(--bg);color:var(--ink);font-weight:600;font-size:15px;cursor:pointer;text-align:left}
+.hm-chip svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.hm-chip em{margin-left:auto;font-style:normal;font-size:13px;color:var(--ok);font-weight:700}
+.hm-h{font-size:20px;text-transform:uppercase;margin-top:6px}
+.hm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+.hm-tile{display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding:16px;border-radius:18px;border:1px solid var(--rule);background:var(--sheet);color:var(--ink);text-align:left;cursor:pointer;min-height:170px;transition:transform .15s,box-shadow .15s}
+.hm-tile:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(15,30,50,.12)}
+.hm-ic{width:46px;height:46px;border-radius:14px;background:var(--accentbg);color:var(--accent);display:grid;place-items:center}
+.hm-ic svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hm-ic.big{width:64px;height:64px;border-radius:18px}.hm-ic.big svg{width:36px;height:36px}
+.hm-tt{font-family:var(--f-display);font-size:20px;font-weight:700;text-transform:uppercase;line-height:1.05}
+.hm-kv{font-family:var(--f-mono);font-weight:700;font-size:15px;color:var(--ok)}
+.hm-tile.none .hm-kv{color:var(--muted);font-weight:500}.hm-tile.co .hm-kv,.hm-tile.ex .hm-kv{color:var(--warn)}
+.hm-ev{font-size:12.5px;color:var(--muted);margin-top:auto}
+.cd-page{position:fixed;inset:0;z-index:30;background:var(--bg);overflow:auto;padding-top:env(safe-area-inset-top,0px)}
+.cd-head{position:sticky;top:0;z-index:2;background:var(--bg);padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--rule)}
+.cd-body{max-width:720px;margin:0 auto;padding-block:18px calc(40px + env(safe-area-inset-bottom,0px));padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:16px}
+.cd-hero{display:flex;gap:14px;align-items:center}.cd-hero h1{font-size:30px;text-transform:uppercase;margin-bottom:4px}
+.cd-val{font-family:var(--f-mono);font-weight:700;font-size:clamp(26px,7vw,40px);line-height:1.15;color:var(--ok);overflow-wrap:anywhere}
+.cd-val.none{color:var(--muted);font-size:22px}.cd-val.co,.cd-val.ex{color:var(--warn)}
+.cd-sec{background:var(--sheet);border-radius:14px;padding:14px 16px;border:1px solid var(--rule);display:flex;flex-direction:column;gap:6px}
+.cd-sec h3{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.cd-row{display:flex;justify-content:space-between;gap:12px;padding:6px 0;border-bottom:1px solid var(--rule)}.cd-row:last-child{border-bottom:0}
+.cd-row b{font-family:var(--f-mono)}.cd-row b.has{color:var(--ok)}.cd-row b.co,.cd-row b.ex{color:var(--warn)}.cd-row b.none{color:var(--muted);font-weight:500}
+.sh-back{margin-left:0!important}
 .ph-zoom{position:absolute;inset:0;border-radius:0;background:#16191c;touch-action:pan-y}
 .ph-fill{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
 .ph-box{position:relative;flex:none}
@@ -620,7 +660,7 @@ const BRANDS = ["Alfa Romeo","Audi","BMW","Citroën","Dacia","Fiat","Ford","Hond
 const CAR_SVG = `<svg viewBox="0 0 200 80" aria-hidden="true"><path class="cb" d="M12 60 C12 51 17 47 30 45 L58 41 C71 28 87 20 110 20 C134 20 151 27 165 41 L179 45 C187 47 189 52 189 60 Z"/><path class="cl" d="M66 41 C78 31 92 26 108 26 L108 41 Z M114 26 C130 26 143 31 154 41 L114 41 Z"/><circle class="cw" cx="50" cy="61" r="13"/><circle class="cl" cx="50" cy="61" r="5"/><circle class="cw" cx="152" cy="61" r="13"/><circle class="cl" cx="152" cy="61" r="5"/></svg>`;
 
 /* ---------- stato ---------- */
-const S = { view: "marche", marca: null, vid: null, sys: null, part: null, q: "", editing: false, draft: {}, error: "", confirmDel: false, adding: false, vdraft: {}, verror: "", confirmVDel: false, saving: false };
+const S = { svDraft: {}, view: "marche", marca: null, vid: null, sys: null, part: null, q: "", editing: false, draft: {}, error: "", confirmDel: false, adding: false, vdraft: {}, verror: "", confirmVDel: false, saving: false };
 let veicoli = new Map(), coppie = new Map();
 const DONE = new Set();
 let db = null, dbStatus = "loading", got = { v: false, c: false }, slowTimer = null;
@@ -759,6 +799,116 @@ const TABS = [
   ["sospensioni", "Sospens.", '<path d="M12 2v3M8 5h8M8 8l8 2-8 2 8 2-8 2 8 2M8 19h8M12 19v3"/>'],
   ["ruota", "Ruota", '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="M12 3v6M12 15v6M3 12h6M15 12h6"/>']
 ];
+const CI = {
+  olio: '<path d="M3 13h9l3-3h4l2 2-4 1-3 5H5a2 2 0 0 1-2-2z"/><path d="M8 13V9h3"/>',
+  filtro: '<rect x="6" y="4" width="12" height="16" rx="3"/><path d="M6 8h12M6 16h12M9 8v8M12 8v8M15 8v8"/>',
+  aria: '<path d="M3 8h11a3 3 0 1 0-3-3M3 12h15a3 3 0 1 1-3 3M3 16h8"/>',
+  gasolio: '<path d="M5 20V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15M4 20h12M15 9h2a2 2 0 0 1 2 2v5a1 1 0 0 0 2 0V8l-3-3"/><path d="M8 7h4"/>',
+  abitacolo: '<circle cx="12" cy="12" r="2"/><path d="M12 10c0-4 2-6 4-6s2 4-2 6M14 12c4 0 6 2 6 4s-4 2-6-2M12 14c0 4-2 6-4 6s-2-4 2-6M10 12c-4 0-6-2-6-4s4-2 6 2"/>',
+  liqfreni: '<circle cx="12" cy="12" r="8"/><path d="M12 7s3 3.5 3 5.5a3 3 0 0 1-6 0C9 10.5 12 7 12 7z"/>',
+  refrigerante: '<path d="M10 14V4a2 2 0 0 1 4 0v10a4 4 0 1 1-4 0z"/><path d="M12 9v6"/>',
+  cinghia: '<circle cx="7" cy="16" r="3"/><circle cx="17" cy="8" r="3"/><path d="M4.5 14.3 14.5 6.3M9.5 17.7l10-8"/>',
+  ruote: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="M12 3v5.5M12 15.5V21M3 12h5.5M15.5 12H21"/>',
+  freni: '<circle cx="11" cy="13" r="7"/><circle cx="11" cy="13" r="2"/><path d="M15 5h4v7h-3"/>'
+};
+const CARDS = [
+  { id: "olio", t: "Olio motore", ic: "olio", ref: ["tagliando", "olio"], ogni: "A ogni tagliando: 20.000 km o 12 mesi", due: n => "Sostituire", extra: [["coppa", "tappo", "Tappo coppa"], ["coppa", "filtro", "Filtro olio"]] },
+  { id: "filtroolio", t: "Filtro olio", ic: "filtro", ref: ["coppa", "filtro"], ogni: "A ogni tagliando, insieme all'olio", due: n => "Sostituire" },
+  { id: "filtroaria", t: "Filtro aria", ic: "aria", ref: ["tagliando", "filtroaria"], ogni: "Sostituire ogni 3° tagliando, pulire negli altri", due: n => n % 3 === 0 ? "Sostituire" : "Pulire" },
+  { id: "gasolio", t: "Filtro gasolio", ic: "gasolio", ref: ["tagliando", "gasolio"], ogni: "Ogni 3° tagliando (60.000 km / 3 anni)", due: n => n % 3 === 0 ? "Sostituire" : null },
+  { id: "abitacolo", t: "Filtro abitacolo", ic: "abitacolo", ref: ["tagliando", "abitacolo"], ogni: "Ogni 2° tagliando (40.000 km / 2 anni)", due: n => n % 2 === 0 ? "Sostituire" : null },
+  { id: "liqfreni", t: "Liquido freni", ic: "liqfreni", ref: ["tagliando", "freni"], ogni: "Ogni 2° tagliando (40.000 km / 2 anni)", due: n => n % 2 === 0 ? "Sostituire" : null },
+  { id: "refrigerante", t: "Liquido refrigerante", ic: "refrigerante", ref: ["tagliando", "refrigerante"], ogni: "Prima sostituzione a 200.000 km o 10 anni", due: n => n % 2 === 0 ? "Controllare impianto" : null },
+  { id: "cinghia", t: "Cinghia servizi", ic: "cinghia", ref: ["tagliando", "cinghia"], ogni: "Controllo ogni 3° tagliando", due: n => n % 3 === 0 ? "Controllare" : null },
+  { id: "ruote", t: "Ruote e gomme", ic: "ruote", ref: ["ruota", "dadi"], ogni: "Controllo a ogni tagliando · rotazione ogni 10.000 km", due: n => "Controllare" },
+  { id: "freni", t: "Freni", ic: "freni", ref: ["freni", "staffa"], ogni: "Controllo a ogni tagliando", due: n => "Controllare", extra: [["freni", "guida", "Viti guida pinza"]] }
+];
+const icon = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${CI[k]}</svg>`;
+const fmtKm = n => Math.round(n).toLocaleString("it-IT");
+function serviceInfo(v) {
+  const sv = v.servizio; if (!sv) return null;
+  const next = ((sv.n || 0) % 12) + 1, kmLeft = (sv.lastKm || 0) + 20000 - (sv.km || 0);
+  let dueDate = null, daysLeft = null;
+  if (sv.lastDate) { const d = new Date(sv.lastDate); if (!isNaN(d)) { dueDate = new Date(d); dueDate.setFullYear(d.getFullYear() + 1); daysLeft = Math.round((dueDate - new Date()) / 864e5); } }
+  const used = Math.min(1, Math.max(0, ((sv.km || 0) - (sv.lastKm || 0)) / 20000));
+  const usedT = sv.lastDate && daysLeft != null ? Math.min(1, Math.max(0, 1 - daysLeft / 365)) : 0;
+  return { next, kmLeft, dueDate, daysLeft, pct: Math.max(used, usedT) };
+}
+function viewHome() {
+  const v = veicoli.get(S.vid); if (!v) return "";
+  const si = serviceInfo(v), sv = v.servizio || {};
+  let top;
+  if (S.svEdit || !si) {
+    top = `<section class="hm-card hm-next"><h2>${si ? "Aggiorna i dati" : "Imposta il tuo tagliando"}</h2>
+      <p class="hm-sub">Così l'app ti dice quanti km mancano e cosa fare.</p>
+      <div class="form">
+        <div class="field"><label for="hm-km">Km attuali</label><input id="hm-km" inputmode="numeric" data-draft="svDraft" data-k="km" value="${esc(S.svDraft.km ?? sv.km ?? "")}" placeholder="es. 84500"></div>
+        <div class="field"><label for="hm-lastkm">Km all'ultimo tagliando</label><input id="hm-lastkm" inputmode="numeric" data-draft="svDraft" data-k="lastKm" value="${esc(S.svDraft.lastKm ?? sv.lastKm ?? "")}" placeholder="es. 80000"></div>
+        <div class="field"><label for="hm-lastdate">Data ultimo tagliando</label><input id="hm-lastdate" type="date" data-draft="svDraft" data-k="lastDate" value="${esc(S.svDraft.lastDate ?? sv.lastDate ?? "")}"></div>
+        <div class="field"><label for="hm-n">Quale tagliando era</label><input id="hm-n" inputmode="numeric" data-draft="svDraft" data-k="n" value="${esc(S.svDraft.n ?? sv.n ?? "")}" placeholder="es. 4 (il 4°)"><small>Lo trovi sul libretto dei tagliandi. Se non lo sai: km dell'ultimo tagliando diviso 20.000.</small></div>
+      </div>
+      ${S.error ? `<p class="err">${esc(S.error)}</p>` : ""}
+      <div class="row"><button class="btn" data-act="sv-save">Salva</button>${si ? `<button class="btn ghost" data-act="sv-cancel">Annulla</button>` : ""}</div></section>`;
+  } else {
+    const late = si.kmLeft < 0 || (si.daysLeft != null && si.daysLeft < 0);
+    const when = si.dueDate ? si.dueDate.toLocaleDateString("it-IT", { month: "long", year: "numeric" }) : "";
+    top = `<section class="hm-card hm-next${late ? " late" : ""}">
+      <div class="hm-nhead"><span class="hm-badge">${si.next}°</span><div><small>Prossimo tagliando</small><h2>${late ? "Da fare adesso" : `Tra ${fmtKm(Math.max(0, si.kmLeft))} km`}</h2>${when ? `<p class="hm-sub">o entro ${esc(when)}, quello che arriva prima</p>` : ""}</div></div>
+      <div class="hm-bar"><i style="width:${Math.round(si.pct * 100)}%"></i></div>
+      <div class="hm-meta"><span>Km attuali: <b>${fmtKm(sv.km || 0)}</b></span><button class="btn link" data-act="sv-edit">Aggiorna km</button></div>
+      <div class="hm-todo"><small>Cosa fare al ${si.next}° tagliando</small><div class="hm-chips">${CARDS.map(c => { const d = c.due(si.next); return d ? `<button class="hm-chip" data-act="card" data-v="${c.id}">${icon(c.ic)}<span>${esc(c.t)}</span><em>${esc(d)}</em></button>` : ""; }).join("")}</div></div></section>`;
+  }
+  const cards = CARDS.map(c => {
+    const d = val(S.vid, c.ref[0], c.ref[1]), st = stateOf(d), num = ["olio", "filtroolio", "refrigerante", "ruote", "freni"].includes(c.id), key = d ? d.coppia.split("·")[0].trim() : "Da inserire";
+    return `<button class="hm-tile ${st}" data-act="card" data-v="${c.id}"><span class="hm-ic">${icon(c.ic)}</span><span class="hm-tt">${esc(c.t)}</span>${num ? `<span class="hm-kv">${esc(key)}</span>` : ""}<span class="hm-ev">${esc(c.ogni)}</span></button>`;
+  }).join("");
+  return `<div class="home">
+    <header class="hm-top"><div><small>La mia auto</small><h1>Mazda CX-5</h1><span>${esc(v.motore || "")} · ${esc(v.anni || "")}</span></div>
+      <button class="sh-menu" data-act="menu" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></header>
+    <main class="hm-body">${top}
+      <h3 class="hm-h">Manutenzione</h3>
+      <div class="hm-grid">${cards}</div>
+      <p class="foot">Dati dal manuale d'uso Mazda dove indicato. Prima di serrare, verifica sempre sulla documentazione ufficiale.</p>
+    </main>
+    ${S.card ? viewCard() : ""}${homeMenu(v)}${S.page ? pageOverlay() : ""}
+  </div>`;
+}
+function viewCard() {
+  const c = CARDS.find(x => x.id === S.card); if (!c) return "";
+  const d = val(S.vid, c.ref[0], c.ref[1]), st = stateOf(d);
+  const okU = u => u && /^https:\/\//.test(u);
+  const extra = (c.extra || []).map(([a, b, lab]) => { const e = val(S.vid, a, b); return `<div class="cd-row"><span>${esc(lab)}</span><b class="${stateOf(e)}">${e ? esc(e.coppia) : "Da inserire"}</b></div>`; }).join("");
+  const steps = d && d.procedura ? `<div class="cd-sec"><h3>Procedura</h3><ol class="steps">${d.procedura.split(/\n+/).filter(x => x.trim()).map((t, i) => { const k = c.id + "#" + i; return `<li><button class="step ${DONE.has(k) ? "done" : ""}" data-act="step" data-v="${esc(k)}"><span class="ck"></span><span>${esc(t)}</span></button></li>`; }).join("")}</ol></div>` : "";
+  const fonti = d ? (d.fonti && d.fonti.length ? d.fonti : [{ t: d.fonte, u: d.fonteUrl }]) : [];
+  return `<div class="cd-page"><div class="cd-head"><button class="btn ghost" data-act="card-close">← Indietro</button></div>
+    <div class="cd-body">
+      <div class="cd-hero ${st}"><span class="hm-ic big">${icon(c.ic)}</span><div><h1>${esc(c.t)}</h1>${chip(chipOf(d))}</div></div>
+      <div class="cd-val ${st}">${d ? esc(d.coppia) : "Valore da inserire"}</div>
+      ${st === "co" ? `<div class="banner"><b>Valore non ufficiale.</b> Riportato uguale da più fonti, da verificare sul manuale d'officina.</div>` : ""}
+      <div class="cd-sec"><h3>Quando</h3><p>${esc(c.ogni)}</p></div>
+      ${d && d.fasi ? `<div class="cd-sec"><h3>Dettagli</h3><p class="pre">${esc(d.fasi)}</p></div>` : ""}
+      ${extra ? `<div class="cd-sec"><h3>Coppie di serraggio collegate</h3>${extra}</div>` : ""}
+      ${steps}
+      ${d && d.note ? `<div class="cd-sec"><h3>Note</h3><p class="pre">${esc(d.note)}</p></div>` : ""}
+      ${fonti.length ? `<div class="cd-sec"><h3>Fonte</h3>${fonti.map(f => `<p>${esc(f.t || "")}${okU(f.u) ? ` <a class="src" href="${esc(f.u)}" target="_blank" rel="noopener">apri ↗</a>` : ""}</p>`).join("")}</div>` : ""}
+      ${!d ? `<p class="hm-sub">Questo valore va preso dal manuale d'officina Mazda. Mandamelo e lo inserisco.</p>` : ""}
+    </div></div>`;
+}
+function homeMenu(v) {
+  if (!S.menu) return "";
+  return `<div class="sh-ov" data-act="menu"><div class="sh-mcard">
+    <div class="eyebrow">${esc(v.marca)} ${esc(vLabel(v))}</div>
+    <button data-act="go-shell" data-v="panoramica">${ICON.book}<span>Foto del mio motore</span></button>
+    <button data-act="go-shell" data-v="motore3d">${ICON.book}<span>Motore in 3D</span></button>
+    ${v.dati ? `<button data-act="page" data-v="scheda">${ICON.info}<span>Dati tecnici</span></button>` : ""}
+    ${v.funzioni ? `<button data-act="page" data-v="funzioni">${ICON.star}<span>Funzioni e optional</span></button>` : ""}
+    <button data-act="page" data-v="dati">${ICON.gauge}<span>Tutte le coppie</span></button>
+    ${store.mode === "local" ? `<button data-act="export">${ICON.book}<span>Esporta backup</span></button><button data-act="import">${ICON.book}<span>Importa backup</span></button>` : ""}
+  </div></div>`;
+}
+function pageOverlay() {
+  return `<div class="sh-page"><div class="sh-page-head"><button class="btn ghost" data-act="page-close">← Indietro</button></div><div class="sh-page-body">${S.page === "scheda" ? viewScheda() : S.page === "funzioni" ? viewFunzioni() : viewDati()}</div></div>`;
+}
 function shellSheet() {
   const s = SYS[S.sys];
   const p = s.parts.find(x => x.id === S.part);
@@ -798,7 +948,7 @@ function viewShell() {
       ${store.mode === "local" ? `<button data-act="export">${ICON.book}<span>Esporta backup</span></button><button data-act="import">${ICON.book}<span>Importa backup</span></button>` : ""}
     </div></div>` : "";
   return `<div class="shell">
-    <header class="sh-top"><div class="sh-tt"><small>${esc(v.modello)} · ${esc(v.motore || "")}</small><h1>${esc(s.nome)}</h1></div>
+    <header class="sh-top"><button class="sh-menu sh-back" data-act="home2" aria-label="Torna alla manutenzione"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button><div class="sh-tt"><small>${esc(v.modello)} · ${esc(v.motore || "")}</small><h1>${esc(s.nome)}</h1></div>
       <button class="sh-menu" data-act="menu" aria-label="Menu"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></header>
     <div class="sh-stage">${S.sys === "panoramica" ? photoStage() : V3D.ok ? `<div class="v3d-slot" id="v3dslot"></div>` : `<div class="sh-svg">${drawSvg(S.sys, false)}</div>`}</div>
     <section class="sh-sheet${S.more || S.editing ? " more" : ""}">${shellSheet()}</section>
@@ -1657,13 +1807,13 @@ let autoOpened = false;
 function autoOpen() {
   if (autoOpened || S.view !== "marche") return;
   const mine = [...veicoli.entries()].find(([, v]) => v.mia);
-  if (mine) { autoOpened = true; S.vid = mine[0]; S.marca = mine[1].marca; S.view = "shell"; S.sys = "panoramica"; S.animate = true; }
+  if (mine) { autoOpened = true; S.vid = mine[0]; S.marca = mine[1].marca; S.view = "home"; S.sys = "panoramica"; }
 }
 function render() {
   if (store.ok && (dbStatus === "local" || dbStatus === "ok")) autoOpen();
   const ae = document.activeElement, fid = ae && ae.id, ss = ae && "selectionStart" in ae ? ae.selectionStart : null;
   let body;
-  if (S.view === "shell" && veicoli.get(S.vid)) body = "";
+  if ((S.view === "shell" || S.view === "home") && veicoli.get(S.vid)) body = "";
   else if (S.view === "modelli") body = viewModelli();
   else if (S.view === "sistemi") body = viewSistemi();
   else if (S.view === "schema") body = viewSchema();
@@ -1675,9 +1825,10 @@ function render() {
   if (dbStatus === "off") banner = `<div class="banner"><b>Archivio non disponibile.</b> Apri la pagina dal tuo account Claude per vedere e salvare i valori.</div>`;
   else if (dbStatus === "slow") banner = `<div class="banner"><b>L'archivio non risponde ancora.</b> I dati potrebbero comparire tra poco; controlla la connessione.</div>`;
   else if (dbStatus === "error") banner = `<div class="banner"><b>Collegamento all'archivio interrotto.</b> Ricarica la pagina per riprovare.</div>`;
-  const shell = S.view === "shell" && veicoli.get(S.vid);
+  const shell = (S.view === "shell" || S.view === "home") && veicoli.get(S.vid);
   document.body.classList.toggle("shell-mode", !!shell);
-  if (shell) app.innerHTML = viewShell(); else app.innerHTML = crumbs() + banner + body + `<p class="foot">I valori di coppia sono inseriti a mano e vanno sempre verificati sulla documentazione ufficiale del costruttore prima di lavorare.${window.APP_BUILD ? " · Versione del " + esc(window.APP_BUILD) : ""}</p>`;
+  if (shell && S.view === "home") app.innerHTML = viewHome();
+  else if (shell) app.innerHTML = viewShell(); else app.innerHTML = crumbs() + banner + body + `<p class="foot">I valori di coppia sono inseriti a mano e vanno sempre verificati sulla documentazione ufficiale del costruttore prima di lavorare.${window.APP_BUILD ? " · Versione del " + esc(window.APP_BUILD) : ""}</p>`;
   const introNow = S.animate; S.animate = false; fitPhoto(); applyZoom();
   const slot3 = document.getElementById("v3dslot");
   if (slot3 && V3D.ok) { const st = {}; SYS[S.sys].parts.forEach(p => { st[p.id] = stateOf(val(S.vid, S.sys, p.id)); }); try { V3D.mount(slot3, S.sys, st, S.part, introNow); } catch (e) { console.error(e); } }
@@ -1787,6 +1938,21 @@ async function act(a, d) {
       else { const el = document.getElementById("manuali"); if (el) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth", block: "start" }); }
       break;
     case "dato": S.sys = d.s; S.part = d.v; Z.k = 1; Z.x = 0; Z.y = 0; S.animate = true; if (S.view === "shell") { S.page = null; S.more = false; S.editing = false; render(); } else go("schema"); break;
+    case "card": S.card = d.v; S.menu = false; render(); window.scrollTo(0, 0); break;
+    case "card-close": S.card = null; render(); break;
+    case "go-shell": S.view = "shell"; S.sys = d.v; S.part = null; S.menu = false; S.animate = true; render(); break;
+    case "home2": S.view = "home"; S.part = null; S.more = false; S.editing = false; render(); break;
+    case "sv-edit": S.svEdit = true; S.svDraft = {}; S.error = ""; render(); break;
+    case "sv-cancel": S.svEdit = false; S.error = ""; render(); break;
+    case "sv-save": {
+      const v = veicoli.get(S.vid), cur = v.servizio || {}, dr = S.svDraft, num = x => { const n = parseInt(String(x ?? "").replace(/\D/g, ""), 10); return isNaN(n) ? null : n; };
+      const sv = { km: num(dr.km ?? cur.km), lastKm: num(dr.lastKm ?? cur.lastKm), lastDate: (dr.lastDate ?? cur.lastDate) || "", n: num(dr.n ?? cur.n) || 0 };
+      if (sv.km == null || sv.lastKm == null) { S.error = "Scrivi i km attuali e quelli dell'ultimo tagliando."; render(); return; }
+      if (sv.lastKm > sv.km) { S.error = "I km dell'ultimo tagliando non possono superare quelli attuali."; render(); return; }
+      try { await store.set("veicoli", S.vid, Object.assign({}, v, { servizio: sv })); S.svEdit = false; S.svDraft = {}; S.error = ""; toast("Salvato"); }
+      catch (e) { S.error = "Non salvato. " + errMsg(e); }
+      render(); break;
+    }
     case "tab": S.sys = d.v; S.part = null; S.more = false; S.editing = false; Z.k = 1; Z.x = 0; Z.y = 0; S.animate = true; render(); break;
     case "menu": S.menu = !S.menu; render(); break;
     case "page": S.page = d.v; S.menu = false; render(); break;
